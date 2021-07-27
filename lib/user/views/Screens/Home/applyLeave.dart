@@ -81,13 +81,6 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
                 physics: ClampingScrollPhysics(),
                 itemCount: _con.allleave.length,
                 itemBuilder: (context, index) {
-                  // for (int i = 0; i < _con.all_leave.length; i++) {
-                  //   _con.all_leave.forEach((element) {
-                  //     element = _con.all_leave[i]["status"].toString() == "1";
-                  //     approved.add(element);
-                  //   });
-                  //   print("pending length : " + pending.length.toString());
-                  // }
                   final DateFormat formatter = new DateFormat('dd MMM yyyy');
                   String from_date = formatter
                       .format(DateTime.parse(_con.allleave[index]["from"]));

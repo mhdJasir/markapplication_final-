@@ -213,10 +213,9 @@ class UserHomeController extends ControllerMVC {
                     height: 20,
                   ),
                   GestureDetector(
-                      onTap: () {
-                        Navigator.pop(cont);
-                        Navigator.pop(cont);
-                        Navigator.pop(cont);
+                      onTap: () async {
+                        await Navigator.pop(context);
+                        Navigator.pop(context);
                       },
                       child: Text(
                         "Close",

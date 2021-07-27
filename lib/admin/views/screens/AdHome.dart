@@ -125,161 +125,161 @@ class _AdHomeState extends StateMVC<AdHome> {
                         )
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 14.0, left: 13),
-                      child: Text(
-                        "Task (" + _con.tskLevrqst.length.toString() + ")",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey[700]),
-                      ),
-                    ), /////Taskk
-                    _con.tskLevrqst.length != 0
-                        ? SizedBox(
-                            height: MediaQuery.of(context).size.height * .18,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                top: 6.0,
-                              ),
-                              child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: _con.tskLevrqst != null
-                                    ? _con.tskLevrqst.length
-                                    : 0,
-                                itemBuilder: (context, index) {
-                                  final DateFormat frm =
-                                      DateFormat('yyyy-MM-dd');
-                                  final String fromedatee = frm.format(
-                                      DateTime.parse(
-                                          _con.tskLevrqst[index]["from"]));
-                                  final String todatee = frm.format(
-                                      DateTime.parse(
-                                          _con.tskLevrqst[index]["to"]));
-                                  return Container(
-                                    margin: const EdgeInsets.only(
-                                        top: 9.0,
-                                        right: 9.0,
-                                        left: 9.0,
-                                        bottom: 10),
-                                    width:
-                                        MediaQuery.of(context).size.width * .90,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(15),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey[400],
-                                          blurRadius: 1.1, // soften the shadow
-                                          spreadRadius: 1.2, //extend the shadow
-                                          offset: Offset(
-                                            1.1, // Move to right 10  horizontally
-                                            1.0, // Move to bottom 10 Vertically
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              .18,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              .04,
-                                          decoration: BoxDecoration(
-                                              color: Color(0xff4a67b3),
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(15),
-                                                bottomLeft: Radius.circular(15),
-                                              )),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 10),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 7),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: <Widget>[
-                                                      Text("Leave Request",
-                                                          style: b18W5),
-                                                      Text(
-                                                        _con.tskLevrqst[index][
-                                                                "emp_firstname"]
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .grey[500],
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 7),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        fromedatee.toString() +
-                                                            " to " +
-                                                            todatee.toString(),
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .grey[500],
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        _con.tskLevrqst[index]
-                                                                ["leave_type"]
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .grey[500],
-                                                            fontSize: 15),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          )
-                        : Container(
-                            height: 0,
-                          ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 14.0, left: 13),
+                    //   child: Text(
+                    //     "Task (" + _con.tskLevrqst.length.toString() + ")",
+                    //     style: TextStyle(
+                    //         fontWeight: FontWeight.w500,
+                    //         color: Colors.grey[700]),
+                    //   ),
+                    // ), /////Taskk
+                    // _con.tskLevrqst.length != 0
+                    //     ? SizedBox(
+                    //         height: MediaQuery.of(context).size.height * .18,
+                    //         child: Padding(
+                    //           padding: const EdgeInsets.only(
+                    //             top: 6.0,
+                    //           ),
+                    //           child: ListView.builder(
+                    //             physics: BouncingScrollPhysics(),
+                    //             shrinkWrap: true,
+                    //             scrollDirection: Axis.horizontal,
+                    //             itemCount: _con.tskLevrqst != null
+                    //                 ? _con.tskLevrqst.length
+                    //                 : 0,
+                    //             itemBuilder: (context, index) {
+                    //               final DateFormat frm =
+                    //                   DateFormat('yyyy-MM-dd');
+                    //               final String fromedatee = frm.format(
+                    //                   DateTime.parse(
+                    //                       _con.tskLevrqst[index]["from"]));
+                    //               final String todatee = frm.format(
+                    //                   DateTime.parse(
+                    //                       _con.tskLevrqst[index]["to"]));
+                    //               return Container(
+                    //                 margin: const EdgeInsets.only(
+                    //                     top: 9.0,
+                    //                     right: 9.0,
+                    //                     left: 9.0,
+                    //                     bottom: 10),
+                    //                 width:
+                    //                     MediaQuery.of(context).size.width * .90,
+                    //                 decoration: BoxDecoration(
+                    //                   color: Colors.white,
+                    //                   borderRadius: BorderRadius.circular(15),
+                    //                   boxShadow: [
+                    //                     BoxShadow(
+                    //                       color: Colors.grey[400],
+                    //                       blurRadius: 1.1, // soften the shadow
+                    //                       spreadRadius: 1.2, //extend the shadow
+                    //                       offset: Offset(
+                    //                         1.1, // Move to right 10  horizontally
+                    //                         1.0, // Move to bottom 10 Vertically
+                    //                       ),
+                    //                     )
+                    //                   ],
+                    //                 ),
+                    //                 child: Row(
+                    //                   children: [
+                    //                     Container(
+                    //                       height: MediaQuery.of(context)
+                    //                               .size
+                    //                               .height *
+                    //                           .18,
+                    //                       width: MediaQuery.of(context)
+                    //                               .size
+                    //                               .width *
+                    //                           .04,
+                    //                       decoration: BoxDecoration(
+                    //                           color: Color(0xff4a67b3),
+                    //                           borderRadius: BorderRadius.only(
+                    //                             topLeft: Radius.circular(15),
+                    //                             bottomLeft: Radius.circular(15),
+                    //                           )),
+                    //                     ),
+                    //                     Expanded(
+                    //                       child: Padding(
+                    //                         padding:
+                    //                             const EdgeInsets.only(left: 10),
+                    //                         child: Column(
+                    //                           mainAxisAlignment:
+                    //                               MainAxisAlignment.center,
+                    //                           crossAxisAlignment:
+                    //                               CrossAxisAlignment.start,
+                    //                           children: <Widget>[
+                    //                             Padding(
+                    //                               padding:
+                    //                                   const EdgeInsets.only(
+                    //                                       right: 7),
+                    //                               child: Row(
+                    //                                 mainAxisAlignment:
+                    //                                     MainAxisAlignment
+                    //                                         .spaceBetween,
+                    //                                 children: <Widget>[
+                    //                                   Text("Leave Request",
+                    //                                       style: b18W5),
+                    //                                   Text(
+                    //                                     _con.tskLevrqst[index][
+                    //                                             "emp_firstname"]
+                    //                                         .toString(),
+                    //                                     style: TextStyle(
+                    //                                         color: Colors
+                    //                                             .grey[500],
+                    //                                         fontSize: 15),
+                    //                                   ),
+                    //                                 ],
+                    //                               ),
+                    //                             ),
+                    //                             SizedBox(
+                    //                               height: 10,
+                    //                             ),
+                    //                             Padding(
+                    //                               padding:
+                    //                                   const EdgeInsets.only(
+                    //                                       right: 7),
+                    //                               child: Row(
+                    //                                 mainAxisAlignment:
+                    //                                     MainAxisAlignment
+                    //                                         .spaceBetween,
+                    //                                 children: [
+                    //                                   Text(
+                    //                                     fromedatee.toString() +
+                    //                                         " to " +
+                    //                                         todatee.toString(),
+                    //                                     textAlign:
+                    //                                         TextAlign.start,
+                    //                                     style: TextStyle(
+                    //                                         color: Colors
+                    //                                             .grey[500],
+                    //                                         fontSize: 15),
+                    //                                   ),
+                    //                                   Text(
+                    //                                     _con.tskLevrqst[index]
+                    //                                             ["leave_type"]
+                    //                                         .toString(),
+                    //                                     style: TextStyle(
+                    //                                         color: Colors
+                    //                                             .grey[500],
+                    //                                         fontSize: 15),
+                    //                                   )
+                    //                                 ],
+                    //                               ),
+                    //                             )
+                    //                           ],
+                    //                         ),
+                    //                       ),
+                    //                     )
+                    //                   ],
+                    //                 ),
+                    //               );
+                    //             },
+                    //           ),
+                    //         ),
+                    //       )
+                    //     : Container(
+                    //         height: 0,
+                    //       ),
                     Padding(
                       padding: const EdgeInsets.only(
                           right: 9.0, left: 9.0, top: 9.0, bottom: 8.5),

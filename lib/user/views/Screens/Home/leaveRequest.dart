@@ -264,7 +264,16 @@ class _LeaveRequestState extends StateMVC<LeaveRequest> {
   }
 
   submitclick() {
-    if (StartDate == null ||
+    if (totaldays < 0) {
+      Fluttertoast.showToast(
+        msg: "Invalid Date Range",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 35,
+        backgroundColor: Colors.black,
+        fontSize: 16.0,
+      );
+    } else if (StartDate == null ||
         EndDate == null ||
         noteController.text.isEmpty ||
         totaldays == null) {

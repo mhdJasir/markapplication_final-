@@ -27,10 +27,9 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
   DateTime selecteddate;
   String staff;
   List emppList = [];
-  List<Map<String, dynamic>> attendanceList = [
-    {"id": "1", "title": "Morning"},
-    {"id": "2", "title": "Afternoon"}
-  ];
+  List allList = [];
+  List allList2 = [];
+
   String attendance;
   @override
   void initState() {
@@ -40,6 +39,11 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
       selecteddate = DateTime.now();
     });
   }
+
+  Size get size => MediaQuery.of(context).size;
+  bool clickedAll = true;
+  bool clickedPresent = false;
+  bool clickedAbsent = false;
 
   @override
   Widget build(BuildContext context) {
@@ -217,138 +221,262 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 10,
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        itemCount: _con.attndencelist["leaves"] != null
-                            ? _con.attndencelist["leaves"].length
-                            : 0,
-                        itemBuilder: (context, indexx) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                left: 9, right: 9, top: 5, bottom: 5),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  //background color of box
-                                  BoxShadow(
-                                    color: Colors.grey[400],
-                                    blurRadius: 0.8, // soften the shadow
-                                    spreadRadius: 0.8, //extend the shadow
-                                    offset: Offset(
-                                      0.5, // Move to right 10  horizontally
-                                      0.5, // Move to bottom 10 Vertically
-                                    ),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 15,
-                                  bottom: 15,
-                                  left: 15,
-                                ),
-                                child: Container(
-                                    child: Stack(
-                                  children: <Widget>[
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text("Requests", style: b18W8),
-                                        SizedBox(
-                                          height: 3,
+                  Container(
+                    margin: EdgeInsets.only(left: 20),
+                    height: 40,
+                    width: size.width - 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        BuildContainer(clickedAll, true, false, false, "All"),
+                        BuildContainer(
+                            clickedPresent, false, true, false, "Present"),
+                        BuildContainer(
+                            clickedAbsent, false, false, true, "Absent"),
+                        SizedBox(
+                          height: 15,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  clickedPresent
+                      ? Container(
+                          height: 500,
+                          child: ListView.builder(
+                            itemCount:
+                                _con.attndencelist["presents_list"] != null
+                                    ? _con.attndencelist["presents_list"].length
+                                    : 0,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: size.width - 30,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                            color: Colors.grey[300])),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(60),
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              child: Image.network(
+                                                _con.attndencelist[
+                                                        "presents_list"][index]
+                                                    ["emp_image"],
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                        Text(
-                                          _con.attndencelist["leaves"][indexx]
-                                              ["emp_firstname"],
-                                          style: b13W8,
+                                        Container(
+                                          margin: EdgeInsets.all(5),
+                                          child: Center(
+                                              child: Row(
+                                            children: [
+                                              Text(_con.attndencelist[
+                                                      "presents_list"][index]
+                                                  ["emp_firstname"]),
+                                              Text(
+                                                  " ${_con.attndencelist["presents_list"][index]["emp_lastname"] == null ? " " : _con.attndencelist["presents_list"][index]["emp_lastname"]}")
+                                            ],
+                                          )),
                                         ),
-                                        SizedBox(
-                                          height: 3,
+                                        Spacer(),
+                                        Container(
+                                          margin: EdgeInsets.all(10),
+                                          height: 30,
+                                          width: 30,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              color: Colors.green[300]),
+                                          child: Center(child: Text("P")),
                                         ),
-                                        Text(
-                                          _con.attndencelist["leaves"][indexx]
-                                              ["leave_type"],
-                                          style: b13W8,
-                                        ),
-                                        SizedBox(
-                                          height: 3,
-                                        ),
-                                        Text(
-                                            _con.attndencelist["leaves"][indexx]
-                                                    ["from"] +
-                                                " - " +
-                                                _con.attndencelist["leaves"]
-                                                    [indexx]["to"],
-                                            style: b13W8),
                                       ],
                                     ),
-                                    Container(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: <Widget>[
-                                          MaterialButton(
-                                            onPressed: () {
-                                              _con
-                                                  .leavstatus(
-                                                    widget.token,
-                                                    "2",
-                                                    _con.attndencelist["leaves"]
-                                                            [indexx]["id"]
-                                                        .toString(),
-                                                    context,
-                                                  )
-                                                  .then((value) {});
-                                            },
-                                            padding: EdgeInsets.all(2),
-                                            shape: CircleBorder(),
-                                            color: Colors.red,
-                                            child: Icon(
-                                              Icons.close,
-                                              color: Colors.white,
-                                              size: 25,
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        )
+                      : clickedAbsent
+                          ? Container(
+                              height: 500,
+                              child: ListView.builder(
+                                itemCount: _con.attndencelist["absents_list"] !=
+                                        null
+                                    ? _con.attndencelist["absents_list"].length
+                                    : 0,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: size.width - 30,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            border: Border.all(
+                                                color: Colors.grey[300])),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(60),
+                                                child: Container(
+                                                  height: 30,
+                                                  width: 30,
+                                                  child: Image.network(
+                                                    _con.attndencelist[
+                                                            "absents_list"]
+                                                        [index]["emp_image"],
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                          MaterialButton(
-                                            onPressed: () {
-                                              _con
-                                                  .leavstatus(
-                                                    widget.token,
-                                                    "1",
-                                                    _con.attndencelist["leaves"]
-                                                            [indexx]["id"]
-                                                        .toString(),
-                                                    context,
-                                                  )
-                                                  .then((value) {});
-                                            },
-                                            padding: EdgeInsets.all(5),
-                                            shape: CircleBorder(),
-                                            color: Colors.green,
-                                            child: Icon(
-                                              Icons.check,
-                                              color: Colors.white,
-                                              size: 25,
+                                            Container(
+                                              margin: EdgeInsets.all(5),
+                                              child: Center(
+                                                  child: Row(
+                                                children: [
+                                                  Text(_con.attndencelist[
+                                                          "absents_list"][index]
+                                                      ["emp_firstname"]),
+                                                  Text(
+                                                      " ${_con.attndencelist["absents_list"][index]["emp_lastname"] == null ? "" : _con.attndencelist["absents_list"][index]["emp_lastname"]}")
+                                                ],
+                                              )),
                                             ),
-                                          ),
-                                        ],
+                                            Spacer(),
+                                            Container(
+                                              margin: EdgeInsets.all(10),
+                                              height: 30,
+                                              width: 30,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: Colors.red[300]),
+                                              child: Center(child: Text("A")),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                )),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                    ],
+                                  );
+                                },
                               ),
-                            ),
-                          );
-                        }),
-                  )
+                            )
+                          : Container(), //Container(
+                  //     height: 500,
+                  //     child: ListView.builder(
+                  //       itemCount: allList != null ? allList.length : 0,
+                  //       itemBuilder: (context, index) {
+                  //         return Column(
+                  //           children: [
+                  //             Container(
+                  //               height: 50,
+                  //               width: size.width - 30,
+                  //               decoration: BoxDecoration(
+                  //                   borderRadius:
+                  //                       BorderRadius.circular(20),
+                  //                   border: Border.all(
+                  //                       color: Colors.grey[300])),
+                  //               child: Row(
+                  //                 mainAxisAlignment:
+                  //                     MainAxisAlignment.start,
+                  //                 children: [
+                  //                   Padding(
+                  //                     padding:
+                  //                         const EdgeInsets.all(8.0),
+                  //                     child: ClipRRect(
+                  //                       borderRadius:
+                  //                           BorderRadius.circular(60),
+                  //                       child: Container(
+                  //                         height: 30,
+                  //                         width: 30,
+                  //                         child: Image.network(
+                  //                           allList[index]["emp_image"],
+                  //                           fit: BoxFit.cover,
+                  //                         ),
+                  //                       ),
+                  //                     ),
+                  //                   ),
+                  //                   Container(
+                  //                     margin: EdgeInsets.all(5),
+                  //                     child: Center(
+                  //                         child: Row(
+                  //                       children: [
+                  //                         Text(allList[index]
+                  //                             ["emp_firstname"]),
+                  //                         Text(
+                  //                             " ${allList[index]["emp_lastname"] == null ? "" : allList[index]["emp_lastname"]}")
+                  //                       ],
+                  //                     )),
+                  //                   ),
+                  //                   Spacer(),
+                  //                   Container(
+                  //                     margin: EdgeInsets.all(10),
+                  //                     height: 30,
+                  //                     width: 30,
+                  //                     decoration: BoxDecoration(
+                  //                       borderRadius:
+                  //                           BorderRadius.circular(20),
+                  //                       color: allList[index] = _con
+                  //                                   .attndencelist[
+                  //                               "presents_list"][index]
+                  //                           ? Colors.green[300]
+                  //                           : Colors.red[300],
+                  //                     ),
+                  //                     child: Center(
+                  //                       child: allList[index] = _con
+                  //                                   .attndencelist[
+                  //                               "presents_list"][index]
+                  //                           ? Text("P")
+                  //                           : Text("A"),
+                  //                     ),
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //             SizedBox(
+                  //               height: 5,
+                  //             ),
+                  //           ],
+                  //         );
+                  //       },
+                  //     ),
+                  //   )
                 ],
               )
             : Center(
@@ -356,52 +484,52 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
               ));
   }
 
-  Widget selectAttendance() {
-    return Container(
-        height: 42,
-        margin: const EdgeInsets.only(right: 9, left: 9, top: 10),
-        decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Colors.grey[400]),
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton(
-            hint: Padding(
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-              child: Text(
-                'Attendance',
-                style: TextStyle(
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15),
-              ),
-            ),
-            items: attendanceList.map(
-              (itm) {
-                return DropdownMenuItem<String>(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
-                    child: new Text(
-                      itm["title"].toString(),
-                      style: TextStyle(fontSize: 15.0),
-                    ),
-                  ),
-                  value: itm["id"].toString(),
-                );
-              },
-            ).toList(),
-            onChanged: (val) {
-              setState(
-                () {
-                  attendance = val;
-                },
-              );
-            },
-            value: attendance,
-          ),
-        ));
-  }
+  // Widget selectAttendance() {
+  //   return Container(
+  //       height: 42,
+  //       margin: const EdgeInsets.only(right: 9, left: 9, top: 10),
+  //       decoration: BoxDecoration(
+  //         border: Border.all(width: 1, color: Colors.grey[400]),
+  //         color: Colors.white,
+  //         borderRadius: BorderRadius.circular(15),
+  //       ),
+  //       child: DropdownButtonHideUnderline(
+  //         child: DropdownButton(
+  //           hint: Padding(
+  //             padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+  //             child: Text(
+  //               'Attendance',
+  //               style: TextStyle(
+  //                   color: Colors.grey[600],
+  //                   fontWeight: FontWeight.w600,
+  //                   fontSize: 15),
+  //             ),
+  //           ),
+  //           items: attendanceList.map(
+  //             (itm) {
+  //               return DropdownMenuItem<String>(
+  //                 child: Padding(
+  //                   padding: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+  //                   child: new Text(
+  //                     itm["title"].toString(),
+  //                     style: TextStyle(fontSize: 15.0),
+  //                   ),
+  //                 ),
+  //                 value: itm["id"].toString(),
+  //               );
+  //             },
+  //           ).toList(),
+  //           onChanged: (val) {
+  //             setState(
+  //               () {
+  //                 attendance = val;
+  //               },
+  //             );
+  //           },
+  //           value: attendance,
+  //         ),
+  //       ));
+  // }
 
   List<DateTime> feedInitialSelectedDates(int target, int calendarDays) {
     List<DateTime> selectedDates = [];
@@ -417,5 +545,31 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
     }
 
     return selectedDates;
+  }
+
+  Widget BuildContainer(bool clicked, click1, click2, click3, String text) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            clickedAll = click1;
+            clickedPresent = click2;
+            clickedAbsent = click3;
+          });
+        },
+        child: Container(
+          height: 40,
+          decoration: BoxDecoration(
+              border: Border.all(color: clicked ? Colors.black : Colors.white),
+              borderRadius: BorderRadius.circular(20)),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(color: clicked ? Colors.black : Colors.black54),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

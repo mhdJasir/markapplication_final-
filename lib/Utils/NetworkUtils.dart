@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
-final baseUrl = 'http://markbuilders.in/admin/api';
+final baseUrl = 'http://hr.qgrocer.in/api';
 
 class NetworkUtils {
   static String token;
