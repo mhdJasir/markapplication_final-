@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "450517787473",
+    "project_id": "hrmarkgroup-61f9d",
+    "storage_bucket": "hrmarkgroup-61f9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:450517787473:android:e0578820023a1a48422970",
+        "android_client_info": {
+          "package_name": "hr.markgroup.hrmarkgrp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "450517787473-r85s29luq8gckrs96rl2v1rrem795pbq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6MNxTTFbHTNsadb9bBTXXDD39RXAejyw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "450517787473-r85s29luq8gckrs96rl2v1rrem795pbq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
