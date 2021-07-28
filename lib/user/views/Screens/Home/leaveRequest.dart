@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 class LeaveRequest extends StatefulWidget {
-  String token;
+  final String token;
   LeaveRequest(this.token);
   @override
   _LeaveRequestState createState() => _LeaveRequestState();
@@ -25,7 +25,7 @@ class _LeaveRequestState extends StateMVC<LeaveRequest> {
   DateTime end;
 
   int totaldays;
-  var StartDate, EndDate;
+  var startDate, endDate;
   String currentdate;
   Color main = Color(0xFFF6F6F6);
   Color textfield = Colors.grey[200];
@@ -235,6 +235,7 @@ class _LeaveRequestState extends StateMVC<LeaveRequest> {
                 icon,
                 color: Colors.grey[400],
               ),
+              onPressed: () {},
             ),
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -273,8 +274,8 @@ class _LeaveRequestState extends StateMVC<LeaveRequest> {
         backgroundColor: Colors.black,
         fontSize: 16.0,
       );
-    } else if (StartDate == null ||
-        EndDate == null ||
+    } else if (startDate == null ||
+        endDate == null ||
         noteController.text.isEmpty ||
         totaldays == null) {
       Fluttertoast.showToast(
@@ -313,43 +314,48 @@ class _LeaveRequestState extends StateMVC<LeaveRequest> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      RaisedButton(
+                      ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                           print("cancel clicked");
                         },
-                        color: Color(0xff4a67b3),
+                        //color: Color(0xff4a67b3),
                         child: Text(
                           "CANCEL",
                           style: TextStyle(
                               fontWeight: FontWeight.w800, color: Colors.white),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        )),
                       ),
-                      RaisedButton(
+                      ElevatedButton(
                         onPressed: () async {
-                          await _con.addleave(
+                          _con.addleave(
                               context,
                               _currentValue,
-                              StartDate.toString(),
-                              EndDate.toString(),
+                              startDate.toString(),
+                              endDate.toString(),
                               noteController.text,
                               totaldays,
                               widget.token);
                           Navigator.of(context).pop();
-                          print("confirm clicked");
                         },
-                        color: Color(0xff4a67b3),
+                        //color: Color(0xff4a67b3),
                         child: Text(
                           "SUBMIT",
                           style: TextStyle(
                               fontWeight: FontWeight.w800, color: Colors.white),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        )),
                       )
                     ],
                   )
@@ -377,10 +383,10 @@ class _LeaveRequestState extends StateMVC<LeaveRequest> {
         setState(() {
           start = pickedDate;
           cal1.text = formattedDate;
-          StartDate = cal1.text;
+          startDate = cal1.text;
 
           print("picked start date :" + pickedDate.toString());
-          print("start date  : " + StartDate);
+          print("start date  : " + startDate);
         });
         print("start  :" + start.toString());
       } else {
@@ -403,10 +409,10 @@ class _LeaveRequestState extends StateMVC<LeaveRequest> {
         setState(() {
           end = pickedDate;
           cal2.text = formattedDate;
-          EndDate = cal2.text;
+          endDate = cal2.text;
 
           print("picked End date :" + pickedDate.toString());
-          print("end date  : " + EndDate);
+          print("end date  : " + endDate);
         });
         gettotaldays(start, end);
         print(" end  :" + end.toString());

@@ -20,9 +20,7 @@ class _DailyStatusState extends StateMVC<DailyStatus> {
   }
   @override
   void initState() {
-    print("aaaaaaaaaa");
     _con.staffdailystats(widget.token, context);
-    // TODO: implement initState
     super.initState();
   }
 
@@ -51,7 +49,8 @@ class _DailyStatusState extends StateMVC<DailyStatus> {
         backgroundColor: main,
       ),
       body: _con.loading == false
-          ? Column(
+          ? Stack(
+              alignment: Alignment.center,
               children: [
                 Container(
                   height: 590,
@@ -141,35 +140,38 @@ class _DailyStatusState extends StateMVC<DailyStatus> {
                     },
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                DailyStatusAdd(token: widget.token)));
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Color(0xff6DC066),
-                      borderRadius: BorderRadius.circular(22),
-                    ),
-                    height: 50,
-                    width: size.width * 0.6,
-                    child: Text(
-                      "Add Status",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w300,
-                          letterSpacing: 1),
-                      textAlign: TextAlign.center,
+                Positioned(
+                  bottom: 10,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  DailyStatusAdd(token: widget.token)));
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Color(0xff6DC066),
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                      height: 50,
+                      width: size.width * 0.6,
+                      child: Text(
+                        "Add Status",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w300,
+                            letterSpacing: 1),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
               ],
             )

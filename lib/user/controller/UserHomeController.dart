@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
+import 'package:hrmarkgrp/sevices/notificationService.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:hrmarkgrp/user/Repository/UserHomeRepository.dart' as repo;
@@ -122,15 +123,18 @@ class UserHomeController extends ControllerMVC {
 
   void viewallstffleave(token) async {
     await repo.viewleave(token).then((value) {
-      if (value["status"] == "1") {
-        setState(() {
-          allleave = value["data"];
-        });
+      if (value.isNotEmpty) {
+        if (value["status"] == "1") {
+          setState(() {
+            allleave = value["data"];
+          });
+        }
       }
     });
   }
 
-  void addleave(cont, leavtype, from, to, reson, totaldys, token) {
+  void addleave(BuildContext cont, String leavtype, String from, String to,
+      String reson, int totaldys, String token) {
     showDialog(
         context: cont,
         barrierDismissible: true,
@@ -171,66 +175,70 @@ class UserHomeController extends ControllerMVC {
 
     repo.stffaddleave(leavtype, from, to, reson, totaldys, token).then((value) {
       Navigator.pop(cont);
-      if (value["status"] == "1") {
-        setState(() {
-          submitrqst = true;
-        });
-        showDialog(
-          builder: (context) => Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(7.0)),
-            child: Container(
-              width: 350,
-              height: 250,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.green),
-                    child: Icon(
-                      Icons.check,
-                      color: Colors.white,
-                      size: 56,
+      if (value.isNotEmpty) {
+        if (value["status"] == "1") {
+          NotificationService().showNotification("Leave request",
+              "Submitted successfully", "1", "leave_req", "Apply leave");
+          setState(() {
+            submitrqst = true;
+          });
+          showDialog(
+            builder: (context) => Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7.0)),
+              child: Container(
+                width: 350,
+                height: 250,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.green),
+                      child: Icon(
+                        Icons.check,
+                        color: Colors.white,
+                        size: 56,
+                      ),
+                      height: 80,
+                      width: 80,
                     ),
-                    height: 80,
-                    width: 80,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Submit Request\n Success",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        color: Colors.grey[700],
-                        fontSize: 17),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  GestureDetector(
-                      onTap: () async {
-                        await Navigator.pop(context);
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        "Close",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            color: Color(0xff4a67b3)),
-                      )),
-                ],
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Submit Request\n Success",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          color: Colors.grey[700],
+                          fontSize: 17),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    GestureDetector(
+                        onTap: () async {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          "Close",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              color: Color(0xff4a67b3)),
+                        )),
+                  ],
+                ),
               ),
             ),
-          ),
-          context: cont,
-        );
-      } else {
-        Navigator.pop(cont);
+            context: cont,
+          );
+        } else {
+          Navigator.pop(cont);
+        }
       }
     });
   }

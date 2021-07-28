@@ -7,22 +7,28 @@ import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 import 'package:path/path.dart';
 
-Future dropviewproj(token) async {
+Future<Map> dropviewproj(token) async {
   final String url = NetworkUtils.getproje;
   final res = await http.get(Uri.parse(url), headers: {
     HttpHeaders.authorizationHeader: "Bearer " + token.toString(),
   });
-  var proj = json.decode(res.body);
-  return proj;
+  if (res?.statusCode == 200) {
+    var proj = json.decode(res.body);
+    return proj;
+  }
+  return Map();
 }
 
-Future dropviewemployees(token) async {
+Future<Map> dropviewemployees(token) async {
   final String url = NetworkUtils.getunemloyees;
   final res = await http.get(Uri.parse(url), headers: {
     HttpHeaders.authorizationHeader: "Bearer " + token.toString(),
   });
-  var emp = json.decode(res.body);
-  return emp;
+  if (res?.statusCode == 200) {
+    var emp = json.decode(res.body);
+    return emp;
+  }
+  return Map();
 }
 
 Future adddailysts(

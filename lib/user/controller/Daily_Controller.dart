@@ -21,25 +21,29 @@ class DailyController extends ControllerMVC {
   }
   void getproject(token) async {
     await repo.dropviewproj(token).then((value) {
-      if (value["status"] == "1") {
-        setState(() {
-          projectlist = value["data"];
-        });
+      if (value.isNotEmpty) {
+        if (value["status"] == "1") {
+          setState(() {
+            projectlist = value["data"];
+          });
+        }
       }
     });
   }
 
   void getstaff(token) async {
     await repo.dropviewemployees(token).then((value) {
-      if (value["status"] == "1") {
-        setState(() {
-          emppList = value["data"];
-          loading = false;
-        });
-      }
       setState(() {
         loading = false;
       });
+      if (value.isNotEmpty) {
+        if (value["status"] == "1") {
+          setState(() {
+            emppList = value["data"];
+            loading = false;
+          });
+        }
+      }
     });
   }
 

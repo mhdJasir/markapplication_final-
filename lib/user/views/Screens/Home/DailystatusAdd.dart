@@ -24,10 +24,10 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
     _con = controller;
   }
 
-  final TextEditingController descr_contr = TextEditingController();
+  final TextEditingController descrcontr = TextEditingController();
   File _image;
   var nameList = [];
-  var NewList;
+  var newList;
 
   Widget imagepickbottomsheet(context) {
     return Container(
@@ -46,7 +46,7 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FlatButton.icon(
+              ElevatedButton.icon(
                   onPressed: () {
                     getCameraImage();
                   },
@@ -58,7 +58,7 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
               SizedBox(
                 width: 20,
               ),
-              FlatButton.icon(
+              ElevatedButton.icon(
                   onPressed: () {
                     getGalleryImage();
                   },
@@ -146,7 +146,6 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
               setState(
                 () {
                   project = val;
-                  print("PROJECTEDEDDED " + project);
                 },
               );
             },
@@ -157,8 +156,6 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
   }
 
   Widget _unemployee(List emplist) {
-    print("ss ");
-    print(emplist);
     return Padding(
       padding: const EdgeInsets.only(right: 9, left: 9),
       child: Container(
@@ -182,14 +179,12 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
               .toList(),
           listType: MultiSelectListType.LIST,
           onConfirm: (values) {
-            print("DDDDDDDD " + values.toString());
-            NewList = values;
-            for (int i = 0; i < NewList.length; i++) {
+            newList = values;
+            for (int i = 0; i < newList.length; i++) {
               setState(() {
-                nameList.insert(i, NewList[i]["emp_firstname"]);
+                nameList.insert(i, newList[i]["emp_firstname"]);
               });
             }
-            print("################# name list : " + nameList.toString());
           },
         ),
       ),
@@ -203,16 +198,13 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
     setState(() {
       currntdate = formatter.format(now);
     });
-    print("CCCCCCCCCCC$currntdate");
   }
 
   @override
   void initState() {
-    print("AAAAAAAAA");
     currentdate();
     _con.getproject(widget.token);
     _con.getstaff(widget.token);
-    // TODO: implement initState
     super.initState();
   }
 
@@ -252,7 +244,7 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
                             border:
                                 Border.all(width: 1, color: Colors.grey[400])),
                         child: TextField(
-                          controller: descr_contr,
+                          controller: descrcontr,
                           textAlign: TextAlign.justify,
                           maxLines: 9,
                           style: TextStyle(
@@ -306,7 +298,7 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
                           _con.adddasts(
                             project,
                             nameList,
-                            descr_contr.text,
+                            descrcontr.text,
                             _image,
                             widget.token,
                           );

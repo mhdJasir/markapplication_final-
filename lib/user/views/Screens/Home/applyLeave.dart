@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 class ApplyLeavePage extends StatefulWidget {
-  String token;
+  final String token;
   ApplyLeavePage({this.token});
   @override
   _ApplyLeavePageState createState() => _ApplyLeavePageState();
@@ -65,9 +65,9 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                BuildContainer(clickedAll, true, false, false, "All"),
-                BuildContainer(clickedPending, false, true, false, "Approved"),
-                BuildContainer(clickedApprove, false, false, true, "Pending"),
+                buildContainer(clickedAll, true, false, false, "All"),
+                buildContainer(clickedPending, false, true, false, "Approved"),
+                buildContainer(clickedApprove, false, false, true, "Pending"),
                 SizedBox(
                   height: 15,
                 ),
@@ -82,9 +82,9 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
                 itemCount: _con.allleave.length,
                 itemBuilder: (context, index) {
                   final DateFormat formatter = new DateFormat('dd MMM yyyy');
-                  String from_date = formatter
+                  String fromdate = formatter
                       .format(DateTime.parse(_con.allleave[index]["from"]));
-                  String to_date = formatter
+                  String todate = formatter
                       .format(DateTime.parse(_con.allleave[index]["to"]));
                   return Container(
                     margin: EdgeInsets.only(top: 10, left: 20, right: 20),
@@ -186,7 +186,7 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                from_date + " - " + to_date,
+                                fromdate + " - " + todate,
                                 style: TextStyle(
                                     fontSize: 13,
                                     color: Colors.black,
@@ -260,7 +260,7 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
     );
   }
 
-  Widget BuildContainer(bool clicked, click1, click2, click3, String text) {
+  Widget buildContainer(bool clicked, click1, click2, click3, String text) {
     return Expanded(
       child: GestureDetector(
         onTap: () {

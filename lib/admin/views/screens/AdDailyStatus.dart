@@ -21,7 +21,6 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
   @override
   void initState() {
     _con.dailystatus(widget.token);
-    // TODO: implement initState
     super.initState();
   }
 

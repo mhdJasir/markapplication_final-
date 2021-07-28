@@ -66,12 +66,13 @@ class HomeController extends ControllerMVC {
 
   void dailystatus(token) async {
     await repo.dailstss(token).then((value) {
-      print(value);
-      if (value["status"] == "1") {
-        setState(() {
-          dailystaus = value["data"];
-          loading = false;
-        });
+      if (value.isNotEmpty) {
+        if (value["status"] == "1") {
+          setState(() {
+            dailystaus = value["data"];
+            loading = false;
+          });
+        }
       }
     });
   }

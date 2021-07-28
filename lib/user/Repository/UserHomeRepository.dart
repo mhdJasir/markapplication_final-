@@ -26,13 +26,16 @@ Future<Map> viewtask(token) async {
   return Map();
 }
 
-Future viewleave(token) async {
+Future<Map> viewleave(token) async {
   final String url = NetworkUtils.staffviewleave;
   final res = await http.get(Uri.parse(url), headers: {
     HttpHeaders.authorizationHeader: "Bearer " + token.toString(),
   });
-  var viewlev = json.decode(res.body);
-  return viewlev;
+  if (res?.statusCode == 200) {
+    var viewlev = json.decode(res.body);
+    return viewlev;
+  }
+  return Map();
 }
 
 Future<Map> stffaddattndece(String token, String date, int attndnce) async {
@@ -60,7 +63,8 @@ Future<Map> staffdailystatus(token) async {
   return Map();
 }
 
-Future stffaddleave(leavtype, from, to, reson, totaldys, token) async {
+Future<Map> stffaddleave(String leavtype, String from, String to, String reson,
+    int totaldys, String token) async {
   final String url = NetworkUtils.staffaddleave;
   final res = await http.post(Uri.parse(url), body: {
     "l_type": leavtype.toString(),
@@ -72,6 +76,9 @@ Future stffaddleave(leavtype, from, to, reson, totaldys, token) async {
     HttpHeaders.authorizationHeader: "Bearer " + token.toString(),
   });
 
-  var addstaff = json.decode(res.body);
-  return addstaff;
+  if (res?.statusCode == 200) {
+    var addstaff = json.decode(res.body);
+    return addstaff;
+  }
+  return Map();
 }

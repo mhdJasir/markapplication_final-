@@ -26,13 +26,16 @@ Future<Map> purchordr(token) async {
   return Map();
 }
 
-Future dailstss(token) async {
+Future<Map> dailstss(token) async {
   final String url = NetworkUtils.dailysta;
   final res = await http.get(Uri.parse(url), headers: {
     HttpHeaders.authorizationHeader: "Bearer " + token.toString(),
   });
-  var task = json.decode(res.body);
-  return task;
+  if (res?.statusCode == 200) {
+    var task = json.decode(res.body);
+    return task;
+  }
+  return Map();
 }
 
 // Future uploadFile(filname,ext) async {

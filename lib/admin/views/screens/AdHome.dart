@@ -19,7 +19,6 @@ import 'package:hrmarkgrp/admin/views/screens/Adinvoice.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:hrmarkgrp/user/views/Screens/LoginScreen/login.dart';
 import 'package:hrmarkgrp/user/views/widgets/icntxtwidget.dart';
-import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AdProjects.dart';
