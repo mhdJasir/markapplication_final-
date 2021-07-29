@@ -21,9 +21,20 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
   bool clickedApprove = false;
   Color main = Color(0xFFF6F6F6);
   Color textfield = Colors.grey[200];
-  // List approved = [];
-  // List pending = [];
+  var approved = [];
+  var pending = [];
   Size get size => MediaQuery.of(context).size;
+  lists() async {
+    print(_con.allleave.toString());
+    for (int i = 0; i < _con.allleave.length; i++) {
+      print("status code   :" + _con.allleave[i]["status"].toString());
+
+      approved.add(_con.allleave
+          .where((object) => object[0]["status"].toString() == "1"));
+    }
+    print("approved : " + approved.toString());
+  }
+
   @override
   void initState() {
     _con.viewallstffleave(widget.token);
@@ -93,7 +104,7 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.white,
-                        border: Border.all(color: Colors.grey[200])),
+                        border: Border.all(color: Color(0xFFE9E9E9))),
                     child: Column(
                       children: [
                         Padding(
@@ -114,6 +125,8 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
                                       height: 20,
                                       width: 60,
                                       decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Color(0xFFE9E9E9)),
                                           color: Colors.green,
                                           borderRadius:
                                               BorderRadius.circular(5)),
@@ -131,6 +144,8 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
                                           height: 20,
                                           width: 60,
                                           decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Color(0xFFE9E9E9)),
                                               color: Color(0xffd7334c),
                                               borderRadius:
                                                   BorderRadius.circular(5)),
@@ -149,6 +164,8 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
                                               height: 20,
                                               width: 60,
                                               decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Color(0xFFE9E9E9)),
                                                   color: Color(0xFFF49C16),
                                                   borderRadius:
                                                       BorderRadius.circular(5)),
@@ -165,6 +182,8 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
                                               height: 20,
                                               width: 60,
                                               decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Color(0xFFE9E9E9)),
                                                   color: Color(0xFFF49C16),
                                                   borderRadius:
                                                       BorderRadius.circular(5)),
@@ -273,7 +292,8 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
         child: Container(
           height: 40,
           decoration: BoxDecoration(
-              border: Border.all(color: clicked ? Colors.black : Colors.white),
+              border:
+                  Border.all(color: clicked ? Color(0xFFE9E9E9) : Colors.white),
               borderRadius: BorderRadius.circular(20)),
           child: Center(
             child: Text(

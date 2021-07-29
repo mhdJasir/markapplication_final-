@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:hrmarkgrp/user/views/Screens/Attendence/Attendence.dart';
+import 'package:hrmarkgrp/user/views/Screens/Attendence/attendence.dart';
 import 'package:hrmarkgrp/user/views/Screens/DailyExpnse/DailyExpance.dart';
 import 'package:hrmarkgrp/user/views/Screens/Home/Home.dart';
 import 'package:hrmarkgrp/user/views/Screens/MatralRqst/MatRqst.dart';
@@ -23,8 +24,8 @@ class _BottomtabsState extends State<Bottomtabs> {
         );
         break;
       case 1:
-        return new Attendence(
-          tokn: widget.token,
+        return new Attendance(
+          widget.token,
         );
         break;
       case 2:
