@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hrmarkgrp/Utils/global_variables.dart';
 import 'package:hrmarkgrp/user/controller/UserHomeController.dart';
-import 'package:hrmarkgrp/user/views/Screens/Attendence/Attendence.dart';
 import 'package:hrmarkgrp/user/views/Screens/Attendence/attendence.dart';
 import 'package:hrmarkgrp/user/views/Screens/DailyExpnse/DailyExpance.dart';
 import 'package:hrmarkgrp/user/views/Screens/Home/DailyStatus.dart';
