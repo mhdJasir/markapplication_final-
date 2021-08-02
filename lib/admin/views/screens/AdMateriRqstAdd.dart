@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hrmarkgrp/admin/controller/MatrialReqController.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
+import 'package:hrmarkgrp/main.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
@@ -40,9 +41,9 @@ class _AddMaterialRqstAddState extends StateMVC<AddMaterialRqstAdd> {
 
   Widget _projectss(List projct) {
     return Container(
-      height: 42,
+      height: 45,
       decoration: BoxDecoration(
-        border: Border.all(width: 1, color: Colors.grey[400]),
+        border: Border.all(width: 1, color: MyApp.border),
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
       ),
@@ -93,9 +94,9 @@ class _AddMaterialRqstAddState extends StateMVC<AddMaterialRqstAdd> {
 
   Widget _staff(List getstaff) {
     return Container(
-      height: 42,
+      height: 45,
       decoration: BoxDecoration(
-        border: Border.all(width: 1, color: Colors.grey[400]),
+        border: Border.all(width: 1, color: MyApp.border),
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
       ),
@@ -146,9 +147,9 @@ class _AddMaterialRqstAddState extends StateMVC<AddMaterialRqstAdd> {
 
   Widget _vendor(List getvendor) {
     return Container(
-      height: 42,
+      height: 45,
       decoration: BoxDecoration(
-        border: Border.all(width: 1, color: Colors.grey[400]),
+        border: Border.all(width: 1, color: MyApp.border),
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
       ),
@@ -213,46 +214,56 @@ class _AddMaterialRqstAddState extends StateMVC<AddMaterialRqstAdd> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
-          "Material Request",
-          style: TextStyle(color: Colors.white),
+          "Add New Material Requirement",
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: _projectss(_con.projectlist),
             ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: _staff(_con.emppList),
             ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: _vendor(_con.vndorlist),
             ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
-                height: 42,
+                height: 45,
                 decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey[400]),
+                  border: Border.all(width: 1, color: MyApp.border),
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -274,12 +285,12 @@ class _AddMaterialRqstAddState extends StateMVC<AddMaterialRqstAdd> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
+              padding: const EdgeInsets.only(right: 20, left: 20, top: 10),
               child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 42,
+                  height: 45,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(width: 1, color: MyApp.border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -295,23 +306,23 @@ class _AddMaterialRqstAddState extends StateMVC<AddMaterialRqstAdd> {
                   )),
             ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             _itemRow("Item 1", 0),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             _itemRow("Item 2", 1),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             _itemRow("Item 3", 2),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             _itemRow("Item 4", 3),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             Row(
               children: [
@@ -321,10 +332,10 @@ class _AddMaterialRqstAddState extends StateMVC<AddMaterialRqstAdd> {
                   child: Column(
                     children: [
                       Container(
-                        height: 42,
-                        margin: EdgeInsets.only(left: 5, right: 5),
+                        height: 45,
+                        margin: EdgeInsets.only(left: 20, right: 20),
                         decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.grey[400]),
+                          border: Border.all(width: 1, color: MyApp.border),
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -351,16 +362,16 @@ class _AddMaterialRqstAddState extends StateMVC<AddMaterialRqstAdd> {
               ],
             ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
-                height: 122,
+                height: 100,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
-                    border: Border.all(width: 1, color: Colors.grey[400])),
+                    border: Border.all(width: 1, color: MyApp.border)),
                 child: TextField(
                   controller: descrcontrlr,
                   textAlign: TextAlign.justify,
@@ -381,92 +392,85 @@ class _AddMaterialRqstAddState extends StateMVC<AddMaterialRqstAdd> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-              child: GestureDetector(
-                onTap: () {
-                  if (project != null &&
-                      headingcontroller.text.isNotEmpty &&
-                      vendor != null &&
-                      staff != null) {
-                    var itemArray = [];
-                    if (items[0] != null) {
-                      itemArray.add({
-                        "item_id": items[0],
-                        "qty": itemQtyList[0].text.isNotEmpty
-                            ? itemQtyList[0].text
-                            : "1",
-                        "basic_amount": itemPrice[0].text.isNotEmpty
-                            ? itemPrice[0].text
-                            : "1"
-                      });
-                    }
-                    if (items[1] != null) {
-                      itemArray.add({
-                        "item_id": items[1],
-                        "qty": itemQtyList[1].text.isNotEmpty
-                            ? itemQtyList[1].text
-                            : "1",
-                        "basic_amount": itemPrice[1].text.isNotEmpty
-                            ? itemPrice[1].text
-                            : "1"
-                      });
-                    }
-                    if (items[2] != null) {
-                      itemArray.add({
-                        "item_id": items[2],
-                        "qty": itemQtyList[2].text.isNotEmpty
-                            ? itemQtyList[2].text
-                            : "1",
-                        "basic_amount": itemPrice[2].text.isNotEmpty
-                            ? itemPrice[2].text
-                            : "1"
-                      });
-                    }
-                    if (items[3] != null) {
-                      itemArray.add({
-                        "item_id": items[3],
-                        "qty": itemQtyList[3].text.isNotEmpty
-                            ? itemQtyList[3].text
-                            : "1",
-                        "basic_amount": itemPrice[3].text.isNotEmpty
-                            ? itemPrice[3].text
-                            : "1"
-                      });
-                    }
-                    if (itemArray.length != 0) {
-                      _con.addmatreq(
-                          project,
-                          headingcontroller.text,
-                          descrcontrlr.text,
-                          staff,
-                          vendor,
-                          itemArray,
-                          widget.token,
-                          orderValueCtrl.text,
-                          context);
-                    }
+            GestureDetector(
+              onTap: () {
+                if (project != null &&
+                    headingcontroller.text.isNotEmpty &&
+                    vendor != null &&
+                    staff != null) {
+                  var itemArray = [];
+                  if (items[0] != null) {
+                    itemArray.add({
+                      "item_id": items[0],
+                      "qty": itemQtyList[0].text.isNotEmpty
+                          ? itemQtyList[0].text
+                          : "1",
+                      "basic_amount":
+                          itemPrice[0].text.isNotEmpty ? itemPrice[0].text : "1"
+                    });
                   }
-                },
-                child: Container(
-                  alignment: Alignment.bottomCenter,
-                  height: 50,
-                  padding: EdgeInsets.all(11),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: Color(0xff4a67b3)),
-                  child: Center(
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16),
-                    ),
-                  ),
+                  if (items[1] != null) {
+                    itemArray.add({
+                      "item_id": items[1],
+                      "qty": itemQtyList[1].text.isNotEmpty
+                          ? itemQtyList[1].text
+                          : "1",
+                      "basic_amount":
+                          itemPrice[1].text.isNotEmpty ? itemPrice[1].text : "1"
+                    });
+                  }
+                  if (items[2] != null) {
+                    itemArray.add({
+                      "item_id": items[2],
+                      "qty": itemQtyList[2].text.isNotEmpty
+                          ? itemQtyList[2].text
+                          : "1",
+                      "basic_amount":
+                          itemPrice[2].text.isNotEmpty ? itemPrice[2].text : "1"
+                    });
+                  }
+                  if (items[3] != null) {
+                    itemArray.add({
+                      "item_id": items[3],
+                      "qty": itemQtyList[3].text.isNotEmpty
+                          ? itemQtyList[3].text
+                          : "1",
+                      "basic_amount":
+                          itemPrice[3].text.isNotEmpty ? itemPrice[3].text : "1"
+                    });
+                  }
+                  if (itemArray.length != 0) {
+                    _con.addmatreq(
+                        project,
+                        headingcontroller.text,
+                        descrcontrlr.text,
+                        staff,
+                        vendor,
+                        itemArray,
+                        widget.token,
+                        orderValueCtrl.text,
+                        context);
+                  }
+                }
+              },
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Color(0xff6DC066),
+                  borderRadius: BorderRadius.circular(60),
+                ),
+                height: 50,
+                width: size.width * 0.6,
+                child: Text(
+                  "Submit",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 1),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
@@ -483,7 +487,7 @@ class _AddMaterialRqstAddState extends StateMVC<AddMaterialRqstAdd> {
 
   Widget _itemRow(String item, int index) {
     return Padding(
-      padding: const EdgeInsets.only(left: 9),
+      padding: const EdgeInsets.only(left: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -492,10 +496,10 @@ class _AddMaterialRqstAddState extends StateMVC<AddMaterialRqstAdd> {
             child: Column(
               children: [
                 Container(
-                  height: 42,
+                  height: 45,
                   //width: MediaQuery.of(context).size.width / 2,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(width: 1, color: MyApp.border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -562,10 +566,10 @@ class _AddMaterialRqstAddState extends StateMVC<AddMaterialRqstAdd> {
             child: Column(
               children: [
                 Container(
-                  height: 42,
+                  height: 45,
                   //width: MediaQuery.of(context).size.width * 0.328,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(width: 1, color: MyApp.border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -611,11 +615,11 @@ class _AddMaterialRqstAddState extends StateMVC<AddMaterialRqstAdd> {
             child: Column(
               children: [
                 Container(
-                  height: 42,
+                  height: 50,
                   //width: MediaQuery.of(context).size.width * 0.328,
-                  margin: EdgeInsets.only(left: 5, right: 5),
+                  margin: EdgeInsets.only(left: 20, right: 20),
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(width: 1, color: MyApp.border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),

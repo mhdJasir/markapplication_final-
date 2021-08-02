@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:hrmarkgrp/modules/loadingDialog.dart';
+import 'package:hrmarkgrp/sevices/notificationService.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:hrmarkgrp/admin/Repo/MatrialReqRepo.dart' as repo;
 
@@ -122,6 +123,8 @@ class MaterialControllr extends ControllerMVC {
             fontSize: 16.0,
           );
         }
+        NotificationService().showNotification(
+            "Material Request", "Added Successfully", "", "", "");
       }
       Navigator.pop(context);
     });
@@ -144,6 +147,8 @@ class MaterialControllr extends ControllerMVC {
         );
         DialogBuilder(context).hideOpenDialog();
       }
+      NotificationService().showNotification("Money Transfer",
+          "Recorded SuccessFully", "1", "Money Transfer", "Money Transfer Add");
       Navigator.pop(context);
       Navigator.pop(context);
     });
@@ -200,6 +205,8 @@ class MaterialControllr extends ControllerMVC {
           backgroundColor: Colors.black,
           fontSize: 16.0,
         );
+        NotificationService().showNotification(
+            "Material Request", "Updated SuccessFully", "1", "", "");
         Navigator.pop(context);
       } else {
         Fluttertoast.showToast(

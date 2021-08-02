@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 
 import 'package:mvc_pattern/mvc_pattern.dart';
 
+import '../../../main.dart';
+
 class MoneyTransfer extends StatefulWidget {
   final token;
   MoneyTransfer({this.token});
@@ -30,119 +32,145 @@ class _MoneyTransferState extends StateMVC<MoneyTransfer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           "Money Transfer",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       body: _con.loading == false
-          ? ListView.builder(
-              itemCount: _con.viewMoneytrnsfer != null
-                  ? _con.viewMoneytrnsfer.length
-                  : 0,
-              itemBuilder: (context, index) {
-                var parsedDate = DateTime.parse(
-                    _con.viewMoneytrnsfer[index]["created_at"].toString());
-                String convertedDate =
-                    new DateFormat("yyyy-MM-dd").format(parsedDate);
-                return GestureDetector(
-                  onTap: () {
-                    // Navigator.push(context, MaterialPageRoute(builder: (Context)=>AdMatrlReqInnr(_con.getmaterialreqq[index])));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
-                    child: Container(
-                      height: 110,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          //background color of box
-                          BoxShadow(
-                            color: Colors.grey[400],
-                            blurRadius: 0.8, // soften the shadow
-                            spreadRadius: 0.8, //extend the shadow
-                            offset: Offset(
-                              0.5, // Move to right 10  horizontally
-                              0.5, // Move to bottom 10 Vertically
-                            ),
-                          )
-                        ],
-                      ),
+          ? ListView(children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: ListView.builder(
+                  itemCount: _con.viewMoneytrnsfer != null
+                      ? _con.viewMoneytrnsfer.length
+                      : 0,
+                  itemBuilder: (context, index) {
+                    var parsedDate = DateTime.parse(
+                        _con.viewMoneytrnsfer[index]["created_at"].toString());
+                    String convertedDate =
+                        new DateFormat("yyyy-MM-dd").format(parsedDate);
+                    return GestureDetector(
+                      onTap: () {
+                        // Navigator.push(context, MaterialPageRoute(builder: (Context)=>AdMatrlReqInnr(_con.getmaterialreqq[index])));
+                      },
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 15, bottom: 15, right: 15, left: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  convertedDate,
-                                  style: b14W7,
+                        padding:
+                            const EdgeInsets.only(right: 20, left: 20, top: 5),
+                        child: Container(
+                          height: 110,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(color: MyApp.border)),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 15, bottom: 15, right: 15, left: 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      convertedDate,
+                                      style: b14W7,
+                                    ),
+                                    Text(
+                                      _con.viewMoneytrnsfer[index]["amount"]
+                                              .toString() +
+                                          "/-",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          color: Color(0xff496ab1)),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
                                 ),
                                 Text(
-                                  _con.viewMoneytrnsfer[index]["amount"]
-                                          .toString() +
-                                      "/-",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xff496ab1)),
+                                    _con.viewMoneytrnsfer[index]
+                                                ["emp_firstname"]
+                                            .toString() +
+                                        " " +
+                                        _con.viewMoneytrnsfer[index]
+                                                ["emp_lastname"]
+                                            .toString(),
+                                    style: b14W7),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  _con.viewMoneytrnsfer[index]["remark"]
+                                      .toString(),
+                                  style: b14W7,
+                                ),
+                                SizedBox(
+                                  height: 10,
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                                _con.viewMoneytrnsfer[index]["emp_firstname"]
-                                        .toString() +
-                                    " " +
-                                    _con.viewMoneytrnsfer[index]["emp_lastname"]
-                                        .toString(),
-                                style: b14W7),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              _con.viewMoneytrnsfer[index]["remark"].toString(),
-                              style: b14W7,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                          ],
+                          ),
                         ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AdMoneyTransferAddscreen(
+                                  token: widget.token)));
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Color(0xff6DC066),
+                        borderRadius: BorderRadius.circular(60),
+                      ),
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: Text(
+                        "Add Transaction",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w300,
+                            letterSpacing: 1),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
-                );
-              },
-            )
+                ],
+              ),
+            ])
           : Center(
               child: CircularProgressIndicator(),
             ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Color(0xff496ab1),
-          child: Icon(
-            FontAwesomeIcons.plus,
-            color: Colors.white,
-            size: 20,
-          ),
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        AdMoneyTransferAddscreen(token: widget.token)));
-            print("flaoa");
-          }),
     );
   }
 }

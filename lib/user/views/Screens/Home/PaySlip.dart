@@ -11,6 +11,7 @@ class _PaySlipState extends State<PaySlip> {
     return Padding(
       padding: const EdgeInsets.only(left: 15),
       child: Container(
+        margin: EdgeInsets.only(top: 20),
         height: 30,
         padding: const EdgeInsets.only(left: 10, right: 10),
         decoration: BoxDecoration(
@@ -67,22 +68,36 @@ class _PaySlipState extends State<PaySlip> {
     'Dec'
   ];
   var a = false;
+  Size get size => MediaQuery.of(context).size;
+  Color main = Color(0xFFF6F6F6);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xfff5f6fa),
       appBar: AppBar(
-          centerTitle: true,
-          title: Text("Payslip"),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(color: Color(0xff4a67b3)),
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
           ),
-          elevation: 0),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(
+          "Payslip",
+          style: TextStyle(color: Colors.black87),
+        ),
+        centerTitle: true,
+        backgroundColor: main,
+      ),
       body: Container(
         color: Colors.grey[400],
         child: Stack(
           children: <Widget>[
             Container(
+              //margin: EdgeInsets.only(top: 20),
               color: Color(0xff4a67b3),
               height: 150,
               child: Column(
@@ -95,6 +110,7 @@ class _PaySlipState extends State<PaySlip> {
                       Expanded(
                           child: Center(
                         child: Container(
+                          margin: EdgeInsets.only(top: 20),
                           height: 41,
                           child: ListView.builder(
                               physics: BouncingScrollPhysics(),
@@ -230,20 +246,24 @@ class _PaySlipState extends State<PaySlip> {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Container(
-                    height: 50,
-                    padding: EdgeInsets.all(11),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: Color(0xff4a67b3)),
-                    child: Center(
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Color(0xff6DC066),
+                        borderRadius: BorderRadius.circular(60),
+                      ),
+                      height: 50,
+                      width: size.width * 0.65,
                       child: Text(
-                        "Download Payslip",
+                        "Download Pay Slip",
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w300,
+                            letterSpacing: 1),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),

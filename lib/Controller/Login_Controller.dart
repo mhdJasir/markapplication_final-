@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hrmarkgrp/Utils/NetworkUtils.dart';
 import 'package:hrmarkgrp/admin/views/widgets/Adbottomtabs.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:hrmarkgrp/user/views/widgets/Bottomtabs.dart';
-// import 'package:device_id/device_id.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:hrmarkgrp/Repo/LoginRepo.dart' as repo;
 import 'package:platform_device_id/platform_device_id.dart';
@@ -77,9 +77,11 @@ class LoginControllr extends ControllerMVC {
               }));
         });
     String deviceId = await PlatformDeviceId.getDeviceId;
+    print("device id  : " + deviceId.toString());
     repo.signIn(phone, password, deviceId).then((value) {
       setState(() {
         logindatas = value;
+        NetworkUtils.token = logindatas["data"]["token"];
       });
       var profileData = List.castFrom(logindatas["data"]["user_profile"]);
       setTokenId(logindatas["data"]["token"]);

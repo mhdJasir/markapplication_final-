@@ -6,6 +6,8 @@ import 'package:hrmarkgrp/admin/controller/DailyExpController.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
+import '../../../main.dart';
+
 class DailyExpinner extends StatefulWidget {
   final dalyexpanses, token;
   DailyExpinner({this.dalyexpanses, this.token});
@@ -116,27 +118,43 @@ class _DailyExpinnerState extends StateMVC<DailyExpinner> {
   var totalamount;
   @override
   Widget build(BuildContext context) {
-    totalamount =
-        widget.dalyexpanses["salary_amount"] + widget.dalyexpanses["balance"];
+    totalamount = widget.dalyexpanses["salary_amount"] == null
+        ? 0
+        : widget.dalyexpanses["salary_amount"] +
+                    widget.dalyexpanses["balance"] ==
+                null
+            ? 0
+            : widget.dalyexpanses["balance"];
     adtotalamontcontrollr = TextEditingController(text: totalamount.toString());
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           widget.dalyexpanses["project_name"].toString(),
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
+              padding: const EdgeInsets.only(right: 20, left: 20, top: 10),
               child: Container(
+                  height: 50,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(color: MyApp.border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -155,11 +173,12 @@ class _DailyExpinnerState extends StateMVC<DailyExpinner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
+                  height: 50,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(color: MyApp.border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -178,12 +197,12 @@ class _DailyExpinnerState extends StateMVC<DailyExpinner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
-                height: 42,
+                height: 50,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey[400]),
+                  border: Border.all(color: MyApp.border),
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -237,7 +256,7 @@ class _DailyExpinnerState extends StateMVC<DailyExpinner> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: TextFormField(
                 keyboardType: TextInputType.number,
                 controller: addailywagescontrollr,
@@ -249,7 +268,7 @@ class _DailyExpinnerState extends StateMVC<DailyExpinner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: TextFormField(
                 keyboardType: TextInputType.number,
                 controller: adbalancecontrollr,
@@ -261,7 +280,7 @@ class _DailyExpinnerState extends StateMVC<DailyExpinner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: TextFormField(
                 keyboardType: TextInputType.number,
                 controller: adtotalamontcontrollr,
@@ -273,7 +292,7 @@ class _DailyExpinnerState extends StateMVC<DailyExpinner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Form(
                 key: _con.loginFormKey,
                 child: TextFormField(
@@ -295,7 +314,7 @@ class _DailyExpinnerState extends StateMVC<DailyExpinner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
@@ -315,64 +334,70 @@ class _DailyExpinnerState extends StateMVC<DailyExpinner> {
               ),
             ),
             SizedBox(
-              height: 50,
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (statusval == null) {
+                      Fluttertoast.showToast(
+                        msg: "Check status",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 35,
+                        backgroundColor: Colors.black,
+                        fontSize: 16.0,
+                      );
+                    } else if (_image == null) {
+                      Fluttertoast.showToast(
+                        msg: "Upload Image",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 35,
+                        backgroundColor: Colors.black,
+                        fontSize: 16.0,
+                      );
+                    } else {
+                      final FormState form = _con.loginFormKey.currentState;
+                      if (!form.validate()) {
+                      } else {
+                        form.save();
+                        _con.updatedailyexp(
+                            widget.dalyexpanses["exp_id"],
+                            statusval,
+                            widget.dalyexpanses["paid_amount"],
+                            totalamount,
+                            _image,
+                            widget.token,
+                            context);
+                      }
+                    }
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Color(0xff6DC066),
+                      borderRadius: BorderRadius.circular(60),
+                    ),
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: Text(
+                      "Submit",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 1),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
-        ),
-      ),
-      bottomNavigationBar: GestureDetector(
-        onTap: () {
-          if (statusval == null) {
-            Fluttertoast.showToast(
-              msg: "Check status",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 35,
-              backgroundColor: Colors.black,
-              fontSize: 16.0,
-            );
-          } else if (_image == null) {
-            Fluttertoast.showToast(
-              msg: "Upload Image",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 35,
-              backgroundColor: Colors.black,
-              fontSize: 16.0,
-            );
-          } else {
-            final FormState form = _con.loginFormKey.currentState;
-            if (!form.validate()) {
-            } else {
-              form.save();
-              _con.updatedailyexp(
-                  widget.dalyexpanses["exp_id"],
-                  statusval,
-                  widget.dalyexpanses["paid_amount"],
-                  totalamount,
-                  _image,
-                  widget.token,
-                  context);
-            }
-          }
-        },
-        child: Container(
-          margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-          alignment: Alignment.bottomCenter,
-          height: 50,
-          padding: EdgeInsets.all(11),
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6), color: Color(0xff4a67b3)),
-          child: Center(
-            child: Text(
-              "Submit",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16),
-            ),
-          ),
         ),
       ),
     );

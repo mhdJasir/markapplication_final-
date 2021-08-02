@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:hrmarkgrp/modules/loadingDialog.dart';
+import 'package:hrmarkgrp/sevices/notificationService.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:hrmarkgrp/admin/Repo/HomeRepo.dart' as repo;
@@ -254,6 +255,8 @@ class HomeController extends ControllerMVC {
           backgroundColor: Colors.black,
           fontSize: 16.0,
         );
+        NotificationService().showNotification(
+            "Employee", "$fname Added Successfully", "1", "", "");
         Navigator.pop(context);
       } else {
         Navigator.pop(context);
@@ -315,6 +318,8 @@ class HomeController extends ControllerMVC {
           backgroundColor: Colors.black,
           fontSize: 16.0,
         );
+        NotificationService().showNotification(
+            "Client", "$fname Added Successfully", "1", "", "");
         Navigator.pop(context);
         // viewclint(context);
         Navigator.pop(context);
@@ -380,6 +385,8 @@ class HomeController extends ControllerMVC {
           backgroundColor: Colors.black,
           fontSize: 16.0,
         );
+        NotificationService()
+            .showNotification("Project", "Added Successfully", "1", "", "");
         Navigator.pop(context);
         Navigator.pop(context);
       } else {

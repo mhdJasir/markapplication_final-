@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
+import 'package:hrmarkgrp/main.dart';
 import 'package:hrmarkgrp/user/views/widgets/SearchTextFiled.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -96,21 +97,9 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
     return Container(
       height: 42,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          //background color of box
-          BoxShadow(
-            color: Colors.grey[400],
-            blurRadius: 0.8, // soften the shadow
-            spreadRadius: 0.8, //extend the shadow
-            offset: Offset(
-              0.5, // Move to right 10  horizontally
-              0.5, // Move to bottom 10 Vertically
-            ),
-          )
-        ],
-      ),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: MyApp.border)),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           hint: Padding(
@@ -150,41 +139,41 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
     );
   }
 
+  Size get size => MediaQuery.of(context).size;
+  Color main = Color(0xFFF6F6F6);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
-          "Purchase Order",
-          style: TextStyle(color: Colors.white),
+          " Add New",
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: main,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
+              padding: const EdgeInsets.only(right: 20, left: 20, top: 10),
               child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: 42,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      //background color of box
-                      BoxShadow(
-                        color: Colors.grey[400],
-                        blurRadius: 0.8, // soften the shadow
-                        spreadRadius: 0.8, //extend the shadow
-                        offset: Offset(
-                          0.5, // Move to right 10  horizontally
-                          0.5, // Move to bottom 10 Vertically
-                        ),
-                      )
-                    ],
-                  ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: MyApp.border)),
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 13, horizontal: 8),
                     child: Text(
@@ -200,25 +189,13 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                 height: 42,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    //background color of box
-                    BoxShadow(
-                      color: Colors.grey[400],
-                      blurRadius: 0.8, // soften the shadow
-                      spreadRadius: 0.8, //extend the shadow
-                      offset: Offset(
-                        0.5, // Move to right 10  horizontally
-                        0.5, // Move to bottom 10 Vertically
-                      ),
-                    )
-                  ],
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: MyApp.border)),
                 child: TextField(
                   style: TextStyle(
                       color: Colors.grey[900],
@@ -239,32 +216,20 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: _projectss(),
             ),
             SizedBox(
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                 height: 42,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    //background color of box
-                    BoxShadow(
-                      color: Colors.grey[400],
-                      blurRadius: 0.8, // soften the shadow
-                      spreadRadius: 0.8, //extend the shadow
-                      offset: Offset(
-                        0.5, // Move to right 10  horizontally
-                        0.5, // Move to bottom 10 Vertically
-                      ),
-                    )
-                  ],
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: MyApp.border)),
                 child: TextField(
                   style: TextStyle(
                       color: Colors.grey[900],
@@ -285,29 +250,17 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 9, right: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
                       height: 42,
-                      width: MediaQuery.of(context).size.width * 0.439,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          //background color of box
-                          BoxShadow(
-                            color: Colors.grey[400],
-                            blurRadius: 0.5, // soften the shadow
-                            spreadRadius: 0.6, //extend the shadow
-                            offset: Offset(
-                              0.1, // Move to right 10  horizontally
-                              0.5, // Move to bottom 10 Vertically
-                            ),
-                          )
-                        ],
-                      ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(color: MyApp.border)),
                       child: SearchTextFiled(
                           initialList: dummyList,
                           label: label,
@@ -316,21 +269,9 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
                     height: 42,
                     width: MediaQuery.of(context).size.width * 0.158,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        //background color of box
-                        BoxShadow(
-                          color: Colors.grey[400],
-                          blurRadius: 0.5, // soften the shadow
-                          spreadRadius: 0.6, //extend the shadow
-                          offset: Offset(
-                            0.1, // Move to right 10  horizontally
-                            0.5, // Move to bottom 10 Vertically
-                          ),
-                        )
-                      ],
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: MyApp.border)),
                     child: TextField(
                       style: TextStyle(
                           color: Colors.grey[900],
@@ -350,21 +291,9 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
                     height: 42,
                     width: MediaQuery.of(context).size.width * 0.298,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        //background color of box
-                        BoxShadow(
-                          color: Colors.grey[400],
-                          blurRadius: 0.5, // soften the shadow
-                          spreadRadius: 0.6, //extend the shadow
-                          offset: Offset(
-                            0.1, // Move to right 10  horizontally
-                            0.5, // Move to bottom 10 Vertically
-                          ),
-                        )
-                      ],
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: MyApp.border)),
                     child: TextField(
                       keyboardType: TextInputType.number,
                       style: TextStyle(
@@ -388,29 +317,17 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 9, right: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
                       height: 42,
-                      width: MediaQuery.of(context).size.width * 0.439,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          //background color of box
-                          BoxShadow(
-                            color: Colors.grey[400],
-                            blurRadius: 0.5, // soften the shadow
-                            spreadRadius: 0.6, //extend the shadow
-                            offset: Offset(
-                              0.1, // Move to right 10  horizontally
-                              0.5, // Move to bottom 10 Vertically
-                            ),
-                          )
-                        ],
-                      ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(color: MyApp.border)),
                       child: SearchTextFiled(
                           initialList: dummyList,
                           label: label,
@@ -419,21 +336,9 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
                     height: 42,
                     width: MediaQuery.of(context).size.width * 0.158,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        //background color of box
-                        BoxShadow(
-                          color: Colors.grey[400],
-                          blurRadius: 0.5, // soften the shadow
-                          spreadRadius: 0.6, //extend the shadow
-                          offset: Offset(
-                            0.1, // Move to right 10  horizontally
-                            0.5, // Move to bottom 10 Vertically
-                          ),
-                        )
-                      ],
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: MyApp.border)),
                     child: TextField(
                       style: TextStyle(
                           color: Colors.grey[900],
@@ -453,21 +358,9 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
                     height: 42,
                     width: MediaQuery.of(context).size.width * 0.298,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        //background color of box
-                        BoxShadow(
-                          color: Colors.grey[400],
-                          blurRadius: 0.5, // soften the shadow
-                          spreadRadius: 0.6, //extend the shadow
-                          offset: Offset(
-                            0.1, // Move to right 10  horizontally
-                            0.5, // Move to bottom 10 Vertically
-                          ),
-                        )
-                      ],
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: MyApp.border)),
                     child: TextField(
                       keyboardType: TextInputType.number,
                       style: TextStyle(
@@ -491,29 +384,17 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 9, right: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
                       height: 42,
-                      width: MediaQuery.of(context).size.width * 0.439,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          //background color of box
-                          BoxShadow(
-                            color: Colors.grey[400],
-                            blurRadius: 0.5, // soften the shadow
-                            spreadRadius: 0.6, //extend the shadow
-                            offset: Offset(
-                              0.1, // Move to right 10  horizontally
-                              0.5, // Move to bottom 10 Vertically
-                            ),
-                          )
-                        ],
-                      ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(color: MyApp.border)),
                       child: SearchTextFiled(
                           initialList: dummyList,
                           label: label,
@@ -522,21 +403,9 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
                     height: 42,
                     width: MediaQuery.of(context).size.width * 0.158,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        //background color of box
-                        BoxShadow(
-                          color: Colors.grey[400],
-                          blurRadius: 0.5, // soften the shadow
-                          spreadRadius: 0.6, //extend the shadow
-                          offset: Offset(
-                            0.1, // Move to right 10  horizontally
-                            0.5, // Move to bottom 10 Vertically
-                          ),
-                        )
-                      ],
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: MyApp.border)),
                     child: TextField(
                       style: TextStyle(
                           color: Colors.grey[900],
@@ -556,21 +425,9 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
                     height: 42,
                     width: MediaQuery.of(context).size.width * 0.298,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        //background color of box
-                        BoxShadow(
-                          color: Colors.grey[400],
-                          blurRadius: 0.5, // soften the shadow
-                          spreadRadius: 0.6, //extend the shadow
-                          offset: Offset(
-                            0.1, // Move to right 10  horizontally
-                            0.5, // Move to bottom 10 Vertically
-                          ),
-                        )
-                      ],
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: MyApp.border)),
                     child: TextField(
                       keyboardType: TextInputType.number,
                       style: TextStyle(
@@ -594,28 +451,18 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9),
+              padding: const EdgeInsets.only(
+                right: 20,
+              ),
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: Container(
                   height: 42,
                   width: MediaQuery.of(context).size.width * 0.298,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      //background color of box
-                      BoxShadow(
-                        color: Colors.grey[400],
-                        blurRadius: 0.5, // soften the shadow
-                        spreadRadius: 0.6, //extend the shadow
-                        offset: Offset(
-                          0.1, // Move to right 10  horizontally
-                          0.5, // Move to bottom 10 Vertically
-                        ),
-                      )
-                    ],
-                  ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: MyApp.border)),
                   child: TextField(
                     keyboardType: TextInputType.number,
                     style: TextStyle(
@@ -638,25 +485,13 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                 height: 42,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    //background color of box
-                    BoxShadow(
-                      color: Colors.grey[400],
-                      blurRadius: 0.8, // soften the shadow
-                      spreadRadius: 0.8, //extend the shadow
-                      offset: Offset(
-                        0.5, // Move to right 10  horizontally
-                        0.5, // Move to bottom 10 Vertically
-                      ),
-                    )
-                  ],
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: MyApp.border)),
                 child: TextField(
                   style: TextStyle(
                       color: Colors.grey[900],
@@ -677,25 +512,13 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                 height: 42,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    //background color of box
-                    BoxShadow(
-                      color: Colors.grey[400],
-                      blurRadius: 0.8, // soften the shadow
-                      spreadRadius: 0.8, //extend the shadow
-                      offset: Offset(
-                        0.5, // Move to right 10  horizontally
-                        0.5, // Move to bottom 10 Vertically
-                      ),
-                    )
-                  ],
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: MyApp.border)),
                 child: TextField(
                   style: TextStyle(
                       color: Colors.grey[900],
@@ -716,7 +539,7 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
@@ -752,25 +575,13 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                 height: 122,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    //background color of box
-                    BoxShadow(
-                      color: Colors.grey[400],
-                      blurRadius: 0.8, // soften the shadow
-                      spreadRadius: 0.8, //extend the shadow
-                      offset: Offset(
-                        0.5, // Move to right 10  horizontally
-                        0.5, // Move to bottom 10 Vertically
-                      ),
-                    )
-                  ],
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: MyApp.border)),
                 child: TextField(
                   style: TextStyle(
                       color: Colors.grey[900],
@@ -790,31 +601,31 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdBottomtabs())) ;
-                },
-                child: Container(
-                  alignment: Alignment.bottomCenter,
-                  height: 50,
-                  padding: EdgeInsets.all(11),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: Color(0xff4a67b3)),
-                  child: Center(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Color(0xff6DC066),
+                      borderRadius: BorderRadius.circular(60),
+                    ),
+                    height: 50,
+                    width: size.width * 0.6,
                     child: Text(
                       "Submit",
                       style: TextStyle(
                           color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 1),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ],
         ),

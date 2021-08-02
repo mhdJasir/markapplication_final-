@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
+import 'package:hrmarkgrp/sevices/notificationService.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:hrmarkgrp/admin/Repo/CalndrRepo.dart' as repo;
 
@@ -87,6 +88,8 @@ class CalendersControllr extends ControllerMVC {
           backgroundColor: Colors.black,
           fontSize: 16.0,
         );
+        NotificationService()
+            .showNotification("Calender", "Added Successfully", "1", "", "");
         Navigator.pop(context);
         viecalnder();
         Navigator.pop(context);
@@ -144,6 +147,8 @@ class CalendersControllr extends ControllerMVC {
           backgroundColor: Colors.black,
           fontSize: 16.0,
         );
+        NotificationService()
+            .showNotification("Holiday", "Added Successfully", "1", "", "");
         Navigator.pop(context);
         viwhlyday();
         Navigator.pop(context);

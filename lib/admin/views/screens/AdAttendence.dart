@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:hrmarkgrp/admin/controller/HomeController.dart';
 import 'package:hrmarkgrp/admin/views/screens/TakeAttendance.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
+import 'package:hrmarkgrp/main.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -27,14 +30,39 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
   DateTime selecteddate;
   String staff;
   List emppList = [];
-  List allList = [];
-  List allList2 = [];
+  List combList;
+  List preList;
+  List absList;
+  List shuffledList;
+  var random = Random();
+
+  lists() async {
+    _con.adattndace(widget.token);
+    absList = _con.attndencelist["absents_list"];
+    preList = _con.attndencelist["presents_list"];
+    combList = absList + preList;
+    print("combined list :" + combList.toString());
+    setState(() {
+      shuffledList = shuffle(combList);
+    });
+  }
+
+  List shuffle(List items) {
+    var random = new Random();
+    for (int i = 0; i < items.length; i++) {
+      var n = random.nextInt(i + 1);
+      var temp = items[i];
+      items[i] = items[n];
+      items[n] = temp;
+    }
+    return items;
+  }
 
   String attendance;
   @override
   void initState() {
     super.initState();
-    _con.adattndace(widget.token);
+    lists();
     setState(() {
       selecteddate = DateTime.now();
     });
@@ -49,79 +77,27 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          elevation: 1,
-          centerTitle: true,
-          backgroundColor: Color(0xff4a67b3),
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Color(0xFF545454),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: Text(
             "Attendance",
-            style: TextStyle(
-              color: Colors.white,
-            ),
+            style: TextStyle(color: Colors.black87),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return TakeAttendence(token: widget.token);
-            }));
-          },
-          child: Icon(Icons.add),
+          centerTitle: true,
+          backgroundColor: MyApp.appBar,
         ),
         body: _con.attndencelist != null
             ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  // HorizontalCalendar(
-                  //   isDateDisabled: (date) => date.weekday == DateTime.sunday,
-                  //   spacingBetweenDates: 5,
-                  //   weekDayTextStyle: TextStyle(
-                  //     color: Colors.black,fontWeight: FontWeight.w800,
-                  //   ),
-                  //   onDateSelected: (time) {
-                  //     setState(() {
-                  //       selecteddate = time;
-                  //     });
-                  //     print("SELECTEDDAATEE $selecteddate");
-                  //     print("Navigation HAPPENDDDDDDDDDD");
-                  //   },
-                  //
-                  //   key: forceRender ? UniqueKey() : Key('Calendar'),
-                  //   height: 80,
-                  //   padding: EdgeInsets.all(16),
-                  //   firstDate: firstDate,
-                  //   lastDate: lastDate,
-                  //   dateFormat: dateFormat,
-                  //   weekDayFormat: weekDayFormat,
-                  //   defaultDecoration: BoxDecoration(
-                  //     color: defaultDecorationColor,
-                  //     shape: defaultDecorationShape,
-                  //     borderRadius: defaultDecorationShape == BoxShape.rectangle &&
-                  //         isCircularRadiusDefault
-                  //         ? BorderRadius.circular(15)
-                  //         : null,
-                  //   ),
-                  //   selectedDecoration: BoxDecoration(
-                  //     color: selectedDecorationColor,
-                  //     shape: selectedDecorationShape,
-                  //     borderRadius: selectedDecorationShape == BoxShape.rectangle &&
-                  //         isCircularRadiusSelected
-                  //         ? BorderRadius.circular(8)
-                  //         : null,
-                  //   ),
-                  //   disabledDecoration: BoxDecoration(
-                  //     color: disabledDecorationColor,
-                  //     shape: disabledDecorationShape,
-                  //     borderRadius: defaultDecorationShape == BoxShape.rectangle &&
-                  //         isCircularRadiusSelected
-                  //         ? BorderRadius.circular(8)
-                  //         : null,
-                  //   ),
-                  //   // isDateDisabled: (date) => date.weekday == DateTime.sunday,
-                  //   labelOrder: order.map(toLabelType).toList(),
-                  //   minSelectedDateCount: minSelectedDateCount,
-                  //   maxSelectedDateCount: maxSelectedDateCount,
-                  //   initialSelectedDates: initialSelectedDates,
-                  // ),
                   SizedBox(
                     height: 10,
                   ),
@@ -130,21 +106,9 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          //background color of box
-                          BoxShadow(
-                            color: Colors.grey[400],
-                            blurRadius: 0.8, // soften the shadow
-                            spreadRadius: 0.8, //extend the shadow
-                            offset: Offset(
-                              0.5, // Move to right 10  horizontally
-                              0.5, // Move to bottom 10 Vertically
-                            ),
-                          )
-                        ],
-                        borderRadius: BorderRadius.circular(15),
-                      ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(color: MyApp.border)),
                       child: Padding(
                         padding: const EdgeInsets.only(
                             top: 8, bottom: 8, left: 15, right: 15),
@@ -233,10 +197,10 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        buildContainer(clickedAll, true, false, false, "All"),
-                        buildContainer(
+                        BuildContainer(clickedAll, true, false, false, "All"),
+                        BuildContainer(
                             clickedPresent, false, true, false, "Present"),
-                        buildContainer(
+                        BuildContainer(
                             clickedAbsent, false, false, true, "Absent"),
                         SizedBox(
                           height: 15,
@@ -249,7 +213,7 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
                   ),
                   clickedPresent
                       ? Container(
-                          height: 500,
+                          height: 450,
                           child: ListView.builder(
                             itemCount:
                                 _con.attndencelist["presents_list"] != null
@@ -323,7 +287,7 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
                         )
                       : clickedAbsent
                           ? Container(
-                              height: 500,
+                              height: 450,
                               child: ListView.builder(
                                 itemCount: _con.attndencelist["absents_list"] !=
                                         null
@@ -331,6 +295,7 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
                                     : 0,
                                 itemBuilder: (context, index) {
                                   return Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Container(
                                         height: 50,
@@ -397,139 +362,136 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
                                 },
                               ),
                             )
-                          : Container(), //Container(
-                  //     height: 500,
-                  //     child: ListView.builder(
-                  //       itemCount: allList != null ? allList.length : 0,
-                  //       itemBuilder: (context, index) {
-                  //         return Column(
-                  //           children: [
-                  //             Container(
-                  //               height: 50,
-                  //               width: size.width - 30,
-                  //               decoration: BoxDecoration(
-                  //                   borderRadius:
-                  //                       BorderRadius.circular(20),
-                  //                   border: Border.all(
-                  //                       color: Colors.grey[300])),
-                  //               child: Row(
-                  //                 mainAxisAlignment:
-                  //                     MainAxisAlignment.start,
-                  //                 children: [
-                  //                   Padding(
-                  //                     padding:
-                  //                         const EdgeInsets.all(8.0),
-                  //                     child: ClipRRect(
-                  //                       borderRadius:
-                  //                           BorderRadius.circular(60),
-                  //                       child: Container(
-                  //                         height: 30,
-                  //                         width: 30,
-                  //                         child: Image.network(
-                  //                           allList[index]["emp_image"],
-                  //                           fit: BoxFit.cover,
-                  //                         ),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                   Container(
-                  //                     margin: EdgeInsets.all(5),
-                  //                     child: Center(
-                  //                         child: Row(
-                  //                       children: [
-                  //                         Text(allList[index]
-                  //                             ["emp_firstname"]),
-                  //                         Text(
-                  //                             " ${allList[index]["emp_lastname"] == null ? "" : allList[index]["emp_lastname"]}")
-                  //                       ],
-                  //                     )),
-                  //                   ),
-                  //                   Spacer(),
-                  //                   Container(
-                  //                     margin: EdgeInsets.all(10),
-                  //                     height: 30,
-                  //                     width: 30,
-                  //                     decoration: BoxDecoration(
-                  //                       borderRadius:
-                  //                           BorderRadius.circular(20),
-                  //                       color: allList[index] = _con
-                  //                                   .attndencelist[
-                  //                               "presents_list"][index]
-                  //                           ? Colors.green[300]
-                  //                           : Colors.red[300],
-                  //                     ),
-                  //                     child: Center(
-                  //                       child: allList[index] = _con
-                  //                                   .attndencelist[
-                  //                               "presents_list"][index]
-                  //                           ? Text("P")
-                  //                           : Text("A"),
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //             SizedBox(
-                  //               height: 5,
-                  //             ),
-                  //           ],
-                  //         );
-                  //       },
-                  //     ),
-                  //   )
+                          : clickedAll
+                              ? Container(
+                                  height: 450,
+                                  child: ListView.builder(
+                                    itemCount: absList + preList != null
+                                        ? (absList + preList).length
+                                        : 0,
+                                    itemBuilder: (context, index) {
+                                      return Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            height: 50,
+                                            width: size.width - 30,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                border: Border.all(
+                                                    color: Colors.grey[300])),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            60),
+                                                    child: Container(
+                                                      height: 30,
+                                                      width: 30,
+                                                      child: Image.network(
+                                                        shuffledList[index]
+                                                            ["emp_image"],
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Center(
+                                                      child: Row(
+                                                    children: [
+                                                      Text(shuffledList[index]
+                                                          ["emp_firstname"]),
+                                                      Text(
+                                                          " ${shuffledList[index]["emp_lastname"] == null ? "" : shuffledList[index]["emp_lastname"]}")
+                                                    ],
+                                                  )),
+                                                ),
+                                                Spacer(),
+                                                Container(
+                                                  margin: EdgeInsets.all(10),
+                                                  height: 30,
+                                                  width: 30,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                    color: absList.contains(
+                                                            shuffledList[index][
+                                                                "emp_firstname"])
+                                                        ? Colors.red
+                                                        : Colors.green,
+                                                  ),
+                                                  child: Center(
+                                                    child: absList.contains(
+                                                            shuffledList[index][
+                                                                "emp_firstname"])
+                                                        ? Text("A")
+                                                        : Text("P"),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                )
+                              : Container(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return TakeAttendence(token: widget.token);
+                          }));
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Color(0xff6DC066),
+                            borderRadius: BorderRadius.circular(60),
+                          ),
+                          height: 50,
+                          width: size.width * 0.6,
+                          child: Text(
+                            "Add Attendance",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w300,
+                                letterSpacing: 1),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  )
                 ],
               )
             : Center(
                 child: CircularProgressIndicator(),
               ));
   }
-
-  // Widget selectAttendance() {
-  //   return Container(
-  //       height: 42,
-  //       margin: const EdgeInsets.only(right: 9, left: 9, top: 10),
-  //       decoration: BoxDecoration(
-  //         border: Border.all(width: 1, color: Colors.grey[400]),
-  //         color: Colors.white,
-  //         borderRadius: BorderRadius.circular(15),
-  //       ),
-  //       child: DropdownButtonHideUnderline(
-  //         child: DropdownButton(
-  //           hint: Padding(
-  //             padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-  //             child: Text(
-  //               'Attendance',
-  //               style: TextStyle(
-  //                   color: Colors.grey[600],
-  //                   fontWeight: FontWeight.w600,
-  //                   fontSize: 15),
-  //             ),
-  //           ),
-  //           items: attendanceList.map(
-  //             (itm) {
-  //               return DropdownMenuItem<String>(
-  //                 child: Padding(
-  //                   padding: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
-  //                   child: new Text(
-  //                     itm["title"].toString(),
-  //                     style: TextStyle(fontSize: 15.0),
-  //                   ),
-  //                 ),
-  //                 value: itm["id"].toString(),
-  //               );
-  //             },
-  //           ).toList(),
-  //           onChanged: (val) {
-  //             setState(
-  //               () {
-  //                 attendance = val;
-  //               },
-  //             );
-  //           },
-  //           value: attendance,
-  //         ),
-  //       ));
-  // }
 
   List<DateTime> feedInitialSelectedDates(int target, int calendarDays) {
     List<DateTime> selectedDates = [];
@@ -547,7 +509,76 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
     return selectedDates;
   }
 
-  Widget buildContainer(bool clicked, click1, click2, click3, String text) {
+  Widget buildAbsentList() {
+    return Container(
+      height: 500,
+      child: ListView.builder(
+        itemCount: _con.attndencelist["absents_list"] != null
+            ? _con.attndencelist["absents_list"].length
+            : 0,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              Container(
+                height: 50,
+                width: size.width - 30,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Color(0xFFE9E9E9))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(60),
+                        child: Container(
+                          height: 30,
+                          width: 30,
+                          child: Image.network(
+                            _con.attndencelist["absents_list"][index]
+                                ["emp_image"],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(5),
+                      child: Center(
+                          child: Row(
+                        children: [
+                          Text(_con.attndencelist["absents_list"][index]
+                              ["emp_firstname"]),
+                          Text(
+                              " ${_con.attndencelist["absents_list"][index]["emp_lastname"] == null ? "" : _con.attndencelist["absents_list"][index]["emp_lastname"]}")
+                        ],
+                      )),
+                    ),
+                    Spacer(),
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.red[300]),
+                      child: Center(child: Text("A")),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget BuildContainer(bool clicked, click1, click2, click3, String text) {
     return Expanded(
       child: GestureDetector(
         onTap: () {
@@ -560,7 +591,8 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
         child: Container(
           height: 40,
           decoration: BoxDecoration(
-              border: Border.all(color: clicked ? Colors.black : Colors.white),
+              border:
+                  Border.all(color: clicked ? Color(0xFFE9E9E9) : Colors.white),
               borderRadius: BorderRadius.circular(20)),
           child: Center(
             child: Text(

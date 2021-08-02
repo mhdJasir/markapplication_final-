@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hrmarkgrp/admin/controller/HomeController.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
+import 'package:hrmarkgrp/main.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 class Adinvoice extends StatefulWidget {
@@ -27,12 +28,22 @@ class _AdinvoiceState extends StateMVC<Adinvoice> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Color(0xFF545454),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: Text(
             "Invoice",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black87),
           ),
           centerTitle: true,
-          backgroundColor: Color(0xff496ab1),
+          backgroundColor: MyApp.appBar,
         ),
         backgroundColor: Color(0xfff5f6f8),
         body: _con.loading == false
@@ -46,24 +57,13 @@ class _AdinvoiceState extends StateMVC<Adinvoice> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          left: 9, right: 9, top: 6, bottom: 1),
+                          left: 20, right: 20, top: 6, bottom: 1),
                       child: Container(
                         height: 75,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          boxShadow: [
-                            //background color of box
-                            BoxShadow(
-                              color: Colors.grey[400],
-                              blurRadius: 0.8, // soften the shadow
-                              spreadRadius: 0.8, //extend the shadow
-                              offset: Offset(
-                                0.5, // Move to right 10  horizontally
-                                0.5, // Move to bottom 10 Vertically
-                              ),
-                            )
-                          ],
+                          border: MyApp.bord,
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Padding(

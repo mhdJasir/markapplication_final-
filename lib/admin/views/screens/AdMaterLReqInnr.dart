@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hrmarkgrp/admin/controller/MatrialReqController.dart';
+import 'package:hrmarkgrp/main.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 class AdMatrlReqInnr extends StatefulWidget {
@@ -23,9 +24,9 @@ class _AdMatrlReqInnrState extends StateMVC<AdMatrlReqInnr> {
   TextEditingController item1qty = TextEditingController();
   Widget _vendor(List vendor) {
     return Container(
-      height: 42,
+      height: 45,
       decoration: BoxDecoration(
-        border: Border.all(width: 1, color: Colors.grey[400]),
+        border: Border.all(width: 1, color: MyApp.border),
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
       ),
@@ -95,22 +96,32 @@ class _AdMatrlReqInnrState extends StateMVC<AdMatrlReqInnr> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           widget.getmaterialreqq["project_name"].toString(),
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
+              padding: const EdgeInsets.only(right: 20, left: 20, top: 10),
               child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(width: 1, color: MyApp.border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -129,11 +140,11 @@ class _AdMatrlReqInnrState extends StateMVC<AdMatrlReqInnr> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(width: 1, color: MyApp.border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -152,11 +163,11 @@ class _AdMatrlReqInnrState extends StateMVC<AdMatrlReqInnr> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(width: 1, color: MyApp.border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -175,18 +186,18 @@ class _AdMatrlReqInnrState extends StateMVC<AdMatrlReqInnr> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 9, right: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: _vendor(_con.vndorlist),
             ),
             SizedBox(
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey[400]),
+                  border: Border.all(width: 1, color: MyApp.border),
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -208,12 +219,12 @@ class _AdMatrlReqInnrState extends StateMVC<AdMatrlReqInnr> {
             Align(
               alignment: Alignment.bottomLeft,
               child: Padding(
-                padding: const EdgeInsets.only(right: 9, left: 9),
+                padding: const EdgeInsets.only(right: 20, left: 20),
                 child: Container(
                   height: 42,
                   width: MediaQuery.of(context).size.width / 2.5,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(width: 1, color: MyApp.border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -270,7 +281,7 @@ class _AdMatrlReqInnrState extends StateMVC<AdMatrlReqInnr> {
             widget.getmaterialreqq["items"].length == 0
                 ? Container(height: 0)
                 : Container(
-                    height: 300,
+                    height: 250,
                     child: ListView.builder(
                         physics: BouncingScrollPhysics(),
                         itemCount: widget.getmaterialreqq["items"] != null
@@ -278,17 +289,17 @@ class _AdMatrlReqInnrState extends StateMVC<AdMatrlReqInnr> {
                             : 0,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.only(left: 9, top: 10),
+                            padding: const EdgeInsets.only(left: 20, top: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Container(
-                                  padding: EdgeInsets.only(left: 10),
-                                  height: 42,
-                                  width: MediaQuery.of(context).size.width / 2,
+                                  height: 45,
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.9,
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                        width: 1, color: Colors.grey[400]),
+                                        width: 1, color: MyApp.border),
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(15),
                                   ),
@@ -305,80 +316,75 @@ class _AdMatrlReqInnrState extends StateMVC<AdMatrlReqInnr> {
                                       )),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(right: 9),
+                                  padding: const EdgeInsets.only(right: 20),
                                   child: Container(
-                                    padding: EdgeInsets.only(left: 10),
                                     height: 42,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.328,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                          width: 1, color: Colors.grey[400]),
+                                          width: 1, color: MyApp.border),
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(15),
                                     ),
-                                    child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          widget.getmaterialreqq["items"][index]
-                                                  ["qty"]
-                                              .toString(),
-                                          style: TextStyle(
-                                              color: Colors.grey[900],
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 15),
-                                        )),
+                                    child: Center(
+                                      child: Text(
+                                        widget.getmaterialreqq["items"][index]
+                                                ["qty"]
+                                            .toString(),
+                                        style: TextStyle(
+                                            color: Colors.grey[900],
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 15),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           );
                         }),
-                  )
-          ],
-        ),
-      ),
-      bottomNavigationBar: GestureDetector(
-        onTap: () {
-          if (vendrr == null || status == null) {
-            Fluttertoast.showToast(
-              msg: "Select The Field",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 35,
-              backgroundColor: Colors.black,
-              fontSize: 16.0,
-            );
-          } else {
-            _con.updatematreqquset(
-                vendrr,
-                status,
-                widget.getmaterialreqq["req_id"].toString(),
-                widget.token,
-                context);
-          }
-
-          // print("STATUS value " +statusvalue.toString());
-
-          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdBottomtabs())) ;
-        },
-        child: Container(
-          margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-          alignment: Alignment.bottomCenter,
-          height: 50,
-          padding: EdgeInsets.all(11),
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6), color: Color(0xff4a67b3)),
-          child: Center(
-            child: Text(
-              "Submit",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16),
+                  ),
+            GestureDetector(
+              onTap: () {
+                if (vendrr == null || status == null) {
+                  Fluttertoast.showToast(
+                    msg: "Select The Field",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 35,
+                    backgroundColor: Colors.black,
+                    fontSize: 16.0,
+                  );
+                } else {
+                  _con.updatematreqquset(
+                      vendrr,
+                      status,
+                      widget.getmaterialreqq["req_id"].toString(),
+                      widget.token,
+                      context);
+                }
+              },
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Color(0xff6DC066),
+                  borderRadius: BorderRadius.circular(60),
+                ),
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: Text(
+                  "Submit",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 1),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

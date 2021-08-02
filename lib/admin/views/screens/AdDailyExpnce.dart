@@ -5,6 +5,8 @@ import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
+import '../../../main.dart';
+
 class AdDailyExpnce extends StatefulWidget {
   final tok;
   AdDailyExpnce({this.tok});
@@ -28,12 +30,22 @@ class _AdDailyExpnceState extends StateMVC<AdDailyExpnce> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Color(0xFF545454),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: Text(
             "Daily Expense",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black87),
           ),
           centerTitle: true,
-          backgroundColor: Color(0xff496ab1),
+          backgroundColor: MyApp.appBar,
         ),
         body: ListView.builder(
           itemCount: _con.dailyexp != null ? _con.dailyexp.length : 0,
@@ -52,26 +64,14 @@ class _AdDailyExpnceState extends StateMVC<AdDailyExpnce> {
                             )));
               },
               child: Container(
-                height: 130,
-                margin: const EdgeInsets.only(
-                    top: 5.0, right: 9.0, left: 9.0, bottom: 5),
+                height: 110,
+                margin:
+                    const EdgeInsets.only(top: 5.0, right: 20.0, left: 20.0),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    //background color of box
-                    BoxShadow(
-                      color: Colors.grey[400],
-                      blurRadius: 0.8, // soften the shadow
-                      spreadRadius: 0.8, //extend the shadow
-                      offset: Offset(
-                        0.5, // Move to right 10  horizontally
-                        0.5, // Move to bottom 10 Vertically
-                      ),
-                    )
-                  ],
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: MyApp.border)),
                 child: Padding(
                   padding: const EdgeInsets.only(
                       top: 3, bottom: 3, right: 15, left: 15),

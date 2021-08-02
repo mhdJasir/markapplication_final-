@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hrmarkgrp/admin/controller/HomeController.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
-import 'package:hrmarkgrp/user/views/Screens/Home/PurchaseOrdrInnr.dart';
+import 'package:hrmarkgrp/main.dart';
+import 'package:hrmarkgrp/user/views/Screens/Home/MaterialReceivedAdd.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-class PurchaseOrder extends StatefulWidget {
+class MaterialReceived extends StatefulWidget {
   final token;
-  PurchaseOrder({this.token});
+  MaterialReceived({this.token});
   @override
-  _PurchaseOrderState createState() => _PurchaseOrderState();
+  _MaterialReceivedState createState() => _MaterialReceivedState();
 }
 
-class _PurchaseOrderState extends StateMVC<PurchaseOrder> {
+class _MaterialReceivedState extends StateMVC<MaterialReceived> {
   HomeController _con;
-  _PurchaseOrderState() : super(HomeController()) {
+  _MaterialReceivedState() : super(HomeController()) {
     _con = controller;
   }
   @override
@@ -22,16 +23,28 @@ class _PurchaseOrderState extends StateMVC<PurchaseOrder> {
     super.initState();
   }
 
+  Size get size => MediaQuery.of(context).size;
+  Color main = Color(0xFFF6F6F6);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Color(0xFF545454),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: Text(
-            "Purchase Order",
-            style: TextStyle(color: Colors.white),
+            "Material Received",
+            style: TextStyle(color: Colors.black87),
           ),
           centerTitle: true,
-          backgroundColor: Color(0xff496ab1),
+          backgroundColor: main,
         ),
         body: SafeArea(
           child: ListView(
@@ -49,26 +62,14 @@ class _PurchaseOrderState extends StateMVC<PurchaseOrder> {
               MaterialPageRoute(builder: (context) => PurchaseOrderInner()));
         },
         child: Padding(
-          padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
+          padding: const EdgeInsets.only(right: 20, left: 20, top: 5),
           child: Container(
             height: 109,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                //background color of box
-                BoxShadow(
-                  color: Colors.grey[400],
-                  blurRadius: 0.8, // soften the shadow
-                  spreadRadius: 0.8, //extend the shadow
-                  offset: Offset(
-                    0.5, // Move to right 10  horizontally
-                    0.5, // Move to bottom 10 Vertically
-                  ),
-                )
-              ],
-            ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(color: MyApp.border)),
             child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: Column(

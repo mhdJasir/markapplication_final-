@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:hrmarkgrp/main.dart';
 import 'package:path/path.dart' as p;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -70,11 +71,11 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.grey[400])),
+          border: Border.all(color: MyApp.border)),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           hint: Padding(
-            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
             child: Text(
               'Client',
               style: TextStyle(
@@ -93,7 +94,7 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
             (item) {
               return DropdownMenuItem<String>(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+                  padding: EdgeInsets.symmetric(vertical: 1, horizontal: 20),
                   child: new Text(
                     item["firstname"].toString(),
                     style: TextStyle(fontSize: 15.0),
@@ -166,12 +167,22 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
     final String enddate = formatdate.format(_currentenddate);
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
-          "Project Add",
-          style: TextStyle(color: Colors.white),
+          "Add New Project",
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       backgroundColor: Color(0xfff5f6f8),
       body: SingleChildScrollView(
@@ -183,7 +194,7 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 9, left: 9),
+                padding: const EdgeInsets.only(right: 20, left: 20),
                 child: TextFormField(
                   validator: validations.validateName,
                   controller: projnamContr,
@@ -193,18 +204,18 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
                       fontSize: 15),
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
+                        borderSide: BorderSide(color: MyApp.border),
                         borderRadius: BorderRadius.circular(15)),
                     focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
+                        borderSide: BorderSide(color: MyApp.border),
                         borderRadius: BorderRadius.circular(15)),
                     filled: true,
                     fillColor: Colors.white,
                     focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
+                        borderSide: BorderSide(color: MyApp.border),
                         borderRadius: BorderRadius.circular(15)),
                     errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
+                        borderSide: BorderSide(color: MyApp.border),
                         borderRadius: BorderRadius.circular(15)),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 14, horizontal: 8),
@@ -219,14 +230,14 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 9, left: 9),
+                padding: const EdgeInsets.only(right: 20, left: 20),
                 child: _client(_con.viewclient),
               ),
               SizedBox(
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 9, left: 9),
+                padding: const EdgeInsets.only(right: 20, left: 20),
                 child: Center(
                   child: GestureDetector(
                     onTap: () => _selectstrtDate(
@@ -237,9 +248,9 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: Colors.grey[400])),
+                          border: Border.all(color: MyApp.border)),
                       child: Padding(
-                        padding: const EdgeInsets.only(right: 10, left: 10),
+                        padding: const EdgeInsets.only(right: 20, left: 20),
                         child: Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -269,7 +280,7 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 9, left: 9),
+                padding: const EdgeInsets.only(right: 20, left: 20),
                 child: Center(
                   child: GestureDetector(
                     onTap: () => _selectendtDate(
@@ -280,9 +291,9 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: Colors.grey[400])),
+                          border: Border.all(color: MyApp.border)),
                       child: Padding(
-                        padding: const EdgeInsets.only(right: 10, left: 10),
+                        padding: const EdgeInsets.only(right: 20, left: 20),
                         child: Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -314,7 +325,7 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 9, left: 9),
+                padding: const EdgeInsets.only(right: 20, left: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.number,
                   validator: validations.validateProjcost,
@@ -325,21 +336,21 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
                       fontSize: 15),
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
+                        borderSide: BorderSide(color: MyApp.border),
                         borderRadius: BorderRadius.circular(15)),
                     focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
+                        borderSide: BorderSide(color: MyApp.border),
                         borderRadius: BorderRadius.circular(15)),
                     filled: true,
                     fillColor: Colors.white,
                     focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
+                        borderSide: BorderSide(color: MyApp.border),
                         borderRadius: BorderRadius.circular(15)),
                     errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
+                        borderSide: BorderSide(color: MyApp.border),
                         borderRadius: BorderRadius.circular(15)),
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 14, horizontal: 8),
+                        EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                     hintText: "Total Project Cost",
                     hintStyle: g615W5,
                     border: InputBorder.none,
@@ -351,13 +362,13 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 9, left: 9),
+                padding: const EdgeInsets.only(right: 20, left: 20),
                 child: Container(
                   height: 122,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
-                      border: Border.all(width: 1, color: Colors.grey[400])),
+                      border: Border.all(width: 1, color: MyApp.border)),
                   child: TextField(
                     controller: descrContr,
                     textAlign: TextAlign.justify,
@@ -368,7 +379,7 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
                         fontSize: 15),
                     decoration: InputDecoration(
                         contentPadding:
-                            EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                            EdgeInsets.symmetric(vertical: 4, horizontal: 20),
                         hintText: "Description..",
                         hintStyle: g615W5,
                         border: InputBorder.none,
@@ -381,7 +392,7 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 12, right: 9),
+                padding: const EdgeInsets.only(left: 20, right: 10),
                 child: Row(
                   children: <Widget>[
                     GestureDetector(
@@ -392,8 +403,8 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
                         height: 33,
                         width: 90,
                         decoration: BoxDecoration(
-                          color: Color(0xff4a67b3),
-                          borderRadius: BorderRadius.circular(5),
+                          color: Color(0xff6DC066),
+                          borderRadius: BorderRadius.circular(15),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.only(right: 10, left: 10),
@@ -437,30 +448,26 @@ class _AdProjAddState extends StateMVC<AdProjAdd> {
               SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-                child: GestureDetector(
-                  onTap: () {
-                    submit(context);
-                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdBottomtabs())) ;
-                  },
-                  child: Container(
-                    alignment: Alignment.bottomCenter,
-                    height: 50,
-                    padding: EdgeInsets.all(11),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: Color(0xff4a67b3)),
-                    child: Center(
-                      child: Text(
-                        "Submit",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16),
-                      ),
-                    ),
+              GestureDetector(
+                onTap: () {
+                  submit(context);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Color(0xff6DC066),
+                    borderRadius: BorderRadius.circular(60),
+                  ),
+                  height: 50,
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Text(
+                    "Submit",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 1),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),

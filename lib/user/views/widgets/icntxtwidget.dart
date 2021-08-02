@@ -23,8 +23,8 @@ class IconTxt extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          height: 88,
-          width: 50,
+          height: 111,
+          width: 65,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

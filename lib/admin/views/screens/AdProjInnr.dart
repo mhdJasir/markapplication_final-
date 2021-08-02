@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
+import 'package:hrmarkgrp/main.dart';
 
 class AdProjInnr extends StatefulWidget {
   final ind;
@@ -15,12 +16,22 @@ class _AdProjInnrState extends State<AdProjInnr> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           widget.ind == 1 ? "Project Name" : "Grase Villa No.2",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       backgroundColor: Color(0xfff5f6f8),
       body: Column(
@@ -28,26 +39,17 @@ class _AdProjInnrState extends State<AdProjInnr> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: 150,
+            height: 130,
             margin: const EdgeInsets.only(
-                top: 10.0, right: 9.0, left: 9.0, bottom: 5),
+              top: 10.0,
+              right: 20,
+              left: 20,
+            ),
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                //background color of box
-                BoxShadow(
-                  color: Colors.grey[400],
-                  blurRadius: 0.8, // soften the shadow
-                  spreadRadius: 0.8, //extend the shadow
-                  offset: Offset(
-                    0.5, // Move to right 10  horizontally
-                    0.5, // Move to bottom 10 Vertically
-                  ),
-                )
-              ],
-            ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                border: MyApp.bord),
             child: Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: Column(
@@ -87,26 +89,17 @@ class _AdProjInnrState extends State<AdProjInnr> {
             ),
           ),
           Container(
-            height: 150,
+            height: 130,
             margin: const EdgeInsets.only(
-                top: 10.0, right: 9.0, left: 9.0, bottom: 5),
+              top: 10.0,
+              right: 20,
+              left: 20,
+            ),
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                //background color of box
-                BoxShadow(
-                  color: Colors.grey[400],
-                  blurRadius: 0.8, // soften the shadow
-                  spreadRadius: 0.8, //extend the shadow
-                  offset: Offset(
-                    0.5, // Move to right 10  horizontally
-                    0.5, // Move to bottom 10 Vertically
-                  ),
-                )
-              ],
-            ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                border: MyApp.bord),
             child: Padding(
               padding: const EdgeInsets.only(
                   top: 15, bottom: 15, right: 15, left: 15),
@@ -117,26 +110,14 @@ class _AdProjInnrState extends State<AdProjInnr> {
             ),
           ),
           Container(
-            height: 150,
+            height: 130,
             margin: const EdgeInsets.only(
-                top: 10.0, right: 9.0, left: 9.0, bottom: 5),
+                top: 10.0, right: 20, left: 20, bottom: 5),
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                //background color of box
-                BoxShadow(
-                  color: Colors.grey[400],
-                  blurRadius: 0.8, // soften the shadow
-                  spreadRadius: 0.8, //extend the shadow
-                  offset: Offset(
-                    0.5, // Move to right 10  horizontally
-                    0.5, // Move to bottom 10 Vertically
-                  ),
-                )
-              ],
-            ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                border: MyApp.bord),
             child: Padding(
               padding: const EdgeInsets.only(
                   top: 15, bottom: 15, right: 15, left: 15),
@@ -158,7 +139,7 @@ class _AdProjInnrState extends State<AdProjInnr> {
                   onTap: () {
                     showDialog(
                       builder: (context) => Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(20.0),
                         child: Container(
                           decoration: BoxDecoration(
                               color: Color(0xff496ab1),
@@ -168,7 +149,7 @@ class _AdProjInnrState extends State<AdProjInnr> {
                           height: MediaQuery.of(context).size.height,
                           child: Padding(
                             padding: const EdgeInsets.only(
-                                top: 30, bottom: 30, right: 2, left: 2),
+                                top: 30, bottom: 30, right: 20, left: 20),
                             child: Container(
                               color: Colors.white,
                               child: Image.asset(
@@ -188,7 +169,10 @@ class _AdProjInnrState extends State<AdProjInnr> {
                     print(index == 1 ? "iccccccccccc" : "zzzzzzzz");
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 9.0, bottom: 10),
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      bottom: 10,
+                    ),
                     child: Container(
                       alignment: Alignment.topLeft,
                       child: Container(

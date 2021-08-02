@@ -1,6 +1,7 @@
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:hrmarkgrp/main.dart';
 
 class AdNotificattionpage extends StatefulWidget {
   @override
@@ -47,12 +48,22 @@ class _AdNotificattionpageState extends State<AdNotificattionpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           "Notifications",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       backgroundColor: Color(0xfff5f6f8),
       body: Column(
@@ -61,7 +72,7 @@ class _AdNotificattionpageState extends State<AdNotificattionpage> {
         children: <Widget>[
           tdylist.isNotEmpty
               ? Padding(
-                  padding: const EdgeInsets.only(left: 9, top: 10),
+                  padding: const EdgeInsets.only(left: 20, top: 10),
                   child: Text(
                     "Today",
                     style: TextStyle(
@@ -82,7 +93,7 @@ class _AdNotificattionpageState extends State<AdNotificattionpage> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding:
-                            const EdgeInsets.only(left: 12, right: 12, top: 10),
+                            const EdgeInsets.only(left: 20, right: 20, top: 10),
                         child: Slidable(
                           key: Key(tdylist[index]),
                           controller: _slidableController1,
@@ -91,26 +102,15 @@ class _AdNotificattionpageState extends State<AdNotificattionpage> {
                           child: Container(
                               width: MediaQuery.of(context).size.width,
                               padding: EdgeInsets.only(
-                                  right: 10, left: 20, top: 10, bottom: 10),
+                                  right: 20, left: 20, top: 10, bottom: 10),
                               decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(3),
-                                    topRight: Radius.circular(3),
-                                    topLeft: Radius.circular(3),
-                                    bottomRight: Radius.circular(3)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey[400],
-                                    blurRadius: 1.5, // soften the shadow
-                                    spreadRadius: 0.3, //extend the shadow
-                                    offset: Offset(
-                                      0.3, // Move to right 10  horizontally
-                                      0.3, // Move to bottom 10 Vertically
-                                    ),
-                                  )
-                                ],
-                              ),
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(3),
+                                      topRight: Radius.circular(3),
+                                      topLeft: Radius.circular(3),
+                                      bottomRight: Radius.circular(3)),
+                                  border: MyApp.bord),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -153,7 +153,7 @@ class _AdNotificattionpageState extends State<AdNotificattionpage> {
               : Container(),
           ystrdylist.isNotEmpty
               ? Padding(
-                  padding: const EdgeInsets.only(left: 9, top: 10),
+                  padding: const EdgeInsets.only(left: 20, top: 10),
                   child: Text(
                     "Yesterday",
                     style: TextStyle(
@@ -174,8 +174,8 @@ class _AdNotificattionpageState extends State<AdNotificattionpage> {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.only(
-                            left: 12,
-                            right: 12,
+                            left: 20,
+                            right: 20,
                             top: 10,
                           ),
                           child: Slidable(
@@ -187,24 +187,13 @@ class _AdNotificattionpageState extends State<AdNotificattionpage> {
                                 padding: EdgeInsets.only(
                                     right: 10, left: 20, top: 10, bottom: 10),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(3),
-                                      topRight: Radius.circular(3),
-                                      topLeft: Radius.circular(3),
-                                      bottomRight: Radius.circular(3)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey[400],
-                                      blurRadius: 1.5, // soften the shadow
-                                      spreadRadius: 0.3, //extend the shadow
-                                      offset: Offset(
-                                        0.3, // Move to right 10  horizontally
-                                        0.3, // Move to bottom 10 Vertically
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(3),
+                                        topRight: Radius.circular(3),
+                                        topLeft: Radius.circular(3),
+                                        bottomRight: Radius.circular(3)),
+                                    border: MyApp.bord),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -229,20 +218,9 @@ class _AdNotificattionpageState extends State<AdNotificattionpage> {
                             secondaryActions: <Widget>[
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(55),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey[400],
-                                      blurRadius: 1.5, // soften the shadow
-                                      spreadRadius: 0.3, //extend the shadow
-                                      offset: Offset(
-                                        0.3, // Move to right 10  horizontally
-                                        0.3, // Move to bottom 10 Vertically
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(55),
+                                    border: MyApp.bord),
                                 child: IconSlideAction(
                                   color: Colors.red,
                                   icon: Icons.close,

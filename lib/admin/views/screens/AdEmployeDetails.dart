@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hrmarkgrp/main.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EmpDetails extends StatefulWidget {
@@ -83,12 +84,12 @@ class _EmpDetailsState extends State<EmpDetails> {
                             padding: EdgeInsets.only(
                                 top: 6, bottom: 6, left: 10, right: 10),
                             decoration: BoxDecoration(
-                              color: Color(0xffdbecff),
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(17),
-                                bottomRight: Radius.circular(17),
-                              ),
-                            ),
+                                color: Color(0xffdbecff),
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(17),
+                                  bottomRight: Radius.circular(17),
+                                ),
+                                border: MyApp.bord),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
@@ -194,12 +195,12 @@ class _EmpDetailsState extends State<EmpDetails> {
                         children: <Widget>[
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(17),
-                                bottomLeft: Radius.circular(17),
-                              ),
-                            ),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(17),
+                                  bottomLeft: Radius.circular(17),
+                                ),
+                                border: MyApp.bord),
                             padding: EdgeInsets.only(
                                 top: 6, bottom: 6, left: 7, right: 6),
                             child: Column(
@@ -264,20 +265,9 @@ class _EmpDetailsState extends State<EmpDetails> {
             ),
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey[300],
-                  blurRadius: 1.1, // soften the shadow
-                  spreadRadius: 1.7, //extend the shadow
-                  offset: Offset(
-                    0.4, // Move to right 10  horizontally
-                    0.2, // Move to bottom 10 Vertically
-                  ),
-                )
-              ],
-            ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                border: MyApp.bord),
             child: Row(
               children: [
                 Padding(
@@ -328,20 +318,9 @@ class _EmpDetailsState extends State<EmpDetails> {
                 top: 8.0, right: 8.0, left: 8.0, bottom: 10),
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey[300],
-                  blurRadius: 1.1, // soften the shadow
-                  spreadRadius: 1.7, //extend the shadow
-                  offset: Offset(
-                    0.4, // Move to right 10  horizontally
-                    0.2, // Move to bottom 10 Vertically
-                  ),
-                )
-              ],
-            ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                border: MyApp.bord),
             child: Padding(
               padding: const EdgeInsets.only(top: 20, left: 15, bottom: 20),
               child: Column(

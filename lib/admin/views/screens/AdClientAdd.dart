@@ -1,12 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:hrmarkgrp/Widgets/Styles/validate_Fields.dart';
 import 'package:hrmarkgrp/admin/controller/HomeController.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:path/path.dart' as p;
+
+import '../../../main.dart';
 
 class AdClientAdd extends StatefulWidget {
   final tok;
@@ -35,22 +38,36 @@ class _AdClientAddState extends StateMVC<AdClientAdd> {
   Future getCameraImage() async {
     var image = await _picker.pickImage(source: ImageSource.camera);
 
+  pickImage(source) async {
+    var image = await _picker.pickImage(source: source);
+    File file = File(image.path);
+    File Compressed = await compressFile(file);
     setState(() {
-      _image = File(image.path);
+      _image = Compressed;
       Navigator.pop(context);
     });
-    print("mmmmmmmmmmmmm" + _image.toString());
+    print(file.lengthSync());
+
+    print("image size  :" + file.lengthSync().toString());
   }
 
   //============================== Image from gallery
   Future getGalleryImage() async {
     var image = await _picker.pickImage(source: ImageSource.gallery);
+  Future<File> compressFile(File file) async {
+    final filePath = file.absolute.path;
+    final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
+    final splitted = filePath.substring(0, (lastIndex));
+    final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
+    var result = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path,
+      outPath,
+      quality: 50,
+    );
 
-    setState(() {
-      _image = File(image.path);
-      Navigator.pop(context);
-    });
-    print("IMAAAAGGGGGGE" + _image.toString());
+    print("result   : " + result.lengthSync().toString());
+
+    return result;
   }
 
   Widget imagepickbottomsheet(context) {
@@ -72,7 +89,7 @@ class _AdClientAddState extends StateMVC<AdClientAdd> {
             children: <Widget>[
               TextButton.icon(
                   onPressed: () {
-                    getCameraImage();
+                    pickImage(ImageSource.camera);
                   },
                   icon: Icon(
                     Icons.camera_alt,
@@ -84,7 +101,7 @@ class _AdClientAddState extends StateMVC<AdClientAdd> {
               ),
               TextButton.icon(
                   onPressed: () {
-                    getGalleryImage();
+                    pickImage(ImageSource.gallery);
                   },
                   icon: Icon(
                     Icons.image,
@@ -136,12 +153,22 @@ class _AdClientAddState extends StateMVC<AdClientAdd> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
-          "Client Add",
-          style: TextStyle(color: Colors.white),
+          "Add Client",
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       backgroundColor: Color(0xfff5f6f8),
       body: SingleChildScrollView(
@@ -149,121 +176,21 @@ class _AdClientAddState extends StateMVC<AdClientAdd> {
           key: _con.loginFormKey,
           child: Column(
             children: <Widget>[
+              buildTextFields(validations.validateFirstName, clintfnamecontr,
+                  "First Name", TextInputType.name),
+              buildTextFields(
+                  null, cllastnamecontr, "Last Name", TextInputType.name),
+              buildTextFields(validations.validateMail, emailcontr, "Email",
+                  TextInputType.emailAddress),
               Padding(
-                padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
-                child: TextFormField(
-                  validator: validations.validateFirstName,
-                  controller: clintfnamecontr,
-                  style: TextStyle(
-                      color: Colors.grey[900],
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15),
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 14, horizontal: 8),
-                    hintText: "First Name",
-                    hintStyle: g615W5,
-                    border: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
-                child: TextFormField(
-                  controller: cllastnamecontr,
-                  style: TextStyle(
-                      color: Colors.grey[900],
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15),
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 14, horizontal: 8),
-                    hintText: "Last Name",
-                    hintStyle: g615W5,
-                    border: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
-                child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  validator: validations.validateMail,
-                  controller: emailcontr,
-                  style: TextStyle(
-                      color: Colors.grey[900],
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15),
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 14, horizontal: 8),
-                    hintText: "Email",
-                    hintStyle: g615W5,
-                    border: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                  padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
+                  padding:
+                      const EdgeInsets.only(right: 20, left: 20, bottom: 15),
                   child: Container(
+                      height: 50,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          border: Border.all(color: Colors.grey[400]),
+                          border: Border.all(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       child: Padding(
                         padding:
@@ -282,116 +209,12 @@ class _AdClientAddState extends StateMVC<AdClientAdd> {
                                 child: Container(),
                               ),
                       ))),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
-                child: TextFormField(
-                  keyboardType: TextInputType.text,
-                  validator: validations.validatecombnay,
-                  controller: combnycontr,
-                  style: TextStyle(
-                      color: Colors.grey[900],
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15),
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 14, horizontal: 8),
-                    hintText: "Company",
-                    hintStyle: g615W5,
-                    border: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  validator: validations.validateMobile,
-                  controller: phon1contr,
-                  style: TextStyle(
-                      color: Colors.grey[900],
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15),
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 14, horizontal: 8),
-                    hintText: "Phone 1",
-                    hintStyle: g615W5,
-                    border: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: phon2contr,
-                  style: TextStyle(
-                      color: Colors.grey[900],
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15),
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey[400]),
-                        borderRadius: BorderRadius.circular(15)),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 14, horizontal: 8),
-                    hintText: "Phone 2",
-                    hintStyle: g615W5,
-                    border: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                  ),
-                ),
-              ),
+              buildTextFields(validations.validatecombnay, combnycontr,
+                  "Company", TextInputType.text),
+              buildTextFields(validations.validateMobile, phon1contr, "Phone 1",
+                  TextInputType.number),
+              buildTextFields(
+                  null, phon2contr, "Phone 2", TextInputType.number),
               SizedBox(
                 height: 20,
               ),
@@ -405,7 +228,6 @@ class _AdClientAddState extends StateMVC<AdClientAdd> {
                           context: context,
                           builder: ((builder) =>
                               imagepickbottomsheet(context)));
-                      print("fffffffffffff");
                     },
                     child: CircleAvatar(
                       backgroundImage: _image == null
@@ -420,36 +242,89 @@ class _AdClientAddState extends StateMVC<AdClientAdd> {
               SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-                child: GestureDetector(
-                  onTap: () {
-                    submit(context);
-                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdBottomtabs())) ;
-                  },
-                  child: Container(
-                    alignment: Alignment.bottomCenter,
-                    height: 50,
-                    padding: EdgeInsets.all(11),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: Color(0xff4a67b3)),
-                    child: Center(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      submit(context);
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Color(0xff6DC066),
+                        borderRadius: BorderRadius.circular(60),
+                      ),
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.6,
                       child: Text(
                         "Submit",
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w300,
+                            letterSpacing: 1),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildTextFields(validator, controller, text, keytype) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        right: 20,
+        left: 20,
+      ),
+      child: Column(
+        children: [
+          Container(
+            height: 50,
+            child: TextFormField(
+              keyboardType: keytype,
+              validator: validator,
+              controller: controller,
+              style: TextStyle(
+                  color: Colors.grey[900],
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15),
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: MyApp.border),
+                    borderRadius: BorderRadius.circular(15)),
+                focusedErrorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: MyApp.border),
+                    borderRadius: BorderRadius.circular(15)),
+                filled: true,
+                fillColor: Colors.white,
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: MyApp.border),
+                    borderRadius: BorderRadius.circular(15)),
+                errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: MyApp.border),
+                    borderRadius: BorderRadius.circular(15)),
+                contentPadding:
+                    new EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0),
+                hintText: text,
+                hintStyle: g615W5,
+                errorStyle: TextStyle(height: 0),
+                border: InputBorder.none,
+                disabledBorder: InputBorder.none,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+        ],
       ),
     );
   }

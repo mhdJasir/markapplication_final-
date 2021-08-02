@@ -101,6 +101,9 @@ class UserHomeController extends ControllerMVC {
             backgroundColor: Colors.black,
             fontSize: 16.0,
           );
+          NotificationService().showNotification("Attendance",
+              "marked Successfully", "1", "Attendance", "AddAttendance");
+          setState(() {});
         }
       }
       Navigator.pop(cont);

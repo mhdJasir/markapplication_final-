@@ -17,6 +17,7 @@ import 'package:hrmarkgrp/admin/views/screens/AdNotification.dart';
 import 'package:hrmarkgrp/admin/views/screens/AdPurchaseOrdr.dart';
 import 'package:hrmarkgrp/admin/views/screens/Adinvoice.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
+import 'package:hrmarkgrp/main.dart';
 import 'package:hrmarkgrp/user/views/Screens/LoginScreen/login.dart';
 import 'package:hrmarkgrp/user/views/widgets/icntxtwidget.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -124,181 +125,15 @@ class _AdHomeState extends StateMVC<AdHome> {
                         )
                       ],
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(top: 14.0, left: 13),
-                    //   child: Text(
-                    //     "Task (" + _con.tskLevrqst.length.toString() + ")",
-                    //     style: TextStyle(
-                    //         fontWeight: FontWeight.w500,
-                    //         color: Colors.grey[700]),
-                    //   ),
-                    // ), /////Taskk
-                    // _con.tskLevrqst.length != 0
-                    //     ? SizedBox(
-                    //         height: MediaQuery.of(context).size.height * .18,
-                    //         child: Padding(
-                    //           padding: const EdgeInsets.only(
-                    //             top: 6.0,
-                    //           ),
-                    //           child: ListView.builder(
-                    //             physics: BouncingScrollPhysics(),
-                    //             shrinkWrap: true,
-                    //             scrollDirection: Axis.horizontal,
-                    //             itemCount: _con.tskLevrqst != null
-                    //                 ? _con.tskLevrqst.length
-                    //                 : 0,
-                    //             itemBuilder: (context, index) {
-                    //               final DateFormat frm =
-                    //                   DateFormat('yyyy-MM-dd');
-                    //               final String fromedatee = frm.format(
-                    //                   DateTime.parse(
-                    //                       _con.tskLevrqst[index]["from"]));
-                    //               final String todatee = frm.format(
-                    //                   DateTime.parse(
-                    //                       _con.tskLevrqst[index]["to"]));
-                    //               return Container(
-                    //                 margin: const EdgeInsets.only(
-                    //                     top: 9.0,
-                    //                     right: 9.0,
-                    //                     left: 9.0,
-                    //                     bottom: 10),
-                    //                 width:
-                    //                     MediaQuery.of(context).size.width * .90,
-                    //                 decoration: BoxDecoration(
-                    //                   color: Colors.white,
-                    //                   borderRadius: BorderRadius.circular(15),
-                    //                   boxShadow: [
-                    //                     BoxShadow(
-                    //                       color: Colors.grey[400],
-                    //                       blurRadius: 1.1, // soften the shadow
-                    //                       spreadRadius: 1.2, //extend the shadow
-                    //                       offset: Offset(
-                    //                         1.1, // Move to right 10  horizontally
-                    //                         1.0, // Move to bottom 10 Vertically
-                    //                       ),
-                    //                     )
-                    //                   ],
-                    //                 ),
-                    //                 child: Row(
-                    //                   children: [
-                    //                     Container(
-                    //                       height: MediaQuery.of(context)
-                    //                               .size
-                    //                               .height *
-                    //                           .18,
-                    //                       width: MediaQuery.of(context)
-                    //                               .size
-                    //                               .width *
-                    //                           .04,
-                    //                       decoration: BoxDecoration(
-                    //                           color: Color(0xff4a67b3),
-                    //                           borderRadius: BorderRadius.only(
-                    //                             topLeft: Radius.circular(15),
-                    //                             bottomLeft: Radius.circular(15),
-                    //                           )),
-                    //                     ),
-                    //                     Expanded(
-                    //                       child: Padding(
-                    //                         padding:
-                    //                             const EdgeInsets.only(left: 10),
-                    //                         child: Column(
-                    //                           mainAxisAlignment:
-                    //                               MainAxisAlignment.center,
-                    //                           crossAxisAlignment:
-                    //                               CrossAxisAlignment.start,
-                    //                           children: <Widget>[
-                    //                             Padding(
-                    //                               padding:
-                    //                                   const EdgeInsets.only(
-                    //                                       right: 7),
-                    //                               child: Row(
-                    //                                 mainAxisAlignment:
-                    //                                     MainAxisAlignment
-                    //                                         .spaceBetween,
-                    //                                 children: <Widget>[
-                    //                                   Text("Leave Request",
-                    //                                       style: b18W5),
-                    //                                   Text(
-                    //                                     _con.tskLevrqst[index][
-                    //                                             "emp_firstname"]
-                    //                                         .toString(),
-                    //                                     style: TextStyle(
-                    //                                         color: Colors
-                    //                                             .grey[500],
-                    //                                         fontSize: 15),
-                    //                                   ),
-                    //                                 ],
-                    //                               ),
-                    //                             ),
-                    //                             SizedBox(
-                    //                               height: 10,
-                    //                             ),
-                    //                             Padding(
-                    //                               padding:
-                    //                                   const EdgeInsets.only(
-                    //                                       right: 7),
-                    //                               child: Row(
-                    //                                 mainAxisAlignment:
-                    //                                     MainAxisAlignment
-                    //                                         .spaceBetween,
-                    //                                 children: [
-                    //                                   Text(
-                    //                                     fromedatee.toString() +
-                    //                                         " to " +
-                    //                                         todatee.toString(),
-                    //                                     textAlign:
-                    //                                         TextAlign.start,
-                    //                                     style: TextStyle(
-                    //                                         color: Colors
-                    //                                             .grey[500],
-                    //                                         fontSize: 15),
-                    //                                   ),
-                    //                                   Text(
-                    //                                     _con.tskLevrqst[index]
-                    //                                             ["leave_type"]
-                    //                                         .toString(),
-                    //                                     style: TextStyle(
-                    //                                         color: Colors
-                    //                                             .grey[500],
-                    //                                         fontSize: 15),
-                    //                                   )
-                    //                                 ],
-                    //                               ),
-                    //                             )
-                    //                           ],
-                    //                         ),
-                    //                       ),
-                    //                     )
-                    //                   ],
-                    //                 ),
-                    //               );
-                    //             },
-                    //           ),
-                    //         ),
-                    //       )
-                    //     : Container(
-                    //         height: 0,
-                    //       ),
                     Padding(
                       padding: const EdgeInsets.only(
                           right: 9.0, left: 9.0, top: 9.0, bottom: 8.5),
                       child: Container(
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey[400],
-                              blurRadius: 1.1, // soften the shadow
-                              spreadRadius: 1.2, //extend the shadow
-                              offset: Offset(
-                                1.1, // Move to right 10  horizontally
-                                1.0, // Move to bottom 10 Vertically
-                              ),
-                            )
-                          ],
-                        ),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                            border: MyApp.bord),
                         child: Padding(
                           padding: const EdgeInsets.only(
                               top: 10, left: 12, right: 12, bottom: 10),
@@ -322,7 +157,7 @@ class _AdHomeState extends StateMVC<AdHome> {
                                                 token: widget.token)));
                                     // pr.show();
                                   },
-                                  title: "Attendence",
+                                  title: "Attendance",
                                   icon: "assets/icons/imm.png",
                                   width: 50,
                                   height: 40,
@@ -338,7 +173,7 @@ class _AdHomeState extends StateMVC<AdHome> {
                                   icon: "assets/icons/luggage.png",
                                   width: 50,
                                   height: 40,
-                                  title: "Leave Request",
+                                  title: "Leave Requests",
                                 ),
                                 IconTxt(
                                   tap: () {
@@ -348,7 +183,7 @@ class _AdHomeState extends StateMVC<AdHome> {
                                             builder: (context) => MoneyTransfer(
                                                 token: widget.token)));
                                   },
-                                  title: "Money Transfer",
+                                  title: "Cash Transfer",
                                   icon: "assets/icons/schedule.png",
                                   width: 50,
                                   height: 40,
@@ -363,7 +198,7 @@ class _AdHomeState extends StateMVC<AdHome> {
                                             builder: (context) =>
                                                 AdDalyStatus()));
                                   },
-                                  title: "Daily Work Status",
+                                  title: "Daily Construction Report",
                                   icon: "assets/icons/imm.png",
                                   width: 50,
                                   height: 40,
@@ -390,7 +225,7 @@ class _AdHomeState extends StateMVC<AdHome> {
                                                 AdEmployeeTask(
                                                     toke: widget.token)));
                                   },
-                                  title: "Employee Task",
+                                  title: "Employee Work Report",
                                   icon: "assets/icons/imm.png",
                                   width: 50,
                                   height: 40,
@@ -408,7 +243,7 @@ class _AdHomeState extends StateMVC<AdHome> {
                                   icon: "assets/icons/salary.png",
                                   width: 50,
                                   height: 40,
-                                  title: "Material Request",
+                                  title: "Material Requirements",
                                 ),
                                 IconTxt(
                                   tap: () {
@@ -419,7 +254,7 @@ class _AdHomeState extends StateMVC<AdHome> {
                                                 AdPurchaseOrder(
                                                     token: widget.token)));
                                   },
-                                  title: "Purchase Order",
+                                  title: "Material Received",
                                   icon: "assets/icons/check-list.png",
                                   width: 50,
                                   height: 40,
@@ -584,7 +419,7 @@ class _AdHomeState extends StateMVC<AdHome> {
                 },
               ),
               ListTile(
-                title: Text("Leave Request"),
+                title: Text("Leave Requests"),
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Image.asset(
@@ -603,7 +438,7 @@ class _AdHomeState extends StateMVC<AdHome> {
                 },
               ),
               ListTile(
-                title: Text("Money Transfer"),
+                title: Text("Cash Transfer"),
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Image.asset(
@@ -624,7 +459,7 @@ class _AdHomeState extends StateMVC<AdHome> {
               ),
               ListTile(
                 title: Text(
-                  "Daily Work Status",
+                  "Daily Work Report",
                 ),
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 15),
@@ -684,7 +519,7 @@ class _AdHomeState extends StateMVC<AdHome> {
               ),
               ListTile(
                 title: Text(
-                  "Material Request",
+                  "Material Requirements",
                 ),
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 15),
@@ -704,7 +539,7 @@ class _AdHomeState extends StateMVC<AdHome> {
                 },
               ),
               ListTile(
-                title: Text("Purchase Order"),
+                title: Text("Material Received"),
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Image.asset(
@@ -794,7 +629,7 @@ class _AdHomeState extends StateMVC<AdHome> {
               ),
               ListTile(
                 title: Text(
-                  "Project",
+                  "Projects",
                 ),
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 15),

@@ -43,6 +43,7 @@ Future adddailysts(
   Map<String, String> headers = {
     "Authorization": "Bearer " + NetworkUtils.token
   };
+  print("token at add dailuStatus repo :" + NetworkUtils.token.toString());
   // Intilize the multipart request
 
   var adddailysts = http.MultipartRequest('POST', apiUrl);
@@ -61,6 +62,7 @@ Future adddailysts(
     adddailysts.headers.addAll(headers);
     final streamedResponse = await adddailysts.send();
     final response = await http.Response.fromStream(streamedResponse);
+    print("status code :" + response.statusCode.toString());
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);
       return responseData;
