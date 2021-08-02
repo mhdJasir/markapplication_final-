@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:hrmarkgrp/admin/controller/HomeController.dart';
+import 'package:hrmarkgrp/Utils/NetworkUtils.dart';
 import 'package:hrmarkgrp/admin/views/screens/AdDailysttsInnerPage.dart';
+import 'package:hrmarkgrp/admin/views/screens/ImageView.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
@@ -10,24 +13,25 @@ class AdDalyStatus extends StatefulWidget {
 }
 
 class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
-  HomeController _con;
-  _AdDalyStatusState() : super(HomeController()) {
-    _con = controller;
-  }
   List<String> menubarItems = ["Sort by Project", "Sort by Date"];
   ScrollController _scrollController = ScrollController();
   bool lazyloading = false;
-  int nextpage;
+  List dailyStatus = [];
+  bool loading = true;
+  int nextpage = 1;
   @override
   void initState() {
-    _con.dailystatus();
+    getDailyStatus();
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        if (!lazyloading) {
-          setState(() {
-            lazyloading = true;
-          });
+      if (nextpage != null) {
+        if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent) {
+          if (!lazyloading) {
+            setState(() {
+              lazyloading = true;
+            });
+            getDailyStatus();
+          }
         }
       }
     });
@@ -47,7 +51,7 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
         centerTitle: true,
         backgroundColor: Color(0xff496ab1),
       ),
-      body: _con.loading == false
+      body: !loading
           ? Container(
               color: Color(0xFFF6F6F6),
               child: ListView(
@@ -81,14 +85,14 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
         )
       ],
     ));
-    for (var index = 0; index < _con.dailystaus.length; index++) {
+    for (var index = 0; index < dailyStatus.length; index++) {
       list.add(GestureDetector(
         onTap: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => AdDalyStatusInnerPage(
-                      dailystts: _con.dailystaus[index])));
+                  builder: (context) =>
+                      AdDalyStatusInnerPage(dailystts: dailyStatus[index])));
         },
         child: Column(
           children: [
@@ -118,14 +122,13 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 15.0),
-                    child: Text(
-                        _con.dailystaus[index]["project_name"].toString(),
+                    child: Text(dailyStatus[index]["project_name"].toString(),
                         style: b14W7),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 15),
                     child: Text(
-                      _con.dailystaus[index]["date"].toString(),
+                      dailyStatus[index]["date"].toString(),
                       style: TextStyle(color: Colors.blue),
                     ),
                   ),
@@ -167,7 +170,7 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
                             height: 30,
                             width: 30,
                             child: Image.network(
-                              "http://markbuilders.in/admin/${_con.dailystaus[index]["emp_image"]}",
+                              "http://markbuilders.in/admin/${dailyStatus[index]["emp_image"]}",
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -176,7 +179,7 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
                           width: 10,
                         ),
                         Text(
-                          _con.dailystaus[index]["emp_firstname"].toString(),
+                          dailyStatus[index]["emp_firstname"].toString(),
                           style: TextStyle(color: Colors.black45),
                         ),
                       ],
@@ -211,12 +214,12 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
-                            itemCount: List.castFrom(
-                                    _con.dailystaus[index]["unemployee"])
-                                .length,
+                            itemCount:
+                                List.castFrom(dailyStatus[index]["unemployee"])
+                                    .length,
                             itemBuilder: (context, i) {
                               var length = List.castFrom(
-                                      _con.dailystaus[index]["unemployee"])
+                                      dailyStatus[index]["unemployee"])
                                   .length;
                               return Row(
                                 children: [
@@ -239,7 +242,7 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
                                     width: 5,
                                   ),
                                   Text(
-                                    _con.dailystaus[index]["unemployee"][i]
+                                    dailyStatus[index]["unemployee"][i]
                                         .toString(),
                                     style: TextStyle(color: Colors.grey),
                                   ),
@@ -260,20 +263,30 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
                       height: 10,
                     ),
                     Text(
-                      _con.dailystaus[index]["description"].toString(),
+                      dailyStatus[index]["description"].toString(),
                       style: b14W7,
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(60),
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        child: Image.network(
-                          "http://markbuilders.in/admin/${_con.dailystaus[index]["image"]}",
-                          fit: BoxFit.cover,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ImageView(
+                              src:
+                                  "http://markbuilders.in/admin/${dailyStatus[index]["image"]}");
+                        }));
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(60),
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          child: Image.network(
+                            "http://markbuilders.in/admin/${dailyStatus[index]["image"]}",
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
@@ -312,14 +325,47 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
         ),
       ));
     }
-    list.add(Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [CircularProgressIndicator()],
-    ));
+    if (lazyloading) {
+      list.add(Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [CircularProgressIndicator()],
+      ));
+    }
     return list;
   }
 
   void menubarAction(String menubaritems) {
     if (menubaritems == menubaritems) {}
+  }
+
+  Future getDailyStatus() async {
+    var api = NetworkUtils.dailysta + "?page=$nextpage";
+    var res = await NetworkUtils.httpget(api);
+    if (res?.statusCode == 200) {
+      var jsObj = jsonDecode(res.body);
+      if (jsObj["status"] == "1") {
+        var data = List.castFrom(jsObj["data"]["data"]);
+        setState(() {
+          if (nextpage == 1) {
+            dailyStatus = data;
+          } else {
+            for (var i = 0; i < data.length; i++) {
+              dailyStatus.add(data[i]);
+            }
+          }
+          if (jsObj["data"]["next_page_url"] != null) {
+            nextpage = jsObj["data"]["last_page"];
+          } else {
+            nextpage = null;
+          }
+          loading = false;
+          lazyloading = false;
+        });
+      }
+    } else {
+      setState(() {
+        loading = false;
+      });
+    }
   }
 }

@@ -29,10 +29,10 @@ class _PurchaseOrderInnerState extends State<PurchaseOrderInner> {
   TextEditingController myController2 = TextEditingController();
   TextEditingController myController3 = TextEditingController();
 
-  PickedFile _imagefile;
+  XFile _imagefile;
   final ImagePicker _picker = ImagePicker();
   void takephoto(ImageSource source) async {
-    final pickedfile = await _picker.getImage(source: source);
+    final pickedfile = await _picker.pickImage(source: source);
     setState(() {
       _imagefile = pickedfile;
     });

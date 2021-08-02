@@ -75,7 +75,6 @@ class _AdBottomtabsState extends State<AdBottomtabs> {
                 style: TextStyle(color: Colors.black),
               ),
               onPressed: () {
-                print("NOT CANCELD APPPPPPP");
                 Navigator.of(context).pop(false);
               }),
           SizedBox(
@@ -89,7 +88,6 @@ class _AdBottomtabsState extends State<AdBottomtabs> {
                 style: TextStyle(color: Colors.black),
               ),
               onPressed: () {
-                print("CANCELD APPPPPPP");
                 Navigator.of(context).pop(true);
               }),
         ],

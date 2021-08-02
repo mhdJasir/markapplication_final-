@@ -9,7 +9,7 @@ class EmpDetails extends StatefulWidget {
 }
 
 class _EmpDetailsState extends State<EmpDetails> {
-  PickedFile _imagefile;
+  XFile _imagefile;
   final ImagePicker _picker = ImagePicker();
 
   @override
@@ -365,7 +365,7 @@ class _EmpDetailsState extends State<EmpDetails> {
   }
 
   void takephoto(ImageSource source) async {
-    final pickedfile = await _picker.getImage(source: source);
+    final pickedfile = await _picker.pickImage(source: source);
     setState(() {
       _imagefile = pickedfile;
     });

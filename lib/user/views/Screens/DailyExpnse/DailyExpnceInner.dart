@@ -33,7 +33,7 @@ class _DailyExpnceInnerState extends StateMVC<DailyExpnceInner> {
 
   File _image;
   Future getCameraImage() async {
-    var image = await _picker.getImage(source: ImageSource.camera);
+    var image = await _picker.pickImage(source: ImageSource.camera);
 
     setState(() {
       _image = File(image.path);
@@ -43,7 +43,7 @@ class _DailyExpnceInnerState extends StateMVC<DailyExpnceInner> {
 
   //============================== Image from gallery
   Future getGalleryImage() async {
-    var image = await _picker.getImage(source: ImageSource.gallery);
+    var image = await _picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       _image = File(image.path);

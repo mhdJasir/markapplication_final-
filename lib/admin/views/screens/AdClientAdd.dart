@@ -33,7 +33,7 @@ class _AdClientAddState extends StateMVC<AdClientAdd> {
   File _image;
   ImagePicker _picker = ImagePicker();
   Future getCameraImage() async {
-    var image = await _picker.getImage(source: ImageSource.camera);
+    var image = await _picker.pickImage(source: ImageSource.camera);
 
     setState(() {
       _image = File(image.path);
@@ -44,7 +44,7 @@ class _AdClientAddState extends StateMVC<AdClientAdd> {
 
   //============================== Image from gallery
   Future getGalleryImage() async {
-    var image = await _picker.getImage(source: ImageSource.gallery);
+    var image = await _picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       _image = File(image.path);

@@ -8,7 +8,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:ntp/ntp.dart';
 
 class Attendance extends StatefulWidget {
-  String token;
+  final String token;
   Attendance(this.token);
   @override
   _AttendanceState createState() => _AttendanceState();
@@ -146,14 +146,14 @@ class _AttendanceState extends StateMVC<Attendance> {
               GestureDetector(
                 onTap: today.hour == 9 && today.minute <= 10
                     ? () async {
-                        await _con.stffaddattenedence(
+                        _con.stffaddattenedence(
                             widget.token, today, 1, context);
                       }
                     : today.hour == 13 &&
                             today.minute >= 30 &&
                             today.minute <= 45
                         ? () async {
-                            await _con.stffaddattenedence(
+                            _con.stffaddattenedence(
                                 widget.token, today, 2, context);
                           }
                         : null,

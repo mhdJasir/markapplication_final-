@@ -76,7 +76,7 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
 
   final ImagePicker _picker = ImagePicker();
   Future getCameraImage() async {
-    var image = await _picker.getImage(source: ImageSource.camera);
+    var image = await _picker.pickImage(source: ImageSource.camera);
     setState(() {
       _image = File(image.path);
       Navigator.pop(context);
@@ -85,7 +85,7 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
 
   //============================== Image from gallery
   Future getGalleryImage() async {
-    var image = await _picker.getImage(source: ImageSource.gallery);
+    var image = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
       _image = File(image.path);
       Navigator.pop(context);
