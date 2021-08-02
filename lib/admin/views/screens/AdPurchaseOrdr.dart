@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hrmarkgrp/admin/controller/HomeController.dart';
 import 'package:hrmarkgrp/admin/views/screens/Adpurchseinner.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
+import 'package:hrmarkgrp/main.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 class AdPurchaseOrder extends StatefulWidget {
@@ -27,12 +28,22 @@ class _AdPurchaseOrderState extends StateMVC<AdPurchaseOrder> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Color(0xFF545454),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: Text(
-            "Purchase Order",
-            style: TextStyle(color: Colors.white),
+            "Materials Received",
+            style: TextStyle(color: Colors.black87),
           ),
           centerTitle: true,
-          backgroundColor: Color(0xff496ab1),
+          backgroundColor: MyApp.appBar,
         ),
         body: _con.loading == false
             ? SafeArea(
@@ -52,26 +63,14 @@ class _AdPurchaseOrderState extends StateMVC<AdPurchaseOrder> {
                       },
                       child: Padding(
                         padding:
-                            const EdgeInsets.only(right: 9, left: 9, top: 10),
+                            const EdgeInsets.only(right: 20, left: 20, top: 10),
                         child: Container(
                           height: 109,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
-                              //background color of box
-                              BoxShadow(
-                                color: Colors.grey[400],
-                                blurRadius: 0.8, // soften the shadow
-                                spreadRadius: 0.8, //extend the shadow
-                                offset: Offset(
-                                  0.5, // Move to right 10  horizontally
-                                  0.5, // Move to bottom 10 Vertically
-                                ),
-                              )
-                            ],
-                          ),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              border: MyApp.bord),
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10, right: 10),
                             child: Column(

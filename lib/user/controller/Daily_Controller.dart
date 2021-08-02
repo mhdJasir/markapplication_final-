@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
+import 'package:hrmarkgrp/sevices/notificationService.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:hrmarkgrp/user/Repository/Daily_Repo.dart' as repo;
 
@@ -109,6 +110,7 @@ class DailyController extends ControllerMVC {
       Navigator.pop(context);
       if (value != null) {
         if (value["status"] == "1") {
+          print("value status : " + value["status"].toString());
           Fluttertoast.showToast(
             msg: value["message"],
             toastLength: Toast.LENGTH_SHORT,
@@ -117,6 +119,12 @@ class DailyController extends ControllerMVC {
             backgroundColor: Colors.black,
             fontSize: 16.0,
           );
+          NotificationService().showNotification(
+              "Daily Status",
+              "Status Added Successfully",
+              "1",
+              "Daily Status",
+              "Daily Status Add");
         }
         Navigator.pop(context);
       }
@@ -176,6 +184,12 @@ class DailyController extends ControllerMVC {
           backgroundColor: Colors.black,
           fontSize: 16.0,
         );
+        NotificationService().showNotification(
+            "Daily Expense",
+            "Expense Added Successfully",
+            "1",
+            "Daily Expense",
+            "Daily Expense Add");
         Navigator.pop(context);
         Navigator.pop(context);
       } else {
@@ -254,6 +268,8 @@ class DailyController extends ControllerMVC {
           backgroundColor: Colors.black,
           fontSize: 16.0,
         );
+        NotificationService().showNotification("Daily Task",
+            "Task Added Successfully", "1", "Daily Task", "Daily Task Add");
         Navigator.pop(context);
         Navigator.pop(context);
       }

@@ -5,8 +5,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hrmarkgrp/Utils/NetworkUtils.dart';
 import 'package:hrmarkgrp/admin/controller/HomeController.dart';
 import 'package:hrmarkgrp/modules/loadingDialog.dart';
+import 'package:hrmarkgrp/sevices/notificationService.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+
+import '../../../main.dart';
 
 class TakeAttendence extends StatefulWidget {
   final token;
@@ -22,6 +25,7 @@ class _TakeAttendenceState extends StateMVC<TakeAttendence> {
   _TakeAttendenceState() : super(HomeController()) {
     _con = controller;
   }
+  Size get size => MediaQuery.of(context).size;
   DateTime firstDate;
   DateTime lastDate;
   DateTime selecteddate;
@@ -46,15 +50,22 @@ class _TakeAttendenceState extends StateMVC<TakeAttendence> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          elevation: 1,
-          centerTitle: true,
-          backgroundColor: Color(0xff4a67b3),
-          title: Text(
-            "Attendance",
-            style: TextStyle(
-              color: Colors.white,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Color(0xFF545454),
             ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
+          title: Text(
+            "Add Attendance",
+            style: TextStyle(color: Colors.black87),
+          ),
+          centerTitle: true,
+          backgroundColor: MyApp.appBar,
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,12 +75,12 @@ class _TakeAttendenceState extends StateMVC<TakeAttendence> {
                 _selectDate(context);
               },
               child: Container(
-                margin: const EdgeInsets.only(right: 9, left: 9, top: 10),
-                padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
+                margin: const EdgeInsets.only(right: 20, left: 20, top: 20),
+                padding: EdgeInsets.only(right: 20, left: 20, top: 15),
                 width: MediaQuery.of(context).size.width,
-                height: 42,
+                height: 55,
                 decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey[400]),
+                  border: Border.all(color: MyApp.border),
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -85,32 +96,38 @@ class _TakeAttendenceState extends StateMVC<TakeAttendence> {
             ),
             _staff(emppList),
             selectAttendance(),
-            GestureDetector(
-              onTap: () {
-                if (attendance != null && staff != null) {
-                  print("take attendance");
-                  _takeAttendance();
-                }
-              },
-              child: Container(
-                margin: const EdgeInsets.only(right: 9, left: 9, top: 10),
-                alignment: Alignment.bottomCenter,
-                height: 50,
-                padding: EdgeInsets.all(11),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    color: Color(0xff4a67b3)),
-                child: Center(
-                  child: Text(
-                    "Submit",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (attendance != null && staff != null) {
+                      print("take attendance");
+                      _takeAttendance();
+                    }
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(top: 20),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Color(0xff6DC066),
+                      borderRadius: BorderRadius.circular(22),
+                    ),
+                    height: 50,
+                    width: size.width * 0.6,
+                    child: Text(
+                      "Submit",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 1),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           ],
         ));
@@ -130,10 +147,10 @@ class _TakeAttendenceState extends StateMVC<TakeAttendence> {
 
   Widget selectAttendance() {
     return Container(
-        height: 42,
-        margin: const EdgeInsets.only(right: 9, left: 9, top: 10),
+        height: 55,
+        margin: const EdgeInsets.only(right: 9, left: 20, top: 10),
         decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Colors.grey[400]),
+          border: Border.all(color: MyApp.border),
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
         ),
@@ -177,10 +194,10 @@ class _TakeAttendenceState extends StateMVC<TakeAttendence> {
 
   Widget _staff(List getstaff) {
     return Container(
-      height: 42,
-      margin: const EdgeInsets.only(right: 9, left: 9, top: 10),
+      height: 55,
+      margin: const EdgeInsets.only(right: 20, left: 20, top: 10),
       decoration: BoxDecoration(
-        border: Border.all(width: 1, color: Colors.grey[400]),
+        border: Border.all(color: MyApp.border),
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
       ),
@@ -264,6 +281,12 @@ class _TakeAttendenceState extends StateMVC<TakeAttendence> {
           backgroundColor: Colors.black,
           fontSize: 16.0,
         );
+        NotificationService().showNotification(
+            "Attendance",
+            "Attendance Added Successfully",
+            "1",
+            "Attendance",
+            "Take Attendance");
       }
     }
   }

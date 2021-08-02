@@ -7,6 +7,8 @@ import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
+import '../../../main.dart';
+
 class AdRemark extends StatefulWidget {
   @override
   _AdRemarkState createState() => _AdRemarkState();
@@ -85,12 +87,22 @@ class _AdRemarkState extends StateMVC<AdRemark> {
     final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
-          "Remark",
-          style: TextStyle(color: Colors.white),
+          "Add Event",
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       backgroundColor: Color(0xfff5f6f8),
       body: SafeArea(
@@ -135,7 +147,7 @@ class _AdRemarkState extends StateMVC<AdRemark> {
                   height: 20,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 9, left: 9),
+                  padding: const EdgeInsets.only(right: 20, left: 20),
                   child: TextFormField(
                     validator: validations.validateLogin,
                     controller: remarkcontr,
@@ -145,18 +157,18 @@ class _AdRemarkState extends StateMVC<AdRemark> {
                         fontSize: 15),
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       filled: true,
                       fillColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 14, horizontal: 8),
@@ -170,31 +182,34 @@ class _AdRemarkState extends StateMVC<AdRemark> {
                 SizedBox(
                   height: 20,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    submit();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Container(
-                      alignment: Alignment.bottomCenter,
-                      height: 50,
-                      padding: EdgeInsets.all(11),
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: Color(0xff4a67b3)),
-                      child: Center(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        submit();
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Color(0xff6DC066),
+                          borderRadius: BorderRadius.circular(22),
+                        ),
+                        height: 50,
+                        width: MediaQuery.of(context).size.width * 0.6,
                         child: Text(
                           "Submit",
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w300,
+                              letterSpacing: 1),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),

@@ -23,44 +23,10 @@ class _AttendanceState extends StateMVC<Attendance> {
   Color main = Color(0xFFF6F6F6);
   String formattedDate;
   String formattedTime;
-  bool evngtime = false;
-  bool lateEvng = false;
-  bool mornTime = false;
   var today;
   Future timeRange() async {
     today = await NTP.now();
-    setState(() {
-      if (today.hour == 13) {
-        if (today.minute > 30 && today.minute <= 45) {
-          setState(() {
-            evngtime = true;
-            mornTime = false;
-            lateEvng = false;
-          });
-        }
-      }
-      if (today.hour == 13) {
-        if (today.minute > 45) {
-          setState(() {
-            mornTime = false;
-            evngtime = false;
-            lateEvng = true;
-          });
-        }
-      }
-      if (today.hour == 9) {
-        if (today.minute <= 10) {
-          setState(() {
-            mornTime = true;
-            lateEvng = false;
-            evngtime = false;
-          });
-        }
-      }
-      print("morning time :" + mornTime.toString());
-      print("evng time :" + evngtime.toString());
-      print("lateEvng time :" + lateEvng.toString());
-    });
+    setState(() {});
   }
 
   Future geTime() async {
@@ -162,15 +128,17 @@ class _AttendanceState extends StateMVC<Attendance> {
                   width: 200,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
-                      color: today.hour == 9 && today.minute <= 0
-                          ? Colors.blue[900]
+                      color: today.hour == 9 && today.minute <= 10
+                          ? Colors.blue
                           : today.hour == 13 &&
                                   today.minute >= 30 &&
                                   today.minute <= 45
-                              ? Colors.green[900]
+                              ? Colors.green
                               : today.hour >= 13 && today.minute > 45
                                   ? Colors.green[200]
-                                  : Colors.blue[200]),
+                                  : today.hour >= 14
+                                      ? Colors.green[200]
+                                      : Colors.blue[200]),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -180,7 +148,7 @@ class _AttendanceState extends StateMVC<Attendance> {
                                 "Morning",
                                 style: TextStyle(color: Colors.white),
                               )
-                            : today.hour >= 13 && today.minute >= 30
+                            : today.hour >= 13
                                 ? Text("Evening",
                                     style: TextStyle(color: Colors.white))
                                 : Text(

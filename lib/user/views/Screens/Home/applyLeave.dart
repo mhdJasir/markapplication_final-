@@ -19,11 +19,11 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
   bool clickedAll = true;
   bool clickedPending = false;
   bool clickedApprove = false;
-  Color main = Color(0xFFF6F6F6);
   Color textfield = Colors.grey[200];
   var approved = [];
   var pending = [];
   Size get size => MediaQuery.of(context).size;
+  Color main = Color(0xFFF6F6F6);
   lists() async {
     print(_con.allleave.toString());
     for (int i = 0; i < _con.allleave.length; i++) {
@@ -87,7 +87,7 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
           ),
           Container(
             width: size.width,
-            height: 530,
+            height: size.height * 0.68,
             child: ListView.builder(
                 physics: ClampingScrollPhysics(),
                 itemCount: _con.allleave.length,
@@ -102,7 +102,7 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
                     height: 100,
                     width: size.width - 50,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
                         border: Border.all(color: Color(0xFFE9E9E9))),
                     child: Column(
@@ -257,7 +257,7 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Color(0xff6DC066),
-                    borderRadius: BorderRadius.circular(22),
+                    borderRadius: BorderRadius.circular(60),
                   ),
                   height: 50,
                   width: size.width * 0.6,

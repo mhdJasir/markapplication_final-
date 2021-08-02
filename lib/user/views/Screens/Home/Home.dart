@@ -4,19 +4,20 @@ import 'package:hrmarkgrp/Utils/global_variables.dart';
 import 'package:hrmarkgrp/user/controller/UserHomeController.dart';
 import 'package:hrmarkgrp/user/views/Screens/Attendence/attendence.dart';
 import 'package:hrmarkgrp/user/views/Screens/DailyExpnse/DailyExpance.dart';
-import 'package:hrmarkgrp/user/views/Screens/Home/DailyStatus.dart';
-import 'package:hrmarkgrp/user/views/Screens/Home/DailyTask.dart';
-import 'package:hrmarkgrp/user/views/Screens/Home/MoneyOnHand.dart';
+import 'package:hrmarkgrp/user/views/Screens/Home/DailyWorkReport.dart';
+import 'package:hrmarkgrp/user/views/Screens/Home/CashOnHand.dart';
 import 'package:hrmarkgrp/user/views/Screens/Home/Notification.dart';
 import 'package:hrmarkgrp/user/views/Screens/Home/PaySlip.dart';
-import 'package:hrmarkgrp/user/views/Screens/Home/PurchaseOrdr.dart';
+import 'package:hrmarkgrp/user/views/Screens/Home/MaterialReceived.dart';
 import 'package:hrmarkgrp/user/views/Screens/Home/applyLeave.dart';
-import 'package:hrmarkgrp/user/views/Screens/Home/date.dart';
+import 'package:hrmarkgrp/user/views/Screens/Home/HolidayCalander.dart';
 import 'package:hrmarkgrp/user/views/Screens/LoginScreen/login.dart';
-import 'package:hrmarkgrp/user/views/Screens/MatralRqst/MatRqst.dart';
+import 'package:hrmarkgrp/user/views/Screens/MatralRqst/MaterialRequirment.dart';
 import 'package:hrmarkgrp/user/views/widgets/icntxtwidget.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'DailyConstructionReport/DailyStatus.dart';
 
 class Home extends StatefulWidget {
   Home({this.token});
@@ -71,7 +72,7 @@ class _HomeState extends StateMVC<Home> {
                     Stack(
                       children: <Widget>[
                         Container(
-                          height: MediaQuery.of(context).size.height * .40,
+                          height: MediaQuery.of(context).size.height * 0.40,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(20),
@@ -213,7 +214,7 @@ class _HomeState extends StateMVC<Home> {
                                             builder: (context) =>
                                                 Attendance(widget.token)));
                                   },
-                                  title: "Attendence",
+                                  title: "Attendance",
                                   icon: "assets/icons/imm.png",
                                   width: 50,
                                   height: 40,
@@ -226,7 +227,7 @@ class _HomeState extends StateMVC<Home> {
                                             builder: (context) => DailyStatus(
                                                 token: widget.token)));
                                   },
-                                  title: "Daily Work Status",
+                                  title: "Daily Construction Rep",
                                   icon: "assets/icons/stand.png",
                                   width: 50,
                                   height: 40,
@@ -251,13 +252,13 @@ class _HomeState extends StateMVC<Home> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => MoneyOnHand(
-                                                tok: widget.token)));
+                                            builder: (context) =>
+                                                CashOnHand(tok: widget.token)));
                                   },
                                   icon: "assets/icons/salary.png",
                                   width: 50,
                                   height: 40,
-                                  title: "Money On Hand",
+                                  title: "Cash On Hand",
                                 ),
                                 IconTxt(
                                   tap: () {
@@ -265,23 +266,25 @@ class _HomeState extends StateMVC<Home> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                MatrlRqst(tok: widget.token)));
+                                                MaterialRequirement(
+                                                    tok: widget.token)));
                                   },
                                   icon: "assets/icons/salary.png",
                                   width: 50,
                                   height: 40,
-                                  title: "Material Request",
+                                  title: "Material Requirements",
                                 ),
                                 IconTxt(
                                   tap: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => PurchaseOrder(
+                                            builder: (context) =>
+                                                MaterialReceived(
                                                   token: widget.token,
                                                 )));
                                   },
-                                  title: "Purchase Order",
+                                  title: "Material Received",
                                   icon: "assets/icons/check-list.png",
                                   width: 50,
                                   height: 40,
@@ -309,9 +312,10 @@ class _HomeState extends StateMVC<Home> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                DailyTask(tok: widget.token)));
+                                                DailyWorkReport(
+                                                    tok: widget.token)));
                                   },
-                                  title: "Daily Activities",
+                                  title: "Daily Work Report",
                                   icon: "assets/icons/schedule.png",
                                   width: 50,
                                   height: 40,
@@ -385,7 +389,7 @@ class _HomeState extends StateMVC<Home> {
               ),
               ListTile(
                 title: Text(
-                  "Attendence",
+                  "Attendance",
                 ),
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 15),
@@ -426,7 +430,7 @@ class _HomeState extends StateMVC<Home> {
               ),
               ListTile(
                 title: Text(
-                  "Material Request",
+                  "Material Requirements",
                 ),
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 15),
@@ -441,7 +445,8 @@ class _HomeState extends StateMVC<Home> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MatrlRqst(tok: widget.token)));
+                          builder: (context) =>
+                              MaterialRequirement(tok: widget.token)));
                 },
               ),
               ListTile(
@@ -485,7 +490,7 @@ class _HomeState extends StateMVC<Home> {
                 },
               ),
               ListTile(
-                title: Text("Purchase Order"),
+                title: Text("Material Received"),
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Image.asset(
@@ -499,7 +504,7 @@ class _HomeState extends StateMVC<Home> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => PurchaseOrder(
+                          builder: (context) => MaterialReceived(
                                 token: widget.token,
                               )));
                 },

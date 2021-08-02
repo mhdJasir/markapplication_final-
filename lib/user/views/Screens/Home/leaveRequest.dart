@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hrmarkgrp/main.dart';
 import 'package:hrmarkgrp/user/controller/UserHomeController.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -140,7 +141,7 @@ class _LeaveRequestState extends StateMVC<LeaveRequest> {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
-                  border: Border.all(width: 1, color: Colors.grey[400])),
+                  border: Border.all(width: 1, color: MyApp.border)),
               child: TextField(
                 controller: noteController,
                 textAlign: TextAlign.justify,
@@ -171,7 +172,7 @@ class _LeaveRequestState extends StateMVC<LeaveRequest> {
                 height: 50,
                 width: size.width * 0.6,
                 child: Text(
-                  "Apply For Leave",
+                  "Submit",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,

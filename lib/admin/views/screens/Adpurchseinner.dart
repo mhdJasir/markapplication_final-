@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hrmarkgrp/admin/controller/MatrialReqController.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
+import 'package:hrmarkgrp/main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
@@ -19,71 +21,17 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
   _AdpurchinnerState() : super(MaterialControllr()) {
     _con = controller;
   }
-  ImagePicker _picker = ImagePicker();
-
-  // static const label = "";
-  // static const dummyList = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5','Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10'];
-  // TextEditingController myController1 = TextEditingController();
-  // TextEditingController myController2= TextEditingController();
-  // TextEditingController myController3 = TextEditingController();
-
-  // PickedFile _imagefile;
-  // final ImagePicker _picker = ImagePicker();
-  // void takephoto(ImageSource source) async {
-  //   final pickedfile = await _picker.getImage(source: source);
-  //   setState(() {
-  //     _imagefile = pickedfile;
-  //   });
-  //   Navigator.pop(context);
-  //   print("aaaaaaaaaa$_imagefile");
-  // }
-  //
-  // Widget imagepickbottomsheet(context) {
-  //   return Container(
-  //     height: 100.0,
-  //     width: MediaQuery
-  //         .of(context)
-  //         .size
-  //         .width,
-  //     margin: EdgeInsets.symmetric(
-  //         vertical: 20, horizontal: 20
-  //     ),
-  //     child: Column(
-  //       children: <Widget>[
-  //         Text("Choose Profile Photo",
-  //           style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.w800),),
-  //         SizedBox(height: 20,),
-  //         Row(mainAxisAlignment: MainAxisAlignment.center,
-  //           children: <Widget>[
-  //             FlatButton.icon(onPressed: () {
-  //               takephoto(ImageSource.camera);
-  //             },
-  //                 icon: Icon(Icons.camera_alt,size: 30,),
-  //                 label: Text("Camera")),
-  //             SizedBox(width: 20,),
-  //             FlatButton.icon(onPressed: () {
-  //               takephoto(ImageSource.gallery);
-  //             },
-  //                 icon: Icon(Icons.image,size: 30,),
-  //                 label: Text("Gallery"))
-  //           ],)
-  //       ],
-  //     ),
-  //
-  //   );
-  // }
-
   String pymntmode;
   Widget _projectss() {
     return Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Colors.grey[400]),
+          border: Border.all(width: 1, color: MyApp.border),
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 13, horizontal: 8),
+          padding: EdgeInsets.symmetric(vertical: 13, horizontal: 20),
           child: Text(
             widget.purchase["project_name"].toString(),
             style: TextStyle(
@@ -100,7 +48,7 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(width: 1, color: Colors.grey[400])),
+          border: Border.all(width: 1, color: MyApp.border)),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           hint: Padding(
@@ -143,23 +91,34 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
   }
 
   File _image;
-  Future getCameraImage() async {
-    var image = await _picker.getImage(source: ImageSource.camera);
-
+  ImagePicker _picker = ImagePicker();
+  pickImage(source) async {
+    var image = await _picker.pickImage(source: source);
+    File file = File(image.path);
+    File Compressed = await compressFile(file);
     setState(() {
-      _image = File(image.path);
+      _image = Compressed;
       Navigator.pop(context);
     });
+    print(file.lengthSync());
+
+    print("image size  :" + file.lengthSync().toString());
   }
 
-  //============================== Image from gallery
-  Future getGalleryImage() async {
-    var image = await _picker.getImage(source: ImageSource.gallery);
+  Future<File> compressFile(File file) async {
+    final filePath = file.absolute.path;
+    final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
+    final splitted = filePath.substring(0, (lastIndex));
+    final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
+    var result = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path,
+      outPath,
+      quality: 50,
+    );
 
-    setState(() {
-      _image = File(image.path);
-      Navigator.pop(context);
-    });
+    print("result   : " + result.lengthSync().toString());
+
+    return result;
   }
 
   Widget imagepickbottomsheet(context) {
@@ -181,7 +140,7 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
             children: <Widget>[
               TextButton.icon(
                   onPressed: () {
-                    getCameraImage();
+                    pickImage(ImageSource.camera);
                   },
                   icon: Icon(
                     Icons.camera_alt,
@@ -193,7 +152,7 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
               ),
               TextButton.icon(
                   onPressed: () {
-                    getGalleryImage();
+                    pickImage(ImageSource.gallery);
                   },
                   icon: Icon(
                     Icons.image,
@@ -216,22 +175,32 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           widget.purchase["project_name"].toString(),
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
+              padding: const EdgeInsets.only(right: 20, left: 20, top: 10),
               child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(width: 1, color: MyApp.border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -250,11 +219,11 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(width: 1, color: MyApp.border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -273,14 +242,20 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(
+                right: 20,
+                left: 20,
+              ),
               child: _projectss(),
             ),
             SizedBox(
               height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(
+                right: 20,
+                left: 20,
+              ),
               child: _paymentstatus(),
             ),
             SizedBox(
@@ -288,13 +263,13 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                right: 9,
-                left: 9,
+                right: 20,
+                left: 20,
               ),
               child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(width: 1, color: MyApp.border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -312,7 +287,7 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
             widget.purchase["items"].length == 0
                 ? Container(height: 0)
                 : Container(
-                    height: 270,
+                    height: 160,
                     child: ListView.builder(
                         physics: BouncingScrollPhysics(),
                         itemCount: widget.purchase["items"] != null
@@ -321,7 +296,7 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.only(
-                                right: 9, left: 9, top: 10),
+                                right: 20, left: 20, top: 10),
                             child: Column(
                               children: [
                                 Row(
@@ -333,7 +308,7 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
                                       width: 100,
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            width: 1, color: Colors.grey[400]),
+                                            width: 1, color: MyApp.border),
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(15),
                                       ),
@@ -366,26 +341,25 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
                                           decoration: InputDecoration(
                                             enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                    color: Colors.grey[400]),
+                                                    color: MyApp.border),
                                                 borderRadius:
                                                     BorderRadius.circular(15)),
                                             focusedErrorBorder:
                                                 OutlineInputBorder(
                                                     borderSide: BorderSide(
-                                                        color:
-                                                            Colors.grey[400]),
+                                                        color: MyApp.border),
                                                     borderRadius: BorderRadius
                                                         .circular(15)),
                                             filled: true,
                                             fillColor: Colors.white,
                                             focusedBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                    color: Colors.grey[400]),
+                                                    color: MyApp.border),
                                                 borderRadius:
                                                     BorderRadius.circular(15)),
                                             errorBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                    color: Colors.grey[400]),
+                                                    color: MyApp.border),
                                                 borderRadius:
                                                     BorderRadius.circular(15)),
                                             contentPadding:
@@ -405,7 +379,7 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
                                       width: 50,
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            width: 1, color: Colors.grey[400]),
+                                            width: 1, color: MyApp.border),
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(15),
                                       ),
@@ -438,26 +412,25 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
                                           decoration: InputDecoration(
                                             enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                    color: Colors.grey[400]),
+                                                    color: MyApp.border),
                                                 borderRadius:
                                                     BorderRadius.circular(15)),
                                             focusedErrorBorder:
                                                 OutlineInputBorder(
                                                     borderSide: BorderSide(
-                                                        color:
-                                                            Colors.grey[400]),
+                                                        color: MyApp.border),
                                                     borderRadius: BorderRadius
                                                         .circular(15)),
                                             filled: true,
                                             fillColor: Colors.white,
                                             focusedBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                    color: Colors.grey[400]),
+                                                    color: MyApp.border),
                                                 borderRadius:
                                                     BorderRadius.circular(15)),
                                             errorBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                    color: Colors.grey[400]),
+                                                    color: MyApp.border),
                                                 borderRadius:
                                                     BorderRadius.circular(15)),
                                             contentPadding:
@@ -482,7 +455,7 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
             Align(
               alignment: Alignment.topRight,
               child: Container(
-                margin: EdgeInsets.only(right: 9),
+                margin: EdgeInsets.only(right: 20),
                 width: 79,
                 height: 42,
                 child: Align(
@@ -498,18 +471,18 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
                         fontSize: 15),
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       filled: true,
                       fillColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 4),
@@ -528,7 +501,7 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
             Align(
               alignment: Alignment.topRight,
               child: Container(
-                margin: EdgeInsets.only(right: 9),
+                margin: EdgeInsets.only(right: 20),
                 width: 79,
                 height: 42,
                 child: Align(
@@ -544,18 +517,18 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
                         fontSize: 15),
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       filled: true,
                       fillColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 4),
@@ -574,7 +547,7 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
             Align(
               alignment: Alignment.topRight,
               child: Container(
-                margin: EdgeInsets.only(right: 9),
+                margin: EdgeInsets.only(right: 20),
                 width: 79,
                 height: 42,
                 child: Align(
@@ -590,18 +563,18 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
                         fontSize: 15),
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       filled: true,
                       fillColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 4),
@@ -620,7 +593,7 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
             Align(
               alignment: Alignment.topRight,
               child: Container(
-                margin: EdgeInsets.only(right: 9),
+                margin: EdgeInsets.only(right: 20),
                 width: 100,
                 height: 42,
                 child: Align(
@@ -636,18 +609,18 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
                         fontSize: 15),
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       filled: true,
                       fillColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
+                          borderSide: BorderSide(color: MyApp.border),
                           borderRadius: BorderRadius.circular(15)),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 4),
@@ -661,10 +634,10 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
               ),
             ),
             SizedBox(
-              height: 50,
+              height: 10,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Container(
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
@@ -684,49 +657,47 @@ class _AdpurchinnerState extends StateMVC<Adpurchinner> {
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 10,
             ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-        child: GestureDetector(
-          onTap: () {
-            if (pymntmode == null) {
-              Fluttertoast.showToast(
-                msg: "Select PaymentMode",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 35,
-                backgroundColor: Colors.black,
-                fontSize: 16.0,
-              );
-            } else {
-              _con.updtepurchseorder(widget.purchase["purchase_id"].toString(),
-                  pymntmode, widget.token, context);
-            }
-
-            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AdBottomtabs())) ;
-          },
-          child: Container(
-            alignment: Alignment.bottomCenter,
-            height: 50,
-            padding: EdgeInsets.all(11),
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                color: Color(0xff4a67b3)),
-            child: Center(
-              child: Text(
-                "Submit",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16),
+            GestureDetector(
+              onTap: () {
+                if (pymntmode == null) {
+                  Fluttertoast.showToast(
+                    msg: "Select PaymentMode",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 35,
+                    backgroundColor: Colors.black,
+                    fontSize: 16.0,
+                  );
+                } else {
+                  _con.updtepurchseorder(
+                      widget.purchase["purchase_id"].toString(),
+                      pymntmode,
+                      widget.token,
+                      context);
+                }
+              },
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Color(0xff6DC066),
+                  borderRadius: BorderRadius.circular(60),
+                ),
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: Text(
+                  "Submit",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 1),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

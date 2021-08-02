@@ -113,19 +113,36 @@ class _DailyExpnceInnerState extends StateMVC<DailyExpnceInner> {
     super.initState();
   }
 
+  Color border = Color(0xFFE9E9E9);
+  Size get size => MediaQuery.of(context).size;
+  Color main = Color(0xFFF6F6F6);
   var totalamount;
   @override
   Widget build(BuildContext context) {
-    totalamount = widget.dalyexp["salary_amount"] + widget.dalyexp["balance"];
+    totalamount = widget.dalyexp["salary_amount"] == null
+        ? 0
+        : widget.dalyexp["salary_amount"] + widget.dalyexp["balance"] == null
+            ? 0
+            : widget.dalyexp["balance"];
     totalamontcontrollr = TextEditingController(text: totalamount.toString());
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           widget.dalyexp["project_name"].toString(),
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: main,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -135,7 +152,7 @@ class _DailyExpnceInnerState extends StateMVC<DailyExpnceInner> {
               child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(width: 1, color: border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -158,7 +175,7 @@ class _DailyExpnceInnerState extends StateMVC<DailyExpnceInner> {
               child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[400]),
+                    border: Border.all(width: 1, color: border),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -182,7 +199,7 @@ class _DailyExpnceInnerState extends StateMVC<DailyExpnceInner> {
                 height: 42,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey[400]),
+                  border: Border.all(width: 1, color: border),
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -235,13 +252,18 @@ class _DailyExpnceInnerState extends StateMVC<DailyExpnceInner> {
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              margin: EdgeInsets.only(right: 9, left: 9),
               child: TextFormField(
                 keyboardType: TextInputType.number,
                 controller: dailywagescontrollr,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Daily Wages'),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: border)),
+                    labelText: 'Daily Wages'),
               ),
             ),
             SizedBox(
@@ -253,7 +275,9 @@ class _DailyExpnceInnerState extends StateMVC<DailyExpnceInner> {
                 keyboardType: TextInputType.number,
                 controller: balancecontrollr,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Balance'),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: border)),
+                    labelText: 'Balance'),
               ),
             ),
             SizedBox(
@@ -265,7 +289,9 @@ class _DailyExpnceInnerState extends StateMVC<DailyExpnceInner> {
                 controller: totalamontcontrollr,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Total Amount'),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: border)),
+                    labelText: 'Total Amount'),
               ),
             ),
             SizedBox(
@@ -286,7 +312,9 @@ class _DailyExpnceInnerState extends StateMVC<DailyExpnceInner> {
                   validator: (value) =>
                       value.isEmpty || value == "null" ? '' : null,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Paid Amount'),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: border)),
+                      labelText: 'Paid Amount'),
                 ),
               ),
             ),
@@ -316,56 +344,67 @@ class _DailyExpnceInnerState extends StateMVC<DailyExpnceInner> {
             SizedBox(
               height: 20,
             ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: GestureDetector(
-        onTap: () {
-          if (statusval == null) {
-            Fluttertoast.showToast(
-              msg: "Check status",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 35,
-              backgroundColor: Colors.black,
-              fontSize: 16.0,
-            );
-          } else if (_image == null) {
-            Fluttertoast.showToast(
-              msg: "upload image",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 35,
-              backgroundColor: Colors.black,
-              fontSize: 16.0,
-            );
-          } else {
-            final FormState form = _con.loginFormKey.currentState;
-            if (!form.validate()) {
-            } else {
-              form.save();
-              _con.dailyexpnceupdate(widget.dalyexp["exp_id"], statusval,
-                  paidval, totalamount, _image, widget.token, context);
-            }
-          }
-        },
-        child: Container(
-          margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-          alignment: Alignment.bottomCenter,
-          height: 50,
-          padding: EdgeInsets.all(11),
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6), color: Color(0xff4a67b3)),
-          child: Center(
-            child: Text(
-              "Submit",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (statusval == null) {
+                      Fluttertoast.showToast(
+                        msg: "Check status",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 35,
+                        backgroundColor: Colors.black,
+                        fontSize: 16.0,
+                      );
+                    } else if (_image == null) {
+                      Fluttertoast.showToast(
+                        msg: "upload image",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 35,
+                        backgroundColor: Colors.black,
+                        fontSize: 16.0,
+                      );
+                    } else {
+                      final FormState form = _con.loginFormKey.currentState;
+                      if (!form.validate()) {
+                      } else {
+                        form.save();
+                        _con.dailyexpnceupdate(
+                            widget.dalyexp["exp_id"],
+                            statusval,
+                            paidval,
+                            totalamount,
+                            _image,
+                            widget.token,
+                            context);
+                      }
+                    }
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Color(0xff6DC066),
+                      borderRadius: BorderRadius.circular(60),
+                    ),
+                    height: 50,
+                    width: size.width * 0.7,
+                    child: Text(
+                      "Submit",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 1),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
+          ],
         ),
       ),
     );

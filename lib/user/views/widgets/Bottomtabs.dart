@@ -3,7 +3,7 @@ import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:hrmarkgrp/user/views/Screens/Attendence/attendence.dart';
 import 'package:hrmarkgrp/user/views/Screens/DailyExpnse/DailyExpance.dart';
 import 'package:hrmarkgrp/user/views/Screens/Home/Home.dart';
-import 'package:hrmarkgrp/user/views/Screens/MatralRqst/MatRqst.dart';
+import 'package:hrmarkgrp/user/views/Screens/MatralRqst/MaterialRequirment.dart';
 
 class Bottomtabs extends StatefulWidget {
   Bottomtabs({this.token});
@@ -31,7 +31,7 @@ class _BottomtabsState extends State<Bottomtabs> {
         return DailyExpnce(token: widget.token);
         break;
       case 3:
-        return MatrlRqst(tok: widget.token);
+        return MaterialRequirement(tok: widget.token);
         break;
       default:
         return new Home(
@@ -106,7 +106,7 @@ class _BottomtabsState extends State<Bottomtabs> {
                     Image.asset("assets/icons/hme.png", width: 50, height: 40),
               ),
               BottomNavigationBarItem(
-                label: "Attendence",
+                label: "Attendance",
                 icon: Image.asset(
                   "assets/icons/attndnce.png",
                   width: 50,
@@ -114,12 +114,12 @@ class _BottomtabsState extends State<Bottomtabs> {
                 ),
               ),
               BottomNavigationBarItem(
-                label: "DailyExpnce",
+                label: "Daily Expense",
                 icon: Image.asset("assets/icons/dlyexp.png",
                     width: 50, height: 40),
               ),
               BottomNavigationBarItem(
-                label: "MaterialRequire",
+                label: "Material Req",
                 icon: Image.asset("assets/icons/matreq.png",
                     width: 50, height: 40),
               ),

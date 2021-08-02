@@ -4,6 +4,8 @@ import 'package:hrmarkgrp/admin/views/screens/AdDailysttsInnerPage.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
+import '../../../main.dart';
+
 class AdDalyStatus extends StatefulWidget {
   final token;
   AdDalyStatus({this.token});
@@ -21,6 +23,7 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
   @override
   void initState() {
     _con.dailystatus(widget.token);
+    print("daily status data  :" + _con.dailystaus.toString());
     super.initState();
   }
 
@@ -28,12 +31,22 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           "Daily Status",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       body: _con.loading == false
           ? Container(
@@ -73,23 +86,12 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
                         Container(
                           height: 50,
                           margin: const EdgeInsets.only(
-                              top: 5.0, right: 9.0, left: 9.0, bottom: 5),
-                          width: MediaQuery.of(context).size.width,
+                              top: 5.0, right: 20, left: 20, bottom: 5),
+                          width: MediaQuery.of(context).size.width - 30,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              //background color of box
-                              BoxShadow(
-                                color: Colors.grey[400],
-                                blurRadius: 0.8, // soften the shadow
-                                spreadRadius: 0.8, //extend the shadow
-                                offset: Offset(
-                                  0.5, // Move to right 10  horizontally
-                                  0.5, // Move to bottom 10 Vertically
-                                ),
-                              )
-                            ],
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(color: MyApp.border),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,25 +114,14 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
                           ),
                         ),
                         Container(
-                          height: 240,
+                          height: 200,
                           margin: const EdgeInsets.only(
-                              top: 5.0, right: 9.0, left: 9.0, bottom: 5),
-                          width: MediaQuery.of(context).size.width,
+                              top: 5.0, right: 20, left: 20, bottom: 5),
+                          width: MediaQuery.of(context).size.width - 30,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              //background color of box
-                              BoxShadow(
-                                color: Colors.grey[400],
-                                blurRadius: 0.8, // soften the shadow
-                                spreadRadius: 0.8, //extend the shadow
-                                offset: Offset(
-                                  0.5, // Move to right 10  horizontally
-                                  0.5, // Move to bottom 10 Vertically
-                                ),
-                              )
-                            ],
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: MyApp.border),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(20),
@@ -152,20 +143,16 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 10,
+                                      width: 5,
                                     ),
                                     Text(
                                       _con.dailystaus[index]["emp_firstname"]
                                           .toString(),
                                       style: TextStyle(color: Colors.black45),
                                     ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: [
+                                    SizedBox(
+                                      width: 3,
+                                    ),
                                     Icon(
                                       Icons.shopping_bag_outlined,
                                       color: Colors.grey,
@@ -177,68 +164,74 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  height: 5,
+                                ),
+                                SizedBox(
+                                  height: 5,
                                 ),
                                 Row(
                                   children: [
                                     Text("Assigned To", style: b14W7),
                                     SizedBox(
-                                      width: 5,
+                                      width: 3,
                                     ),
-                                    Container(
-                                      width: 215,
-                                      height: 40,
-                                      child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        shrinkWrap: true,
-                                        itemCount: _con.dailystaus.length,
-                                        itemBuilder: (context, i) {
-                                          return Row(
-                                            children: [
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(60),
-                                                child: Container(
-                                                  height: 30,
-                                                  width: 30,
-                                                  child: Image.asset(
-                                                    "assets/images/men.jpg",
-                                                    fit: BoxFit.cover,
+                                    Flexible(
+                                      child: Container(
+                                        height: 40,
+                                        child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          shrinkWrap: true,
+                                          itemCount: _con.dailystaus.length,
+                                          itemBuilder: (context, i) {
+                                            return Row(
+                                              children: [
+                                                SizedBox(
+                                                  width: 3,
+                                                ),
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(60),
+                                                  child: Container(
+                                                    height: 30,
+                                                    width: 30,
+                                                    child: Image.asset(
+                                                      "assets/images/men.jpg",
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                _con.dailystaus[i]["unemp_name"]
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    color: Colors.grey),
-                                              ),
-                                            ],
-                                          );
-                                        },
+                                                SizedBox(
+                                                  width: 3,
+                                                ),
+                                                Text(
+                                                  _con.dailystaus[i]
+                                                          ["unemp_name"]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.grey),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Text(
                                   _con.dailystaus[index]["description"]
                                       .toString(),
                                   style: b14W7,
+                                  maxLines: 1,
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  height: 5,
                                 ),
                                 Container(
-                                  height: 50,
+                                  height: 40,
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       shrinkWrap: true,

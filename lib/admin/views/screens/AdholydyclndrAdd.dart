@@ -7,6 +7,8 @@ import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
+import '../../../main.dart';
+
 class AdholydyclndrAdd extends StatefulWidget {
   @override
   _AdholydyclndrAddState createState() => _AdholydyclndrAddState();
@@ -85,12 +87,22 @@ class _AdholydyclndrAddState extends StateMVC<AdholydyclndrAdd> {
     final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
-          "Remark",
-          style: TextStyle(color: Colors.white),
+          "Add New Holiday",
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       backgroundColor: Color(0xfff5f6f8),
       body: SafeArea(
@@ -135,66 +147,71 @@ class _AdholydyclndrAddState extends StateMVC<AdholydyclndrAdd> {
                   height: 20,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 9, left: 9),
-                  child: TextFormField(
-                    validator: validations.validateLogin,
-                    controller: rmrkcont,
-                    style: TextStyle(
-                        color: Colors.grey[900],
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15),
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
-                          borderRadius: BorderRadius.circular(15)),
-                      focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
-                          borderRadius: BorderRadius.circular(15)),
-                      filled: true,
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
-                          borderRadius: BorderRadius.circular(15)),
-                      errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]),
-                          borderRadius: BorderRadius.circular(15)),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 14, horizontal: 8),
-                      hintText: "Remark",
-                      hintStyle: g615W5,
-                      border: InputBorder.none,
-                      disabledBorder: InputBorder.none,
+                  padding: const EdgeInsets.only(right: 20, left: 20),
+                  child: Container(
+                    height: 70,
+                    child: TextFormField(
+                      validator: validations.validateLogin,
+                      controller: rmrkcont,
+                      style: TextStyle(
+                          color: Colors.grey[900],
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15),
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: MyApp.border),
+                            borderRadius: BorderRadius.circular(15)),
+                        focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: MyApp.border),
+                            borderRadius: BorderRadius.circular(15)),
+                        filled: true,
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: MyApp.border),
+                            borderRadius: BorderRadius.circular(15)),
+                        errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: MyApp.border),
+                            borderRadius: BorderRadius.circular(15)),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 14, horizontal: 8),
+                        hintText: "Remark",
+                        hintStyle: g615W5,
+                        border: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    submit();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Container(
-                      alignment: Alignment.bottomCenter,
-                      height: 50,
-                      padding: EdgeInsets.all(11),
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: Color(0xff4a67b3)),
-                      child: Center(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        submit();
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Color(0xff6DC066),
+                          borderRadius: BorderRadius.circular(60),
+                        ),
+                        height: 50,
+                        width: MediaQuery.of(context).size.width * 0.65,
                         child: Text(
                           "Submit",
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w300,
+                              letterSpacing: 1),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),

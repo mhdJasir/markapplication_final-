@@ -3,6 +3,8 @@ import 'package:hrmarkgrp/admin/controller/HomeController.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
+import '../../../main.dart';
+
 class AdLeaveRqst extends StatefulWidget {
   final tokk;
   AdLeaveRqst({this.tokk});
@@ -26,12 +28,22 @@ class _AdLeaveRqstState extends StateMVC<AdLeaveRqst> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           "Leave Request",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       backgroundColor: Color(0xfff5f6f8),
       body: _con.loading == false
@@ -48,21 +60,9 @@ class _AdLeaveRqstState extends StateMVC<AdLeaveRqst> {
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              //background color of box
-                              BoxShadow(
-                                color: Colors.grey[400],
-                                blurRadius: 0.8, // soften the shadow
-                                spreadRadius: 0.8, //extend the shadow
-                                offset: Offset(
-                                  0.5, // Move to right 10  horizontally
-                                  0.5, // Move to bottom 10 Vertically
-                                ),
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(15),
-                          ),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(color: MyApp.border)),
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 top: 15, bottom: 15, left: 15, right: 1),

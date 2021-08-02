@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
+import 'package:hrmarkgrp/main.dart';
 import 'package:hrmarkgrp/user/controller/MoneyOnHand_Controller.dart';
-import 'package:hrmarkgrp/user/views/Screens/Home/MoneyOnHandInner.dart';
+import 'package:hrmarkgrp/user/views/Screens/Home/CashOnHandTrans.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-class MoneyOnHand extends StatefulWidget {
+class CashOnHand extends StatefulWidget {
   final tok;
-  MoneyOnHand({this.tok});
+  CashOnHand({this.tok});
   @override
-  _MoneyOnHandState createState() => _MoneyOnHandState();
+  _CashOnHandState createState() => _CashOnHandState();
 }
 
-class _MoneyOnHandState extends StateMVC<MoneyOnHand> {
+class _CashOnHandState extends StateMVC<CashOnHand> {
   MoneyOnHndConroller _con;
-  _MoneyOnHandState() : super(MoneyOnHndConroller()) {
+  _CashOnHandState() : super(MoneyOnHndConroller()) {
     _con = controller;
   }
   @override
@@ -23,16 +24,27 @@ class _MoneyOnHandState extends StateMVC<MoneyOnHand> {
     super.initState();
   }
 
+  Color main = Color(0xFFF6F6F6);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
-          "Money Onhand",
-          style: TextStyle(color: Colors.white),
+          "Cash On Hand",
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: main,
       ),
       body: _con.isloading == true
           ? ListView.builder(
@@ -58,21 +70,9 @@ class _MoneyOnHandState extends StateMVC<MoneyOnHand> {
                       height: 110,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          //background color of box
-                          BoxShadow(
-                            color: Colors.grey[400],
-                            blurRadius: 0.8, // soften the shadow
-                            spreadRadius: 0.8, //extend the shadow
-                            offset: Offset(
-                              0.5, // Move to right 10  horizontally
-                              0.5, // Move to bottom 10 Vertically
-                            ),
-                          )
-                        ],
-                      ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(color: MyApp.border)),
                       child: Padding(
                         padding: const EdgeInsets.only(
                             top: 15, bottom: 15, right: 15, left: 15),

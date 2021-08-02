@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
+import 'package:hrmarkgrp/sevices/notificationService.dart';
 import 'package:hrmarkgrp/user/Repository/Mat_Req_Repo.dart' as repo;
 import 'package:mvc_pattern/mvc_pattern.dart';
 
@@ -90,6 +91,12 @@ class StaffMaterialReq extends ControllerMVC {
             backgroundColor: Colors.black,
             fontSize: 16.0,
           );
+          NotificationService().showNotification(
+              "Material Request ",
+              "Request Added Successfully",
+              "1",
+              "Material Request",
+              "Material Request Add");
           Navigator.pop(context);
         } else {
           Fluttertoast.showToast(

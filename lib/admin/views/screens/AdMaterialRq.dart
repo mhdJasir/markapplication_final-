@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:hrmarkgrp/main.dart';
 import 'package:hrmarkgrp/modules/loadingDialog.dart';
 import 'package:http/http.dart' as http;
 
@@ -37,167 +38,197 @@ class _AdMaterlReqState extends StateMVC<AdMaterlReq> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
-          "Material Request",
-          style: TextStyle(color: Colors.white),
+          "Material Requirements",
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
-      body: ListView.builder(
-        itemCount:
-            _con.getmaterialreqq != null ? _con.getmaterialreqq.length : 0,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AdMatrlReqInnr(
-                          _con.getmaterialreqq[index], widget.tok)));
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 9, left: 9, top: 10),
-              child: Container(
-                height: 110,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    //background color of box
-                    BoxShadow(
-                      color: Colors.grey[400],
-                      blurRadius: 0.8, // soften the shadow
-                      spreadRadius: 0.8, //extend the shadow
-                      offset: Offset(
-                        0.5, // Move to right 10  horizontally
-                        0.5, // Move to bottom 10 Vertically
-                      ),
-                    )
-                  ],
-                ),
+      body: ListView(children: [
+        Container(
+          height: MediaQuery.of(context).size.height * 0.8,
+          child: ListView.builder(
+            itemCount:
+                _con.getmaterialreqq != null ? _con.getmaterialreqq.length : 0,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AdMatrlReqInnr(
+                              _con.getmaterialreqq[index], widget.tok)));
+                },
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 15, bottom: 15, right: 15, left: 15),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: 5,
-                        right: 10,
-                        child: Text(
-                          _con.getmaterialreqq[index]["from_date"].toString(),
-                          style: b14W7,
-                        ),
-                      ),
-                      _con.getmaterialreqq[index]["status"].toString() == "1"
-                          ? Positioned(
-                              bottom: 5,
-                              right: 10,
-                              child: GestureDetector(
-                                onTap: () async {
-                                  var getdoc =
-                                      await getApplicationDocumentsDirectory();
-                                  var docPath = getdoc.path;
-                                  var url = _con.getmaterialreqq[index]["print"]
-                                      .toString();
-                                  var todown =
-                                      File("$docPath/${basename(url)}.pdf")
-                                          .path;
-                                  if (!File(todown).existsSync()) {
-                                    DialogBuilder(context).showLoadingDialog();
-                                    downloadFile(url, path: todown, onDone: () {
-                                      DialogBuilder(context).hideOpenDialog();
-                                      OpenFile.open(todown);
-                                    });
-                                  } else {
-                                    OpenFile.open(todown);
-                                  }
-                                },
-                                child: Text(
-                                  "Download PDF",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ))
-                          : Container(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                              _con.getmaterialreqq[index]["project_name"]
+                  padding: const EdgeInsets.only(right: 20, left: 20, top: 10),
+                  child: Container(
+                    height: 110,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        border: MyApp.bord),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 15, bottom: 15, right: 15, left: 15),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 5,
+                            right: 10,
+                            child: Text(
+                              _con.getmaterialreqq[index]["from_date"]
                                   .toString(),
-                              style: b14W7),
-                          SizedBox(
-                            height: 10,
+                              style: b14W7,
+                            ),
                           ),
-                          Text(
-                            _con.getmaterialreqq[index]["heading"].toString(),
-                            style: b14W7,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
+                          _con.getmaterialreqq[index]["status"].toString() ==
+                                  "1"
+                              ? Positioned(
+                                  bottom: 5,
+                                  right: 10,
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      var getdoc =
+                                          await getApplicationDocumentsDirectory();
+                                      var docPath = getdoc.path;
+                                      var url = _con.getmaterialreqq[index]
+                                              ["print"]
+                                          .toString();
+                                      var todown =
+                                          File("$docPath/${basename(url)}.pdf")
+                                              .path;
+                                      if (!File(todown).existsSync()) {
+                                        DialogBuilder(context)
+                                            .showLoadingDialog();
+                                        downloadFile(url, path: todown,
+                                            onDone: () {
+                                          DialogBuilder(context)
+                                              .hideOpenDialog();
+                                          OpenFile.open(todown);
+                                        });
+                                      } else {
+                                        OpenFile.open(todown);
+                                      }
+                                    },
+                                    child: Text(
+                                      "Download PDF",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ))
+                              : Container(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
                               Text(
-                                _con.getmaterialreqq[index]["status"]
-                                            .toString() ==
-                                        "0"
-                                    ? "Pending"
-                                    : _con.getmaterialreqq[index]["status"]
+                                  _con.getmaterialreqq[index]["project_name"]
+                                      .toString(),
+                                  style: b14W7),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                _con.getmaterialreqq[index]["heading"]
+                                    .toString(),
+                                style: b14W7,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    _con.getmaterialreqq[index]["status"]
                                                 .toString() ==
-                                            "1"
-                                        ? "Approved"
+                                            "0"
+                                        ? "Pending"
                                         : _con.getmaterialreqq[index]["status"]
                                                     .toString() ==
-                                                "2"
-                                            ? "Declined"
+                                                "1"
+                                            ? "Approved"
                                             : _con.getmaterialreqq[index]
                                                             ["status"]
                                                         .toString() ==
-                                                    "3"
-                                                ? "Completed"
-                                                : "Pending",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xff496ab1)),
+                                                    "2"
+                                                ? "Declined"
+                                                : _con.getmaterialreqq[index]
+                                                                ["status"]
+                                                            .toString() ==
+                                                        "3"
+                                                    ? "Completed"
+                                                    : "Pending",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xff496ab1)),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
+                ),
+              );
+            },
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            AddMaterialRqstAdd(token: widget.tok)));
+              },
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Color(0xff6DC066),
+                  borderRadius: BorderRadius.circular(60),
+                ),
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: Text(
+                  "Add New Requirements",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 1),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Color(0xff496ab1),
-          child: Icon(
-            FontAwesomeIcons.plus,
-            color: Colors.white,
-            size: 20,
-          ),
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        AddMaterialRqstAdd(token: widget.tok)));
-          }),
+          ],
+        ),
+      ]),
     );
   }
 

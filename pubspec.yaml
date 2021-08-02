@@ -41,11 +41,14 @@ dependencies:
   ntp: ^2.0.0
   open_file: ^3.2.1
   flutter_local_notifications: ^6.1.0
+  flutter_image_compress: ^1.1.0
+  #carousel_slider: ^4.0.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.9.0
   flutter_test:
-    sdk: flutter
+    sdk: flutterimport 'package:carousel_slider/carousel_slider.dart';
+
 
 flutter_icons:
   android: true
