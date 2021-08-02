@@ -360,8 +360,8 @@ class _AdHomeState extends StateMVC<AdHome> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => AdDalyStatus(
-                                                token: widget.token)));
+                                            builder: (context) =>
+                                                AdDalyStatus()));
                                   },
                                   title: "Daily Work Status",
                                   icon: "assets/icons/imm.png",
@@ -636,11 +636,8 @@ class _AdHomeState extends StateMVC<AdHome> {
                 ),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              AdDalyStatus(token: widget.token)));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AdDalyStatus()));
                 },
               ),
               ListTile(

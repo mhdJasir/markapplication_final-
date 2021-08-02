@@ -192,7 +192,7 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
   }
 
   String currntdate;
-  String currentdate() {
+  void currentdate() {
     var now = new DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
     setState(() {

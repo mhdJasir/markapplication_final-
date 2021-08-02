@@ -64,12 +64,12 @@ class HomeController extends ControllerMVC {
     });
   }
 
-  void dailystatus(token) async {
-    await repo.dailstss(token).then((value) {
+  Future<void> dailystatus() async {
+    await repo.dailstss().then((value) {
       if (value.isNotEmpty) {
         if (value["status"] == "1") {
           setState(() {
-            dailystaus = value["data"];
+            dailystaus = value["data"]["data"];
             loading = false;
           });
         }

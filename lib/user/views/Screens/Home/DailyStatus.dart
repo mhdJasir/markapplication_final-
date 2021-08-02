@@ -110,9 +110,10 @@ class _DailyStatusState extends StateMVC<DailyStatus> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        _con.staffdailystatus[index]
-                                                ["unemp_name"]
-                                            .toString(),
+                                        List.castFrom(
+                                                _con.staffdailystatus[index]
+                                                    ["unemployee"])
+                                            .join(','),
                                         style: b14W7,
                                       ),
                                     ],

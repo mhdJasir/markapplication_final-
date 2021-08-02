@@ -26,10 +26,10 @@ Future<Map> purchordr(token) async {
   return Map();
 }
 
-Future<Map> dailstss(token) async {
+Future<Map> dailstss() async {
   final String url = NetworkUtils.dailysta;
   final res = await http.get(Uri.parse(url), headers: {
-    HttpHeaders.authorizationHeader: "Bearer " + token.toString(),
+    HttpHeaders.authorizationHeader: "Bearer " + NetworkUtils.token,
   });
   if (res?.statusCode == 200) {
     var task = json.decode(res.body);
