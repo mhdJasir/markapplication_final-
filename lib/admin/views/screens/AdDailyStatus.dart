@@ -7,8 +7,6 @@ import 'package:hrmarkgrp/admin/views/screens/ImageView.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-import '../../../main.dart';
-
 class AdDalyStatus extends StatefulWidget {
   @override
   _AdDalyStatusState createState() => _AdDalyStatusState();
@@ -37,8 +35,6 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
         }
       }
     });
-    _con.dailystatus(widget.token);
-    print("daily status data  :" + _con.dailystaus.toString());
     super.initState();
   }
 
@@ -48,22 +44,12 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Color(0xFF545454),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
         title: Text(
           "Daily Status",
-          style: TextStyle(color: Colors.black87),
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: MyApp.appBar,
+        backgroundColor: Color(0xff496ab1),
       ),
       body: !loading
           ? Container(
@@ -223,102 +209,162 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
                           width: 5,
                         ),
                         Container(
-                                  ],
-                                SizedBox(
-                                  height: 5,
-                                SizedBox(
-                                  height: 5,
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 3,
-                                    Flexible(
-                                      child: Container(
-                                        height: 40,
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          shrinkWrap: true,
-                                          itemCount: _con.dailystaus.length,
-                                          itemBuilder: (context, i) {
-                                            return Row(
-                                              children: [
-                                                SizedBox(
-                                                  width: 3,
-                                                ),
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(60),
-                                                  child: Container(
-                                                    height: 30,
-                                                    width: 30,
-                                                      "assets/images/men.jpg",
-                                                    ),
-                                                ),
-                                                  width: 3,
-                                                Text(
-                                                          ["unemp_name"]
-                                                  style: TextStyle(
-                                                      color: Colors.grey),
-                                                ),
-                                              ],
-                                          },
-                                        ),
-                                    ),
-                                  ],
-                                SizedBox(
-                                  height: 5,
-                                Text(
-                                  _con.dailystaus[index]["description"]
-                                  style: b14W7,
-                                  maxLines: 1,
-                                SizedBox(
-                                  height: 5,
-                                Container(
-                                  height: 40,
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      shrinkWrap: true,
-                                      itemCount: 3,
-                                      itemBuilder: (context, i) {
-                                        return Row(children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(60),
-                                            child: Container(
-                                              height: 40,
-                                              width: 40,
-                                              child: Image.asset(
-                                                "assets/images/men.jpg",
-                                                fit: BoxFit.cover,
+                          width: size.width * 0.55,
+                          height: 40,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount:
+                                List.castFrom(dailyStatus[index]["unemployee"])
+                                    .length,
+                            itemBuilder: (context, i) {
+                              var length = List.castFrom(
+                                      dailyStatus[index]["unemployee"])
+                                  .length;
+                              return Row(
+                                children: [
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  // ClipRRect(
+                                  //   borderRadius:
+                                  //       BorderRadius.circular(60),
+                                  //   child: Container(
+                                  //     height: 30,
+                                  //     width: 30,
+                                  //     child: Image.asset(
+                                  //       "assets/images/men.jpg",
+                                  //       fit: BoxFit.cover,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    dailyStatus[index]["unemployee"][i]
+                                        .toString(),
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                  length - 1 > i
+                                      ? Text(
+                                          ", ",
+                                          style: TextStyle(color: Colors.grey),
+                                        )
+                                      : Container(),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      dailyStatus[index]["description"].toString(),
+                      style: b14W7,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ImageView(
+                              src:
+                                  "http://markbuilders.in/admin/${dailyStatus[index]["image"]}");
+                        }));
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(60),
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          child: Image.network(
+                            "http://markbuilders.in/admin/${dailyStatus[index]["image"]}",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // Container(
+                    //   height: 50,
+                    //   child: ListView.builder(
+                    //       scrollDirection: Axis.horizontal,
+                    //       shrinkWrap: true,
+                    //       itemCount: 3,
+                    //       itemBuilder: (context, i) {
+                    //         return Row(children: [
+                    //           ClipRRect(
+                    //             borderRadius:
+                    //                 BorderRadius.circular(60),
+                    //             child: Container(
+                    //               height: 40,
+                    //               width: 40,
+                    //               child: Image.asset(
+                    //                 "assets/images/men.jpg",
                     //                 fit: BoxFit.cover,
+                    //               ),
                     //             ),
-                    //           SizedBox(
                     //           ),
+                    //           SizedBox(
+                    //             width: 8,
+                    //           ),
+                    //         ]);
                     //       }),
+                    // )
                   ],
+                ),
               ),
+            ),
           ],
+        ),
       ));
+    }
     if (lazyloading) {
+      list.add(Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        children: [CircularProgressIndicator()],
       ));
+    }
     return list;
+  }
 
+  void menubarAction(String menubaritems) {
     if (menubaritems == menubaritems) {}
+  }
 
+  Future getDailyStatus() async {
     var api = NetworkUtils.dailysta + "?page=$nextpage";
+    var res = await NetworkUtils.httpget(api);
     if (res?.statusCode == 200) {
+      var jsObj = jsonDecode(res.body);
       if (jsObj["status"] == "1") {
+        var data = List.castFrom(jsObj["data"]["data"]);
         setState(() {
+          if (nextpage == 1) {
             dailyStatus = data;
-            for (var i = 0; i < data.length; i++) {
-            }
-          if (jsObj["data"]["next_page_url"] != null) {
           } else {
+            for (var i = 0; i < data.length; i++) {
+              dailyStatus.add(data[i]);
+            }
           }
+          if (jsObj["data"]["next_page_url"] != null) {
+            nextpage = jsObj["data"]["last_page"];
+          } else {
+            nextpage = null;
+          }
+          loading = false;
           lazyloading = false;
+        });
       }
+    } else {
       setState(() {
+        loading = false;
       });
     }
   }

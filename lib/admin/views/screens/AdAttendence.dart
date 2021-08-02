@@ -197,10 +197,10 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        BuildContainer(clickedAll, true, false, false, "All"),
-                        BuildContainer(
+                        buildContainer(clickedAll, true, false, false, "All"),
+                        buildContainer(
                             clickedPresent, false, true, false, "Present"),
-                        BuildContainer(
+                        buildContainer(
                             clickedAbsent, false, false, true, "Absent"),
                         SizedBox(
                           height: 15,
@@ -578,7 +578,7 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
     );
   }
 
-  Widget BuildContainer(bool clicked, click1, click2, click3, String text) {
+  Widget buildContainer(bool clicked, click1, click2, click3, String text) {
     return Expanded(
       child: GestureDetector(
         onTap: () {

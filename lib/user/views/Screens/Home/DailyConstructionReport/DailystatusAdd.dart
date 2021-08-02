@@ -25,9 +25,9 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
     _con = controller;
   }
 
-  final TextEditingController descr_contr = TextEditingController();
+  final TextEditingController descrcontr = TextEditingController();
   var nameList = [];
-  var NewList;
+  var newList = [];
 
   Widget imagepickbottomsheet(context) {
     return Container(
@@ -81,9 +81,9 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
   pickImage(source) async {
     var image = await _picker.pickImage(source: source);
     File file = File(image.path);
-    File Compressed = await compressFile(file);
+    File compressed = await compressFile(file);
     setState(() {
-      _image = Compressed;
+      _image = compressed;
       Navigator.pop(context);
     });
     print(file.lengthSync());
@@ -132,10 +132,10 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
             emplist.map((e) => MultiSelectItem(e, e["emp_firstname"])).toList(),
         listType: MultiSelectListType.LIST,
         onConfirm: (values) {
-          NewList = values;
-          for (int i = 0; i < NewList.length; i++) {
+          newList = values;
+          for (int i = 0; i < newList.length; i++) {
             setState(() {
-              nameList.insert(i, NewList[i]["emp_firstname"]);
+              nameList.insert(i, newList[i]["emp_firstname"]);
             });
           }
         },
@@ -146,7 +146,7 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
   Color main = Color(0xFFF6F6F6);
   Size get size => MediaQuery.of(context).size;
   String currntdate;
-  String currentdate() {
+  void currentdate() {
     var now = new DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
     setState(() {
@@ -235,7 +235,7 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
                           _con.adddasts(
                             project,
                             nameList,
-                            descr_contr.text,
+                            descrcontr.text,
                             _image,
                             context,
                           );
@@ -278,7 +278,7 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
           border: Border.all(width: 1, color: Colors.grey[200])),
       child: TextField(
         autofocus: false,
-        controller: descr_contr,
+        controller: descrcontr,
         textAlign: TextAlign.justify,
         maxLines: 9,
         style: TextStyle(

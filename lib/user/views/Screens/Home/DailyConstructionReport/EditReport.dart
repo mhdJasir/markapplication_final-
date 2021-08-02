@@ -26,7 +26,7 @@ class _ConstructionReportEditState extends StateMVC<ConstructionReportEdit> {
   var employ;
   ImagePicker _imagePicker = ImagePicker();
   var nameList = [];
-  var NewList;
+  var newList = [];
   Color main = Color(0xFFF6F6F6);
   File _image;
   Size get size => MediaQuery.of(context).size;
@@ -37,7 +37,7 @@ class _ConstructionReportEditState extends StateMVC<ConstructionReportEdit> {
     });
   }
 
-  String currentdate() {
+  void currentdate() {
     var now = new DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
     setState(() {
@@ -181,10 +181,10 @@ class _ConstructionReportEditState extends StateMVC<ConstructionReportEdit> {
             emplist.map((e) => MultiSelectItem(e, e["emp_firstname"])).toList(),
         listType: MultiSelectListType.LIST,
         onConfirm: (values) {
-          NewList = values;
-          for (int i = 0; i < NewList.length; i++) {
+          newList = values;
+          for (int i = 0; i < newList.length; i++) {
             setState(() {
-              nameList.insert(i, NewList[i]["emp_firstname"]);
+              nameList.insert(i, newList[i]["emp_firstname"]);
             });
           }
         },

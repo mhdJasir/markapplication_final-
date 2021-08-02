@@ -219,15 +219,12 @@ class _AdEmpAddState extends StateMVC<AdEmpAdd> {
     );
   }
 
-  Future getCameraImage() async {
-    var image = await _picker.pickImage(source: ImageSource.camera);
-
   pickImage(source) async {
     var image = await _picker.pickImage(source: source);
     File file = File(image.path);
-    File Compressed = await compressFile(file);
+    File compressed = await compressFile(file);
     setState(() {
-      _image = Compressed;
+      _image = compressed;
       Navigator.pop(context);
     });
     print(file.lengthSync());
@@ -235,9 +232,6 @@ class _AdEmpAddState extends StateMVC<AdEmpAdd> {
     print("image size  :" + file.lengthSync().toString());
   }
 
-  //============================== Image from gallery
-  Future getGalleryImage() async {
-    var image = await _picker.pickImage(source: ImageSource.gallery);
   Future<File> compressFile(File file) async {
     final filePath = file.absolute.path;
     final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
