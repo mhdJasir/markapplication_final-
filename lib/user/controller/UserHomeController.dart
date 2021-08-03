@@ -33,8 +33,8 @@ class UserHomeController extends ControllerMVC {
     });
   }
 
-  void staffdailystats(token, context) async {
-    await repo.staffdailystatus(token).then((value) {
+  void staffdailystats() async {
+    await repo.staffdailystatus().then((value) {
       setState(() {
         loading = false;
       });

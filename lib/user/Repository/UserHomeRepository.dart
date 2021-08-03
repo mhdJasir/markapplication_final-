@@ -51,10 +51,10 @@ Future<Map> stffaddattndece(String token, String date, int attndnce) async {
   return Map();
 }
 
-Future<Map> staffdailystatus(token) async {
+Future<Map> staffdailystatus() async {
   final String url = NetworkUtils.staffviewdailystatus;
   final res = await http.get(Uri.parse(url), headers: {
-    HttpHeaders.authorizationHeader: "Bearer " + token.toString(),
+    HttpHeaders.authorizationHeader: "Bearer " + NetworkUtils.token,
   });
   if (res.statusCode == 200) {
     var dailys = json.decode(res.body);

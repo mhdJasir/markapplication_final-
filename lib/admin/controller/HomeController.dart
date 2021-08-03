@@ -78,7 +78,7 @@ class HomeController extends ControllerMVC {
     });
   }
 
-  void adattndace(token) async {
+  Future adattndace(token) async {
     await repo.admattendance(token).then((value) {
       if (value["status"] == "1") {
         setState(() {

@@ -30,20 +30,20 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
   DateTime selecteddate;
   String staff;
   List emppList = [];
-  List combList;
-  List preList;
-  List absList;
-  List shuffledList;
+  List combList = [];
+  List preList = [];
+  List absList = [];
+  List shuffledList = [];
   var random = Random();
 
   lists() async {
-    _con.adattndace(widget.token);
-    absList = _con.attndencelist["absents_list"];
-    preList = _con.attndencelist["presents_list"];
-    combList = absList + preList;
-    print("combined list :" + combList.toString());
-    setState(() {
-      shuffledList = shuffle(combList);
+    _con.adattndace(widget.token).then((value) {
+      setState(() {
+        absList = _con.attndencelist["absents_list"];
+        preList = _con.attndencelist["presents_list"];
+        combList = absList + preList;
+        shuffledList = shuffle(combList);
+      });
     });
   }
 
@@ -242,9 +242,7 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
                                               height: 30,
                                               width: 30,
                                               child: Image.network(
-                                                _con.attndencelist[
-                                                        "presents_list"][index]
-                                                    ["emp_image"],
+                                                "http://markbuilders.in/admin/${_con.attndencelist["presents_list"][index]["emp_image"]}",
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
@@ -319,9 +317,7 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
                                                   height: 30,
                                                   width: 30,
                                                   child: Image.network(
-                                                    _con.attndencelist[
-                                                            "absents_list"]
-                                                        [index]["emp_image"],
+                                                    "http://markbuilders.in/admin/${_con.attndencelist["absents_list"][index]["emp_image"]}",
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
@@ -397,8 +393,7 @@ class _AdAttendenceState extends StateMVC<AdAttendence> {
                                                       height: 30,
                                                       width: 30,
                                                       child: Image.network(
-                                                        shuffledList[index]
-                                                            ["emp_image"],
+                                                        "http://markbuilders.in/admin/${shuffledList[index]["emp_image"]}",
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),

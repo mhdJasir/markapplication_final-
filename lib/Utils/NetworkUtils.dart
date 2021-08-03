@@ -24,7 +24,7 @@ class NetworkUtils {
   static final adminaddAttendance = baseUrl + "/admin_add_attendance";
   static final clientid = baseUrl + "/get_client_id";
   static final getemployeeid = baseUrl + "/get_employee_id";
-  static final dailysta = baseUrl + "/daily_status";
+  static final dailysta = baseUrl + "/daily_updates";
   static final getinvo = baseUrl + "/get_invoices";
   static final admingetmatrilrqs = baseUrl + "/material_requests";
   static final adminpurchaseord = baseUrl + "/purchase_orders";
@@ -49,7 +49,7 @@ class NetworkUtils {
   static final staffviewtask = baseUrl + "/staff/staff_task";
   static final staffaddleave = baseUrl + "/staff/staff_add_leave";
   static final staffviewleave = baseUrl + "/staff/staff_view_leave";
-  static final staffviewdailystatus = baseUrl + "/staff/staff_view_dailystatus";
+  static final staffviewdailystatus = baseUrl + "/staff/staff_daily_updates";
   static final staffaddatttendence = baseUrl + "/staff/staff_add_attendance";
   static final staffadddailystats = baseUrl + "/staff/staff_add_dailystatus";
   static final staffAddMatreq = baseUrl + "/staff/staff_add_materialrequest";
