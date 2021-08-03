@@ -7,6 +7,8 @@ import 'package:hrmarkgrp/admin/views/screens/ImageView.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
+import '../../../main.dart';
+
 class AdDalyStatus extends StatefulWidget {
   @override
   _AdDalyStatusState createState() => _AdDalyStatusState();
@@ -44,12 +46,22 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xFF545454),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           "Daily Status",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff496ab1),
+        backgroundColor: MyApp.appBar,
       ),
       body: !loading
           ? Container(
