@@ -28,7 +28,7 @@ class _AdBottomtabsState extends State<AdBottomtabs> {
         );
         break;
       case 1:
-        return new AdAttendence(
+        return new AdAttendance(
           token: widget.token,
         );
         break;

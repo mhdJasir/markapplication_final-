@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hrmarkgrp/Utils/NetworkUtils.dart';
-import 'package:hrmarkgrp/admin/views/screens/AdDailysttsInnerPage.dart';
+import 'package:hrmarkgrp/admin/views/screens/AdConstructionReportInner.dart';
 import 'package:hrmarkgrp/admin/views/screens/ImageView.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -57,7 +57,7 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
           },
         ),
         title: Text(
-          "Daily Status",
+          "Daily Construction Report",
           style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
@@ -111,24 +111,12 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
             Container(
               height: 50,
               margin: const EdgeInsets.only(
-                  top: 5.0, right: 9.0, left: 9.0, bottom: 5),
+                  top: 5.0, right: 20, left: 20, bottom: 5),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  //background color of box
-                  BoxShadow(
-                    color: Colors.grey[400],
-                    blurRadius: 0.8, // soften the shadow
-                    spreadRadius: 0.8, //extend the shadow
-                    offset: Offset(
-                      0.5, // Move to right 10  horizontally
-                      0.5, // Move to bottom 10 Vertically
-                    ),
-                  )
-                ],
-              ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: MyApp.bord),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -150,24 +138,12 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
             Container(
               height: 240,
               margin: const EdgeInsets.only(
-                  top: 5.0, right: 9.0, left: 9.0, bottom: 5),
+                  top: 5.0, right: 20.0, left: 20.0, bottom: 5),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  //background color of box
-                  BoxShadow(
-                    color: Colors.grey[400],
-                    blurRadius: 0.8, // soften the shadow
-                    spreadRadius: 0.8, //extend the shadow
-                    offset: Offset(
-                      0.5, // Move to right 10  horizontally
-                      0.5, // Move to bottom 10 Vertically
-                    ),
-                  )
-                ],
-              ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: MyApp.bord),
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -238,18 +214,6 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
                                   SizedBox(
                                     width: 5,
                                   ),
-                                  // ClipRRect(
-                                  //   borderRadius:
-                                  //       BorderRadius.circular(60),
-                                  //   child: Container(
-                                  //     height: 30,
-                                  //     width: 30,
-                                  //     child: Image.asset(
-                                  //       "assets/images/men.jpg",
-                                  //       fit: BoxFit.cover,
-                                  //     ),
-                                  //   ),
-                                  // ),
                                   SizedBox(
                                     width: 5,
                                   ),
@@ -302,33 +266,6 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
                         ),
                       ),
                     ),
-
-                    // Container(
-                    //   height: 50,
-                    //   child: ListView.builder(
-                    //       scrollDirection: Axis.horizontal,
-                    //       shrinkWrap: true,
-                    //       itemCount: 3,
-                    //       itemBuilder: (context, i) {
-                    //         return Row(children: [
-                    //           ClipRRect(
-                    //             borderRadius:
-                    //                 BorderRadius.circular(60),
-                    //             child: Container(
-                    //               height: 40,
-                    //               width: 40,
-                    //               child: Image.asset(
-                    //                 "assets/images/men.jpg",
-                    //                 fit: BoxFit.cover,
-                    //               ),
-                    //             ),
-                    //           ),
-                    //           SizedBox(
-                    //             width: 8,
-                    //           ),
-                    //         ]);
-                    //       }),
-                    // )
                   ],
                 ),
               ),
@@ -353,6 +290,7 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
   Future getDailyStatus() async {
     var api = NetworkUtils.dailysta + "?page=$nextpage";
     var res = await NetworkUtils.httpget(api);
+    print("status code   :" + res.statusCode.toString());
     if (res?.statusCode == 200) {
       var jsObj = jsonDecode(res.body);
       if (jsObj["status"] == "1") {
@@ -360,6 +298,7 @@ class _AdDalyStatusState extends StateMVC<AdDalyStatus> {
         setState(() {
           if (nextpage == 1) {
             dailyStatus = data;
+            print("daily status :" + jsObj["data"].toString());
           } else {
             for (var i = 0; i < data.length; i++) {
               dailyStatus.add(data[i]);

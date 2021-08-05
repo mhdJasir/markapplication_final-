@@ -25,19 +25,25 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
   Size get size => MediaQuery.of(context).size;
   Color main = Color(0xFFF6F6F6);
   lists() async {
-    print(_con.allleave.toString());
-    for (int i = 0; i < _con.allleave.length; i++) {
-      print("status code   :" + _con.allleave[i]["status"].toString());
-
-      approved.add(_con.allleave
-          .where((object) => object[0]["status"].toString() == "1"));
-    }
-    print("approved : " + approved.toString());
+    _con.viewallstffleave(widget.token).then((value) {
+      print(_con.allleave.toString());
+      for (int i = 0; i < _con.allleave.length; i++) {
+        if (_con.allleave[i]["status"] == "1") {
+          print("status 1 :" + _con.allleave[i]["status"] == "1".toString());
+          approved.add(_con.allleave[i]);
+          print("approved :" + approved.toString());
+        }
+        if (_con.allleave[i]["status"] == "0") {
+          pending.add(_con.allleave[i]);
+        }
+      }
+      print("approved : " + approved.toString());
+    });
   }
 
   @override
   void initState() {
-    _con.viewallstffleave(widget.token);
+    lists();
     super.initState();
   }
 
@@ -88,69 +94,54 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
           Container(
             width: size.width,
             height: size.height * 0.68,
-            child: ListView.builder(
-                physics: ClampingScrollPhysics(),
-                itemCount: _con.allleave.length,
-                itemBuilder: (context, index) {
-                  final DateFormat formatter = new DateFormat('dd MMM yyyy');
-                  String fromdate = formatter
-                      .format(DateTime.parse(_con.allleave[index]["from"]));
-                  String todate = formatter
-                      .format(DateTime.parse(_con.allleave[index]["to"]));
-                  return Container(
-                    margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-                    height: 100,
-                    width: size.width - 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
-                        border: Border.all(color: Color(0xFFE9E9E9))),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 16, left: 16, right: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                  _con.allleave[index]["leave_reason"]
-                                      .toString(),
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  )),
-                              _con.allleave[index]["status"].toString() == "1"
-                                  ? Container(
-                                      height: 20,
-                                      width: 60,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Color(0xFFE9E9E9)),
-                                          color: Colors.green,
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      child: Center(
-                                        child: Text("Approved",
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white)),
-                                      ),
-                                    )
-                                  : _con.allleave[index]["status"].toString() ==
-                                          "2"
+            child: clickedAll
+                ? ListView.builder(
+                    physics: ClampingScrollPhysics(),
+                    itemCount: _con.allleave != null ? _con.allleave.length : 0,
+                    itemBuilder: (context, index) {
+                      final DateFormat formatter =
+                          new DateFormat('dd MMM yyyy');
+                      String fromdate = formatter
+                          .format(DateTime.parse(_con.allleave[index]["from"]));
+                      String todate = formatter
+                          .format(DateTime.parse(_con.allleave[index]["to"]));
+                      return Container(
+                        margin: EdgeInsets.only(top: 10, left: 20, right: 20),
+                        height: 100,
+                        width: size.width - 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            border: Border.all(color: Color(0xFFE9E9E9))),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 16, left: 16, right: 16),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      _con.allleave[index]["leave_reason"]
+                                          .toString(),
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.black,
+                                      )),
+                                  _con.allleave[index]["status"].toString() ==
+                                          "1"
                                       ? Container(
                                           height: 20,
                                           width: 60,
                                           decoration: BoxDecoration(
                                               border: Border.all(
                                                   color: Color(0xFFE9E9E9)),
-                                              color: Color(0xffd7334c),
+                                              color: Colors.green,
                                               borderRadius:
                                                   BorderRadius.circular(5)),
                                           child: Center(
-                                            child: Text("Decline",
+                                            child: Text("Approved",
                                                 style: TextStyle(
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.w500,
@@ -159,18 +150,18 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
                                         )
                                       : _con.allleave[index]["status"]
                                                   .toString() ==
-                                              "0"
+                                              "2"
                                           ? Container(
                                               height: 20,
                                               width: 60,
                                               decoration: BoxDecoration(
                                                   border: Border.all(
                                                       color: Color(0xFFE9E9E9)),
-                                                  color: Color(0xFFF49C16),
+                                                  color: Color(0xffd7334c),
                                                   borderRadius:
                                                       BorderRadius.circular(5)),
                                               child: Center(
-                                                child: Text("Pending",
+                                                child: Text("Decline",
                                                     style: TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
@@ -178,70 +169,316 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
                                                         color: Colors.white)),
                                               ),
                                             )
-                                          : Container(
-                                              height: 20,
-                                              width: 60,
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Color(0xFFE9E9E9)),
-                                                  color: Color(0xFFF49C16),
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                              child: Center(
-                                                child: Text("Pending",
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: Colors.white)),
-                                              ),
-                                            )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15, top: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                fromdate + " - " + todate,
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w700),
+                                          : _con.allleave[index]["status"]
+                                                      .toString() ==
+                                                  "0"
+                                              ? Container(
+                                                  height: 20,
+                                                  width: 60,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Color(
+                                                              0xFFE9E9E9)),
+                                                      color: Color(0xFFF49C16),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: Center(
+                                                    child: Text("Pending",
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color:
+                                                                Colors.white)),
+                                                  ),
+                                                )
+                                              : Container(
+                                                  height: 20,
+                                                  width: 60,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Color(
+                                                              0xFFE9E9E9)),
+                                                      color: Color(0xFFF49C16),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  child: Center(
+                                                    child: Text("Pending",
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color:
+                                                                Colors.white)),
+                                                  ),
+                                                )
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 15, top: 10, right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                _con.allleave[index]["leave_type"],
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black),
-                              ),
-                              Container(
-                                  height: 20,
-                                  width: 20,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Color(0xffE2E2E2),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15, top: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    fromdate + " - " + todate,
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w700),
                                   ),
-                                  child: Center(child: Text("1"))),
-                            ],
-                          ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 15, top: 10, right: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    _con.allleave[index]["leave_type"],
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black),
+                                  ),
+                                  Container(
+                                      height: 20,
+                                      width: 20,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Color(0xffE2E2E2),
+                                      ),
+                                      child: Center(
+                                          child: Text(_con.allleave[index]
+                                                  ["noof_days"]
+                                              .toString()))),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                }),
+                      );
+                    })
+                : clickedApprove
+                    ? ListView.builder(
+                        physics: ClampingScrollPhysics(),
+                        itemCount: pending.length != null ? pending.length : 0,
+                        itemBuilder: (context, index) {
+                          final DateFormat formatter =
+                              new DateFormat('dd MMM yyyy');
+                          String fromdate = formatter
+                              .format(DateTime.parse(pending[index]["from"]));
+                          String todate = formatter
+                              .format(DateTime.parse(pending[index]["to"]));
+                          return Container(
+                            margin:
+                                EdgeInsets.only(top: 10, left: 20, right: 20),
+                            height: 100,
+                            width: size.width - 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
+                                border: Border.all(color: Color(0xFFE9E9E9))),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 16, left: 16, right: 16),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                          pending[index]["leave_reason"]
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black,
+                                          )),
+                                      Container(
+                                        height: 20,
+                                        width: 60,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Color(0xFFE9E9E9)),
+                                            color: Color(0xFFF49C16),
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        child: Center(
+                                          child: Text("Pending",
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.white)),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 15, top: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        fromdate + " - " + todate,
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15, top: 10, right: 20),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        pending[index]["leave_type"],
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black),
+                                      ),
+                                      Container(
+                                          height: 20,
+                                          width: 20,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: Color(0xffE2E2E2),
+                                          ),
+                                          child: Center(
+                                              child: Text(pending[index]
+                                                      ["noof_days"]
+                                                  .toString()))),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        })
+                    : clickedPending
+                        ? ListView.builder(
+                            physics: ClampingScrollPhysics(),
+                            itemCount:
+                                approved.length != null ? approved.length : 0,
+                            itemBuilder: (context, index) {
+                              final DateFormat formatter =
+                                  new DateFormat('dd MMM yyyy');
+                              String fromdate = formatter.format(
+                                  DateTime.parse(approved[index]["from"]));
+                              String todate = formatter.format(
+                                  DateTime.parse(approved[index]["to"]));
+                              return Container(
+                                margin: EdgeInsets.only(
+                                    top: 10, left: 20, right: 20),
+                                height: 100,
+                                width: size.width - 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.white,
+                                    border:
+                                        Border.all(color: Color(0xFFE9E9E9))),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 16, left: 16, right: 16),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                              approved[index]["leave_reason"]
+                                                  .toString(),
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                              )),
+                                          Container(
+                                            height: 20,
+                                            width: 60,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Color(0xFFE9E9E9)),
+                                                color: Colors.green,
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            child: Center(
+                                              child: Text("Approved",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Colors.white)),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 15, top: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            fromdate + " - " + todate,
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 15, top: 10, right: 20),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            approved[index]["leave_type"],
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black),
+                                          ),
+                                          Container(
+                                              height: 20,
+                                              width: 20,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: Color(0xffE2E2E2),
+                                              ),
+                                              child: Center(
+                                                  child: Text(approved[index]
+                                                          ["noof_days"]
+                                                      .toString()))),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            })
+                        : Container(),
           ),
           SizedBox(height: 20),
           Row(
@@ -306,3 +543,5 @@ class _ApplyLeavePageState extends StateMVC<ApplyLeavePage> {
     );
   }
 }
+
+class BuildList {}

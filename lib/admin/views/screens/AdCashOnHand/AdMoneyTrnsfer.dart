@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hrmarkgrp/admin/controller/HomeController.dart';
-import 'package:hrmarkgrp/admin/views/screens/AdMoneyhandAddScreen.dart';
+import 'package:hrmarkgrp/admin/views/screens/AdCashOnHand/AdMoneyhandAddScreen.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:intl/intl.dart';
 
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-import '../../../main.dart';
+import '../../../../main.dart';
+import 'TransactionInnerPage.dart';
 
 class MoneyTransfer extends StatefulWidget {
   final token;
@@ -21,6 +22,7 @@ class _MoneyTransferState extends StateMVC<MoneyTransfer> {
   _MoneyTransferState() : super(HomeController()) {
     _con = controller;
   }
+  int id;
   @override
   void initState() {
     _con.viewmoneytran(widget.token);
@@ -42,7 +44,7 @@ class _MoneyTransferState extends StateMVC<MoneyTransfer> {
           },
         ),
         title: Text(
-          "Money Transfer",
+          "Cash Transfer",
           style: TextStyle(color: Colors.black87),
         ),
         centerTitle: true,
@@ -63,7 +65,12 @@ class _MoneyTransferState extends StateMVC<MoneyTransfer> {
                         new DateFormat("yyyy-MM-dd").format(parsedDate);
                     return GestureDetector(
                       onTap: () {
-                        // Navigator.push(context, MaterialPageRoute(builder: (Context)=>AdMatrlReqInnr(_con.getmaterialreqq[index])));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TransactionInner(
+                                    widget.token,
+                                    _con.viewMoneytrnsfer[index]["id"])));
                       },
                       child: Padding(
                         padding:

@@ -17,7 +17,7 @@ import 'package:hrmarkgrp/user/views/widgets/icntxtwidget.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'DailyConstructionReport/DailyStatus.dart';
+import 'DailyConstructionReport/DailyConstructionReport.dart';
 
 class Home extends StatefulWidget {
   Home({this.token});

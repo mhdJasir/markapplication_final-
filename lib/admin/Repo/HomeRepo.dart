@@ -115,6 +115,26 @@ Future getttinvo(token) async {
   return invoice;
 }
 
+Future labour(token) async {
+  var url = NetworkUtils.labours;
+  var response = await http.get(Uri.parse(url), headers: {
+    HttpHeaders.authorizationHeader: "Bearer " + token.toString(),
+  });
+  print("status code : " + response.statusCode.toString());
+  var data = json.decode(response.body);
+  return data;
+}
+
+Future jobs(token) async {
+  var url = NetworkUtils.labourJobs;
+  var response = await http.get(Uri.parse(url), headers: {
+    HttpHeaders.authorizationHeader: "Bearer " + token.toString(),
+  });
+  print("status code  :" + response.statusCode.toString());
+  var data = json.decode(response.body);
+  return data;
+}
+
 Future getmaterialr(token) async {
   final String url = NetworkUtils.admingetmatrilrqs;
   final res = await http.get(Uri.parse(url), headers: {
@@ -269,4 +289,21 @@ Future viewmoneytrnsfr(token) async {
   });
   var viewmony = json.decode(res.body);
   return viewmony;
+}
+
+Future addLabour(token, fname, lname, id, joinedate, phone, des) async {
+  var url = Uri.parse(NetworkUtils.addLabour);
+  var response = await http.post(url, headers: {
+    HttpHeaders.authorizationHeader: "Bearer " + token.toString(),
+  }, body: {
+    "fname": fname.toString(),
+    "lname": lname.toString(),
+    "id": id.toString(),
+    "joindate": joinedate.toString(),
+    "phone": phone.toString(),
+    "des": des.toString(),
+  });
+  print("status code :" + response.statusCode.toString());
+  var data = json.decode(response.body);
+  return data;
 }

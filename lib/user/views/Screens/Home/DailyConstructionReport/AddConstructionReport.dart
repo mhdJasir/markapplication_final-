@@ -178,7 +178,7 @@ class _DailyStatusAddState extends StateMVC<DailyStatusAdd> {
             },
           ),
           title: Text(
-            "Daily Status Add",
+            "Add Report",
             style: TextStyle(color: Colors.black87),
           ),
           centerTitle: true,

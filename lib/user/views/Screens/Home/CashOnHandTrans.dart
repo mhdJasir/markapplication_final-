@@ -95,17 +95,6 @@ class _MoneyOnHandInnrState extends State<MoneyOnHandInnr> {
                               ),
                             ],
                           ),
-                          // Text(
-                          //   expense[index]["remark"].toString(),
-                          //   style: b14W7,
-                          // ),
-                          // SizedBox(
-                          //   height: 10,
-                          // ),
-                          // Text(
-                          //   expense[index]["emp_id"].toString(),
-                          //   style: b14W7,
-                          // ),
                         ],
                       ),
                     ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hrmarkgrp/admin/controller/MatrialReqController.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-import '../../../main.dart';
+import '../../../../main.dart';
 
 class AdMoneyTransferAddscreen extends StatefulWidget {
   final token;

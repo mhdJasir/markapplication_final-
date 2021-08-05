@@ -6,13 +6,13 @@ import 'package:hrmarkgrp/admin/views/screens/AdAttendence.dart';
 import 'package:hrmarkgrp/admin/views/screens/AdCalRmrk.dart';
 import 'package:hrmarkgrp/admin/views/screens/AdClient.dart';
 import 'package:hrmarkgrp/admin/views/screens/AdDailyExpnce.dart';
-import 'package:hrmarkgrp/admin/views/screens/AdDailyStatus.dart';
+import 'package:hrmarkgrp/admin/views/screens/AdDailyConstructionReport.dart';
 import 'package:hrmarkgrp/admin/views/screens/AdEmployeeTask.dart';
 import 'package:hrmarkgrp/admin/views/screens/AdEmployees.dart';
 import 'package:hrmarkgrp/admin/views/screens/AdHoliyClndr.dart';
 import 'package:hrmarkgrp/admin/views/screens/AdLeaveRqst.dart';
 import 'package:hrmarkgrp/admin/views/screens/AdMaterialRq.dart';
-import 'package:hrmarkgrp/admin/views/screens/AdMoneyTrnsfer.dart';
+import 'package:hrmarkgrp/admin/views/screens/AdCashOnHand/AdMoneyTrnsfer.dart';
 import 'package:hrmarkgrp/admin/views/screens/AdNotification.dart';
 import 'package:hrmarkgrp/admin/views/screens/AdPurchaseOrdr.dart';
 import 'package:hrmarkgrp/admin/views/screens/Adinvoice.dart';
@@ -24,6 +24,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AdProjects.dart';
 import 'AdSalary.dart';
+import 'Labours/LaboursList.dart';
 
 class AdHome extends StatefulWidget {
   final token;
@@ -153,7 +154,7 @@ class _AdHomeState extends StateMVC<AdHome> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => AdAttendence(
+                                            builder: (context) => AdAttendance(
                                                 token: widget.token)));
                                     // pr.show();
                                   },
@@ -292,6 +293,19 @@ class _AdHomeState extends StateMVC<AdHome> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
+                                            builder: (context) =>
+                                                Labours(widget.token)));
+                                  },
+                                  title: "Labours",
+                                  icon: "assets/icons/employee.png",
+                                  width: 50,
+                                  height: 40,
+                                ),
+                                IconTxt(
+                                  tap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
                                             builder: (context) => AdSalary()));
                                   },
                                   title: "Salary",
@@ -299,6 +313,8 @@ class _AdHomeState extends StateMVC<AdHome> {
                                   width: 50,
                                   height: 40,
                                 ),
+                              ]),
+                              TableRow(children: [
                                 IconTxt(
                                   tap: () {
                                     Navigator.push(
@@ -312,8 +328,6 @@ class _AdHomeState extends StateMVC<AdHome> {
                                   width: 50,
                                   height: 40,
                                 ),
-                              ]),
-                              TableRow(children: [
                                 IconTxt(
                                   tap: () {
                                     Navigator.push(
@@ -340,6 +354,8 @@ class _AdHomeState extends StateMVC<AdHome> {
                                   width: 50,
                                   height: 40,
                                 ),
+                              ]),
+                              TableRow(children: [
                                 IconTxt(
                                   tap: () {
                                     Navigator.push(
@@ -352,6 +368,14 @@ class _AdHomeState extends StateMVC<AdHome> {
                                   width: 50,
                                   height: 40,
                                   title: "Holiday Calender",
+                                ),
+                                Container(
+                                  width: 50,
+                                  height: 40,
+                                ),
+                                Container(
+                                  width: 50,
+                                  height: 40,
                                 ),
                               ]),
                             ],
@@ -415,7 +439,7 @@ class _AdHomeState extends StateMVC<AdHome> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              AdAttendence(token: widget.token)));
+                              AdAttendance(token: widget.token)));
                 },
               ),
               ListTile(

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hrmarkgrp/Utils/NetworkUtils.dart';
 import 'package:hrmarkgrp/admin/views/widgets/WidgetStyle.dart';
 import 'package:hrmarkgrp/main.dart';
-import 'package:hrmarkgrp/user/views/Screens/Home/DailyConstructionReport/DailystatusAdd.dart';
+import 'package:hrmarkgrp/user/views/Screens/Home/DailyConstructionReport/AddConstructionReport.dart';
 import 'package:hrmarkgrp/user/views/Screens/Home/DailyConstructionReport/EditReport.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 

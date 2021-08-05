@@ -124,7 +124,7 @@ class UserHomeController extends ControllerMVC {
     });
   }
 
-  void viewallstffleave(token) async {
+  Future<void> viewallstffleave(token) async {
     await repo.viewleave(token).then((value) {
       if (value.isNotEmpty) {
         if (value["status"] == "1") {

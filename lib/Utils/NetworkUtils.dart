@@ -43,6 +43,10 @@ class NetworkUtils {
   static final adminupdatedailyexpncee =
       baseUrl + "/admin_update_daily_expanse";
   static final adminviewemploytask = baseUrl + "/admin_view_task";
+  static final labours = baseUrl + "/get_unemployees";
+  static final labourJobs = baseUrl + "/get_jobs";
+  static final addLabour = baseUrl + "/add_unemployee";
+  static final money_transfer_view = baseUrl + "/money_transfer_view";
 
   /// Stafff
   static final staffviewholiday = baseUrl + "/staff/staff_view_holiday";
